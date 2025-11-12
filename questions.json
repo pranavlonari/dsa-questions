@@ -2,7 +2,7 @@
   "metadata": {
     "repository": "DSA Questions Collection",
     "description": "Interview-ready solutions with detailed explanations",
-    "lastUpdated": "2025-11-12",
+    "lastUpdated": "2025-11-13",
     "totalQuestions": 37
   },
   "statistics": {
@@ -126,14 +126,13 @@
       "fileName": "Find Good Days to Rob the Bank",
       "difficulty": "Medium",
       "topics": [
-        "Graph",
         "Array",
         "String",
         "Two Pointers",
         "Sliding Window"
       ],
-      "summary": "restatement (short)",
-      "keyApproach": "",
+      "summary": "",
+      "keyApproach": "1. If `time == 0` return all indices immediately.",
       "complexity": {
         "time": "O(n)",
         "space": "O(n)"
@@ -166,11 +165,11 @@
       "topics": [
         "Tree",
         "BFS",
-        "Graph",
-        "Hash Table",
-        "Array"
+        "Array",
+        "Greedy",
+        "Heap"
       ],
-      "summary": ". Below is an interview-ready answer you can speak to the interviewer, plus a clean Java implementation (two-heap approach), complexity, tests, and answers to the two follow-up questions.",
+      "summary": ". The standard, simple, and interview-friendly solution is **two heaps**:",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -185,11 +184,11 @@
       "topics": [
         "BFS",
         "Array",
-        "String",
         "Greedy",
-        "Heap"
+        "Heap",
+        "Queue"
       ],
-      "summary": "definition examples.",
+      "summary": "",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -221,16 +220,13 @@
       "difficulty": "Medium",
       "topics": [
         "DFS",
-        "Graph",
-        "Array",
-        "String",
-        "Stack"
+        "String"
       ],
       "summary": "restatement",
-      "keyApproach": "1. **Handle zero:** If `num == 0`, return `\"Zero\"`.",
+      "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(n)"
+        "space": "O(1)"
       }
     },
     {
@@ -258,11 +254,9 @@
       "fileName": "LRU Cache",
       "difficulty": "Medium",
       "topics": [
-        "BFS",
-        "Graph",
         "Linked List",
         "Hash Table",
-        "Array"
+        "Two Pointers"
       ],
       "summary": "",
       "keyApproach": "",
@@ -277,10 +271,8 @@
       "fileName": "Maximum Length of Subarray With Positive Product",
       "difficulty": "Medium",
       "topics": [
-        "Graph",
         "Array",
-        "String",
-        "Two Pointers"
+        "String"
       ],
       "summary": "",
       "keyApproach": "",
@@ -295,11 +287,11 @@
       "fileName": "Maximum Number of Robots Within Budget",
       "difficulty": "Medium",
       "topics": [
-        "Tree",
-        "Graph",
         "Array",
         "String",
-        "Two Pointers"
+        "Two Pointers",
+        "Sliding Window",
+        "Queue"
       ],
       "summary": "restatement Given two arrays `chargeTimes` and `runningCosts` of length `n` and a `budget`, find the maximum length of a contiguous subarray (consecutive robots) such that:",
       "keyApproach": "",
@@ -334,13 +326,13 @@
       "difficulty": "Medium",
       "topics": [
         "Tree",
+        "BFS",
+        "Graph",
         "Array",
-        "String",
-        "Greedy",
-        "Two Pointers"
+        "String"
       ],
-      "summary": ". Below is an interview-ready answer you can say to the interviewer, followed by a clear, correct Java implementation (greedy simulation), complexity, tests, and a short note about a faster alternativ...",
-      "keyApproach": "",
+      "summary": "recap (one line)",
+      "keyApproach": "1. Build a target palindrome string `t` of same multiset of characters as `s`. How? For each character `c`, let `cnt[c]`. Put `cnt[c]/2` copies into t",
       "complexity": {
         "time": "O(n²)",
         "space": "O(n)"
@@ -359,7 +351,7 @@
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(n)"
+        "space": "O(1)"
       }
     },
     {
@@ -368,11 +360,11 @@
       "fileName": "Number of Islands",
       "difficulty": "Medium",
       "topics": [
+        "Tree",
         "BFS",
         "DFS",
         "Graph",
-        "Array",
-        "String"
+        "Hash Table"
       ],
       "summary": ".",
       "keyApproach": "",
@@ -392,11 +384,11 @@
         "String",
         "Two Pointers"
       ],
-      "summary": "",
+      "summary": "intuition (short)",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(1)"
+        "space": "O(n)"
       }
     },
     {
@@ -405,11 +397,13 @@
       "fileName": "Plates Between Candles",
       "difficulty": "Medium",
       "topics": [
+        "Graph",
         "Array",
         "String",
-        "Two Pointers"
+        "Two Pointers",
+        "Sorting"
       ],
-      "summary": "",
+      "summary": ", give the clean, optimal algorithm and a correctness argument, show a step-by-step worked example, discuss edge cases and complexity, and finally provide a polished Java implementation you can paste ...",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -423,18 +417,16 @@
       "difficulty": "Medium",
       "topics": [
         "BFS",
-        "Hash Table",
-        "String",
+        "Array",
         "Dynamic Programming",
         "DP"
       ],
-      "summary": "(LeetCode 818). I'll explain a neat dynamic-programming / greedy solution (memoized recursion) that runs very fast for `target ≤ 10^4`, then give a clean Java implementation you can use in an intervie...",
-      "keyApproach": "",
+      "summary": "— classic LeetCode **Race Car** (818). I'll give a full, detailed explanation of the idea, the cases to consider, correctness intuition, complexity, and a clean Java dynamic programming implementation...",
+      "keyApproach": "A better strategy sometimes is: do `n-1` `A`s to go to `2^{n-1}-1` (still less than `target`), then `R` to reverse, then perform `m` `A`s (moving back",
       "complexity": {
         "time": "O(n)",
         "space": "O(n)"
-      },
-      "leetcodeNumber": 818
+      }
     },
     {
       "id": 24,
@@ -447,10 +439,10 @@
         "String",
         "Sorting"
       ],
-      "summary": ". The simplest, clearest approach for an interview is:",
+      "summary": "idea (short)",
       "keyApproach": "",
       "complexity": {
-        "time": "O(n log n · k)",
+        "time": "O(n)",
         "space": "O(n)"
       }
     },
@@ -461,16 +453,16 @@
       "difficulty": "Medium",
       "topics": [
         "BFS",
-        "DFS",
         "Graph",
         "Array",
-        "String"
+        "String",
+        "Greedy"
       ],
       "summary": "restatement: Given a string `s`, rearrange its characters so that no two adjacent characters are the same. Return any valid rearrangement or return `\"\"` if it's impossible.",
-      "keyApproach": "1. Count frequencies of characters. Let `n = s.length()`. If any `freq[i] > (n+1)/2` return `\"\"`.",
+      "keyApproach": "",
       "complexity": {
-        "time": "O(n log k)",
-        "space": "O(k)"
+        "time": "O(n)",
+        "space": "O(n)"
       }
     },
     {
@@ -518,16 +510,16 @@
       "difficulty": "Medium",
       "topics": [
         "BFS",
+        "Graph",
         "Array",
         "String",
-        "Dynamic Programming",
-        "DP"
+        "Two Pointers"
       ],
-      "summary": "",
+      "summary": "statement; that means the BFS layering in that formulation leads to minutes=4. To match the expected output you must ensure minute counting matches the problem's notion. The implementation below is th...",
       "keyApproach": "",
       "complexity": {
-        "time": "O(n)",
-        "space": "O(n)"
+        "time": "O(N)",
+        "space": "O(N)"
       }
     },
     {
@@ -536,13 +528,13 @@
       "fileName": "Sequentially Ordinal Rank Tracker",
       "difficulty": "Medium",
       "topics": [
-        "Tree",
         "BFS",
         "Graph",
         "String",
-        "Greedy"
+        "Greedy",
+        "Heap"
       ],
-      "summary": ". .",
+      "summary": "",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -555,25 +547,8 @@
       "fileName": "Sliding Window Maximum",
       "difficulty": "Medium",
       "topics": [
+        "BFS",
         "Graph",
-        "Array",
-        "Two Pointers",
-        "Sliding Window",
-        "Queue"
-      ],
-      "summary": "",
-      "keyApproach": "",
-      "complexity": {
-        "time": "O(n)",
-        "space": "O(k)"
-      }
-    },
-    {
-      "id": 31,
-      "title": "Substring With Largest Variance",
-      "fileName": "Substring With Largest Variance",
-      "difficulty": "Medium",
-      "topics": [
         "Array",
         "String",
         "Two Pointers"
@@ -582,7 +557,25 @@
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(1)"
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 31,
+      "title": "Substring With Largest Variance",
+      "fileName": "Substring With Largest Variance",
+      "difficulty": "Medium",
+      "topics": [
+        "Tree",
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": "to a maximum subarray (Kadane) style problem by scanning `s` and treating:",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
       }
     },
     {
@@ -597,7 +590,7 @@
         "Stack",
         "Queue"
       ],
-      "summary": "",
+      "summary": "s counting subarrays where an element is max/min.",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -611,12 +604,11 @@
       "difficulty": "Medium",
       "topics": [
         "Array",
-        "String",
         "Two Pointers",
         "Stack",
         "Queue"
       ],
-      "summary": "recap (one line)",
+      "summary": "— classic and a bit tricky. I'll explain the intuition and derive a clean `O(n)` algorithm using monotonic stacks and prefix-of-prefix sums, show why it works, analyze complexity, then give a producti...",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
@@ -629,16 +621,15 @@
       "fileName": "Total Appeal of A String",
       "difficulty": "Medium",
       "topics": [
-        "Graph",
         "Array",
         "String",
         "Two Pointers"
       ],
-      "summary": ". Quick answer: scan once and for each character at index `i` add `(i - lastPos[c]) * (n - i)` to the total, where `lastPos[c]` is the previous index where that character appeared (or `-1` if none). T...",
+      "summary": "",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(1)"
+        "space": "O(n)"
       }
     },
     {
@@ -648,15 +639,13 @@
       "difficulty": "Medium",
       "topics": [
         "Array",
-        "String",
-        "Two Pointers",
-        "Stack"
+        "Two Pointers"
       ],
       "summary": "",
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(1)"
+        "space": "O(n)"
       }
     },
     {
@@ -666,13 +655,13 @@
       "difficulty": "Medium",
       "topics": [
         "DFS",
-        "Graph",
         "Hash Table",
         "Array",
-        "String"
+        "String",
+        "Dynamic Programming"
       ],
       "summary": "restatement",
-      "keyApproach": "1. Build `dict` from `wordDict` and compute `canBreak` boolean DP from back to front:",
+      "keyApproach": "",
       "complexity": {
         "time": "O(n)",
         "space": "O(n)"
@@ -694,7 +683,7 @@
       "keyApproach": "",
       "complexity": {
         "time": "O(n)",
-        "space": "O(N)"
+        "space": "O(n)"
       }
     }
   ],
@@ -705,9 +694,9 @@
     "Tree": [
       1,
       9,
-      16,
       18,
-      29
+      20,
+      31
     ],
     "BFS": [
       1,
@@ -715,13 +704,14 @@
       9,
       10,
       13,
-      14,
+      18,
       20,
       23,
       25,
       26,
       28,
       29,
+      30,
       37
     ],
     "DFS": [
@@ -730,7 +720,6 @@
       12,
       13,
       20,
-      25,
       36
     ],
     "Graph": [
@@ -738,34 +727,28 @@
       3,
       5,
       6,
-      7,
       8,
-      9,
-      12,
-      14,
-      15,
-      16,
       17,
+      18,
       20,
       21,
+      22,
       24,
       25,
       26,
       27,
+      28,
       29,
       30,
-      34,
-      36,
       37
     ],
     "Hash Table": [
       2,
       3,
       4,
-      9,
       11,
       14,
-      23,
+      20,
       36,
       37
     ],
@@ -778,17 +761,15 @@
       9,
       10,
       11,
-      12,
       13,
-      14,
       15,
       16,
       17,
       18,
       19,
-      20,
       21,
       22,
+      23,
       24,
       25,
       26,
@@ -810,7 +791,6 @@
       6,
       7,
       8,
-      10,
       11,
       12,
       15,
@@ -818,33 +798,29 @@
       17,
       18,
       19,
-      20,
       21,
       22,
-      23,
       24,
       25,
       26,
       27,
       28,
       29,
+      30,
       31,
       32,
-      33,
       34,
-      35,
       36,
       37
     ],
     "Dynamic Programming": [
       2,
       23,
-      28
+      36
     ],
     "DP": [
       2,
-      23,
-      28
+      23
     ],
     "Linked List": [
       3,
@@ -855,12 +831,12 @@
       4,
       7,
       8,
-      15,
+      14,
       16,
-      18,
       21,
       22,
       26,
+      28,
       30,
       31,
       32,
@@ -870,37 +846,40 @@
     ],
     "Sliding Window": [
       7,
-      30
+      16
     ],
     "Sorting": [
       8,
       11,
       17,
+      22,
       24,
       27
     ],
     "Greedy": [
+      9,
       10,
       13,
       17,
-      18,
+      25,
       29
     ],
     "Heap": [
+      9,
       10,
-      13
+      13,
+      29
     ],
-    "Stack": [
-      12,
+    "Queue": [
+      10,
+      16,
       32,
-      33,
-      35
+      33
     ],
     "Binary Search": [
       27
     ],
-    "Queue": [
-      30,
+    "Stack": [
       32,
       33
     ]

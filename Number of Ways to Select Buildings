@@ -24,93 +24,148 @@ Constraints:
 3 <= s.length <= 10^5
 s[i] is either '0' or '1'.
 
-# What to say to the interviewer (one-liner)
+class Solution {
+public long numberOfWays(String s) {
 
-“I’ll count contributions by choosing the middle character: every `'1'` at index `j` contributes `(#0s on the left) * (#0s on the right)` ways to form `"010"`, and every `'0'` at index `j` contributes `(#1s on the left) * (#1s on the right)` ways to form `"101"`. Summing those gives the answer in O(n) time and O(1) extra space.”
+    }
 
----
+}
 
-# Intuition / proof sketch
+Great — let’s go deep and detailed.
 
-Any length-3 subsequence `i < j < k` is determined by its middle index `j`.
-
-- If `s[j] == '1'`, to form `"010"` we need a `0` to the left and a `0` to the right → `leftZeros * rightZeros` choices.
-- If `s[j] == '0'`, to form `"101"` we need a `1` to the left and a `1` to the right → `leftOnes * rightOnes` choices.
-  Summing over all positions `j` counts each valid triple exactly once.
+I'll explain the **intuition**, give a **mathematically clean derivation**, show the **O(n)** algorithm (with code), prove correctness, analyze complexity, walk through an example step-by-step, discuss edge cases, and mention alternative approaches.
 
 ---
 
-# Algorithm (O(n))
+## Problem intuition (short)
 
-1. Precompute total number of `0`s and `1`s in the string.
-2. Iterate `j` from left to right, keeping `leftZeros`/`leftOnes` counts seen so far; compute `rightZeros = totalZeros - leftZeros - (s[j]=='0'?1:0)` (or simply maintain remaining counts).
-3. For each `j`:
+We need the number of length-3 subsequences (i < j < k) of the string `s` that form either `"010"` or `"101"`. Count each occurrence separately (subsequences, not substrings).
 
-   - if `s[j]=='1'`: add `leftZeros * rightZeros` to answer.
-   - else (`'0'`): add `leftOnes * rightOnes`.
+A convenient way is to count contributions of every index `j` as the middle of a 3-length subsequence:
 
-4. Update left counters and continue.
+- If `s[j] == '0'`, it can be the middle of `"101"`; the number of such subsequences with center `j` equals:
 
-Use `long` for counting (possible values ~ O(n^3) combinations bounded by n≈1e5 → fits in 64-bit).
+  ```
+  (# of '1's to the left of j) * (# of '1's to the right of j)
+  ```
+
+- If `s[j] == '1'`, it can be the middle of `"010"`; the number equals:
+
+  ```
+  (# of '0's to the left of j) * (# of '0's to the right of j)
+  ```
+
+So the total answer is the sum of these contributions for all positions `j`.
+
+Why this works: to pick a subsequence of the form `"101"` with center at `j`, we must choose any `'1'` index left of `j` and any `'1'` index right of `j`. The number of choices is exactly the product of counts on both sides. Same for `"010"`.
 
 ---
 
-# Complexity
+## Algorithm (O(n) time, O(1) extra space)
 
-- Time: O(n) — single pass + O(1) ops per index.
-- Space: O(1) extra.
+1. First count `totalZeros` and `totalOnes` in `s`.
+2. Maintain running `leftZeros = 0` and `leftOnes = 0` while iterating positions `j` from left to right.
+3. For each position `j`:
+
+   - If `s[j] == '0'`: contribution = `leftOnes * (totalOnes - leftOnes)`.
+   - If `s[j] == '1'`: contribution = `leftZeros * (totalZeros - leftZeros)`.
+   - Add contribution to answer (use `long`).
+   - Then update `leftZeros` or `leftOnes` by 1 (to include `s[j]` for future indices).
+
+4. Return the accumulated answer.
+
+We compute the contribution using counts **before** incrementing the left counters, because `left*right` counts refer to elements strictly on left / right of `j`.
 
 ---
 
-# Java implementation
+## Correctness
+
+For each `j`, the formulas count all combinations of `i < j < k` where the characters at i and k make the desired pattern with `s[j]` as the center. Every valid subsequence has a unique center index `j`, so we count each subsequence exactly once. Thus summing contributions over `j` yields the correct total.
+
+---
+
+## Complexity
+
+- Time: `O(n)` single pass (after initial total count).
+- Space: `O(1)` extra (just counters and the final `long`).
+- Use `long` for the answer because counts multiply and `n` up to 1e5 → worst-case answer up to ~ (1e5)^2 which is > 32-bit.
+
+---
+
+## Java implementation
 
 ```java
-public class NumberOfWaysToSelectBuildings {
+class Solution {
     public long numberOfWays(String s) {
         int n = s.length();
-        long totalZeros = 0, totalOnes = 0;
-        for (char c : s.toCharArray()) {
-            if (c == '0') totalZeros++;
+        long totalZeros = 0;
+        long totalOnes = 0;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '0') totalZeros++;
             else totalOnes++;
         }
 
-        long leftZeros = 0, leftOnes = 0;
+        long leftZeros = 0;
+        long leftOnes = 0;
         long ans = 0;
 
         for (int i = 0; i < n; i++) {
             char c = s.charAt(i);
             if (c == '0') {
-                // as center '0' contributes to "101"
-                long rightOnes = totalOnes - leftOnes;
+                // '0' as center of "101"
+                long rightOnes = totalOnes - leftOnes; // ones strictly to the right
                 ans += leftOnes * rightOnes;
                 leftZeros++;
             } else { // c == '1'
-                // as center '1' contributes to "010"
-                long rightZeros = totalZeros - leftZeros;
+                // '1' as center of "010"
+                long rightZeros = totalZeros - leftZeros; // zeros strictly to the right
                 ans += leftZeros * rightZeros;
                 leftOnes++;
             }
         }
-
         return ans;
     }
 
-    // quick tests
+    // quick local test
     public static void main(String[] args) {
-        NumberOfWaysToSelectBuildings solver = new NumberOfWaysToSelectBuildings();
-        System.out.println(solver.numberOfWays("001101")); // expected 6
-        System.out.println(solver.numberOfWays("11100"));  // expected 0
-        System.out.println(solver.numberOfWays("010"));    // expected 1 (only [0,1,2])
-        System.out.println(solver.numberOfWays("10101"));  // check behavior
+        Solution sol = new Solution();
+        System.out.println(sol.numberOfWays("001101")); // 6
+        System.out.println(sol.numberOfWays("11100"));  // 0
+        System.out.println(sol.numberOfWays("01010"));  // example: verify manually
     }
 }
 ```
 
 ---
 
-# Edge cases / tests to mention
+## Walk-through example: `s = "001101"`
 
-- All zeros or all ones → `0`.
-- Short strings `n < 3` → `0` (but by constraint `n >= 3`).
-- Mixed strings — examples above.
-- Large inputs — uses `long` to avoid overflow.
+- `totalZeros = 3`, `totalOnes = 3`.
+- i=0, c='0': leftOnes=0 → add 0\*(3-0)=0 ; leftZeros=1
+- i=1, c='0': leftOnes=0 → add 0 ; leftZeros=2
+- i=2, c='1': leftZeros=2 → add 2\*(3-2)=2 ; leftOnes=1
+- i=3, c='1': leftZeros=2 → add 2\*(3-2)=2 ; leftOnes=2
+- i=4, c='0': leftOnes=2 → add 2\*(3-2)=2 ; leftZeros=3
+- i=5, c='1': leftZeros=3 → add 3\*(3-3)=0 ; leftOnes=3
+  Total = 0+0+2+2+2+0 = 6 ✅
+
+Matches expected output.
+
+---
+
+## Edge cases
+
+- If the string length < 3 → answer is 0 (the algorithm still returns 0).
+- If `abs(totalZeros - totalOnes) > n` irrelevant — the algorithm handles all.
+- Strings with no `'0'` or no `'1'` → contributions always zero → returns 0.
+- Works for large `n` up to 10^5; uses `long` to avoid overflow.
+
+---
+
+## Alternative viewpoints / other methods
+
+- You can compute prefix arrays `prefixZeros[i]` / `prefixOnes[i]` and for each `j` compute contribution using `prefix` and `suffix` values. That's the same idea but with arrays; the rolling counters above are more memory efficient and simpler.
+- Brute force triple loop `O(n^3)` or two loops checking pairs `O(n^2)` are too slow for 1e5.
+- There is no need for combinatorics beyond these simple products per center.
+
+---
