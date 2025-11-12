@@ -1,0 +1,89 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# OS Files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Logs and databases
+*.log
+*.sql
+*.sqlite
+*.db
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+~*
+
+# Node modules (if you add any JS tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Original question files (HTML versions are generated and committed)
+All Nodes Distance K in Binary Tree
+Copy List with Random Pointer
+Integer to English Words
+LRU Cache
+Maximum Number of Robots Within Budget
+Reorganize String
+Rotting Oranges
+Word Break II
+
+# Build outputs
+*.html.bak
+*.json.bak
+
+# Git
+*.orig
+
+# Personal notes or draft files
+DRAFT_*
+TODO.txt
+NOTES.txt
+scratch.*
+
+# Test files
+test_*.py
+*_test.py
+tests/
+
+# Documentation working files
+*.draft.md

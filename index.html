@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSA Questions Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.2);
+            padding: 10px 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: bold;
+        }
+
+        .controls {
+            padding: 30px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        #searchInput {
+            flex: 1;
+            min-width: 250px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            transition: border-color 0.3s;
+        }
+
+        #searchInput:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 5px;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .filter-btn:hover {
+            background: #f8f9fa;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .difficulty-easy { border-color: #28a745; color: #28a745; }
+        .difficulty-easy.active { background: #28a745; border-color: #28a745; color: white; }
+        .difficulty-medium { border-color: #ffc107; color: #e6a800; }
+        .difficulty-medium.active { background: #ffc107; border-color: #ffc107; color: white; }
+        .difficulty-hard { border-color: #dc3545; color: #dc3545; }
+        .difficulty-hard.active { background: #dc3545; border-color: #dc3545; color: white; }
+
+        .questions-container {
+            padding: 30px;
+        }
+
+        .question-card {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .question-card:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+            border-color: #667eea;
+        }
+
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .question-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .difficulty-badge {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .difficulty-Easy { background: #d4edda; color: #155724; }
+        .difficulty-Medium { background: #fff3cd; color: #856404; }
+        .difficulty-Hard { background: #f8d7da; color: #721c24; }
+
+        .question-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .topic-tag {
+            background: #e7f3ff;
+            color: #0066cc;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.85em;
+        }
+
+        .question-summary {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .complexity-info {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+            font-size: 0.9em;
+            flex-wrap: wrap;
+        }
+
+        .complexity-item {
+            background: #f8f9fa;
+            padding: 8px 15px;
+            border-radius: 8px;
+        }
+
+        .complexity-label {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .view-solution-btn {
+            display: inline-block;
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.3s;
+        }
+
+        .view-solution-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: #666;
+        }
+
+        .no-results-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+        }
+
+        footer {
+            background: #f8f9fa;
+            padding: 30px;
+            text-align: center;
+            color: #666;
+            border-top: 2px solid #e9ecef;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .question-header {
+                flex-direction: column;
+            }
+            
+            .stats {
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚀 DSA Questions Collection</h1>
+            <p class="subtitle">Interview-Ready Solutions with Detailed Explanations</p>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number" id="totalQuestions">9</div>
+                    <div>Total Questions</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="easyCount">0</div>
+                    <div>Easy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="mediumCount">9</div>
+                    <div>Medium</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" id="hardCount">0</div>
+                    <div>Hard</div>
+                </div>
+            </div>
+        </header>
+
+        <div class="controls">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search questions by name, topic, or keyword...">
+            </div>
+            <div class="filters">
+                <div class="filter-group">
+                    <button class="filter-btn difficulty-easy" data-difficulty="Easy">Easy</button>
+                    <button class="filter-btn difficulty-medium" data-difficulty="Medium">Medium</button>
+                    <button class="filter-btn difficulty-hard" data-difficulty="Hard">Hard</button>
+                </div>
+                <div class="filter-group">
+                    <button class="filter-btn" data-topic="Array">Array</button>
+                    <button class="filter-btn" data-topic="BFS">BFS</button>
+                    <button class="filter-btn" data-topic="Binary Tree">Binary Tree</button>
+                    <button class="filter-btn" data-topic="DFS">DFS</button>
+                    <button class="filter-btn" data-topic="Graph">Graph</button>
+                    <button class="filter-btn" data-topic="Hash Table">Hash Table</button>
+                    <button class="filter-btn" data-topic="Linked List">Linked List</button>
+                    <button class="filter-btn" data-topic="Stack">Stack</button>
+                </div>
+                <button class="filter-btn" id="clearFilters">Clear All</button>
+            </div>
+        </div>
+
+        <div class="questions-container" id="questionsContainer">
+            <!-- Questions will be dynamically inserted here -->
+        </div>
+
+        <footer>
+            <p><strong>Last Updated:</strong> November 12, 2025</p>
+            <p>💡 All solutions include problem restatement, multiple approaches, complexity analysis, and clean code.</p>
+            <p>🤖 Auto-generated by generate.py - Just add questions and run the script!</p>
+        </footer>
+    </div>
+
+    <script>
+        // Questions data (auto-generated)
+        const questions = [
+            {
+                        "id": 1,
+                        "title": "All Nodes Distance K in Binary Tree",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "Binary Tree",
+                                    "Tree",
+                                    "BFS",
+                                    "DFS",
+                                    "Graph"
+                        ],
+                        "summary": "restatement",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "All Nodes Distance K in Binary Tree",
+                        "keyApproach": "1. DFS (or iterative traversal) to fill `parent` pointers and also find the `targetNode` matching the given `target` value."
+            },
+            {
+                        "id": 2,
+                        "title": "Copy List with Random Pointer",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "Graph",
+                                    "Linked List",
+                                    "Hash Table",
+                                    "Two Pointers"
+                        ],
+                        "summary": "statement: Given the head of a linked list where each node has an extra `random` pointer that can point to any node in the list or `null`, return a **deep copy** of the list. The deep copy should dupl...",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(1)",
+                        "file": "Copy List with Random Pointer",
+                        "keyApproach": "1. **Weave copies**: For each original node `cur`, create `copy = new Node(cur.val)` and insert it after `cur` (`cur.next = copy; copy.next = nextOrig"
+            },
+            {
+                        "id": 3,
+                        "title": "Integer to English Words",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "DFS",
+                                    "Graph",
+                                    "Array",
+                                    "String",
+                                    "Stack"
+                        ],
+                        "summary": "restatement",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "Integer to English Words",
+                        "keyApproach": "1. **Handle zero:** If `num == 0`, return `\"Zero\"`."
+            },
+            {
+                        "id": 4,
+                        "title": "LRU Cache",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "BFS",
+                                    "Graph",
+                                    "Linked List",
+                                    "Hash Table",
+                                    "Array"
+                        ],
+                        "summary": "",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "LRU Cache",
+                        "keyApproach": ""
+            },
+            {
+                        "id": 5,
+                        "title": "Maximum Number of Robots Within Budget",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "Tree",
+                                    "Graph",
+                                    "Array",
+                                    "String",
+                                    "Two Pointers"
+                        ],
+                        "summary": "restatement Given two arrays `chargeTimes` and `runningCosts` of length `n` and a `budget`, find the maximum length of a contiguous subarray (consecutive robots) such that:",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "Maximum Number of Robots Within Budget",
+                        "keyApproach": ""
+            },
+            {
+                        "id": 6,
+                        "title": "Number of Ways to Select Buildings",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "Graph",
+                                    "Array",
+                                    "String",
+                                    "Two Pointers"
+                        ],
+                        "summary": "",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(1)",
+                        "file": "Number of Ways to Select Buildings",
+                        "keyApproach": ""
+            },
+            {
+                        "id": 7,
+                        "title": "Reorganize String",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "BFS",
+                                    "DFS",
+                                    "Graph",
+                                    "Array",
+                                    "String"
+                        ],
+                        "summary": "restatement: Given a string `s`, rearrange its characters so that no two adjacent characters are the same. Return any valid rearrangement or return `\"\"` if it's impossible.",
+                        "timeComplexity": "O(n log k)",
+                        "spaceComplexity": "O(k)",
+                        "file": "Reorganize String",
+                        "keyApproach": "1. Count frequencies of characters. Let `n = s.length()`. If any `freq[i] > (n+1)/2` return `\"\"`."
+            },
+            {
+                        "id": 8,
+                        "title": "Rotting Oranges",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "BFS",
+                                    "Graph",
+                                    "Array",
+                                    "String",
+                                    "Two Pointers"
+                        ],
+                        "summary": "restatement**",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "Rotting Oranges",
+                        "keyApproach": "1. Initialize queue with all `2`s (rotten), and count all `1`s (fresh)."
+            },
+            {
+                        "id": 9,
+                        "title": "Word Break II",
+                        "difficulty": "Medium",
+                        "topics": [
+                                    "DFS",
+                                    "Graph",
+                                    "Hash Table",
+                                    "Array",
+                                    "String"
+                        ],
+                        "summary": "restatement",
+                        "timeComplexity": "O(n)",
+                        "spaceComplexity": "O(n)",
+                        "file": "Word Break II",
+                        "keyApproach": "1. Build `dict` from `wordDict` and compute `canBreak` boolean DP from back to front:"
+            }
+];
+
+        let activeFilters = {
+            difficulty: new Set(),
+            topics: new Set(),
+            search: ""
+        };
+
+        // Initialize
+        function init() {
+            renderQuestions(questions);
+            setupEventListeners();
+        }
+
+        // Render questions
+        function renderQuestions(questionsToRender) {
+            const container = document.getElementById('questionsContainer');
+            
+            if (questionsToRender.length === 0) {
+                container.innerHTML = `
+                    <div class="no-results">
+                        <div class="no-results-icon">🔍</div>
+                        <h2>No questions found</h2>
+                        <p>Try adjusting your filters or search terms</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = questionsToRender.map(q => `
+                <div class="question-card" onclick="openQuestion('${q.file}')">
+                    <div class="question-header">
+                        <div class="question-title">${q.title}</div>
+                        <span class="difficulty-badge difficulty-${q.difficulty}">${q.difficulty}</span>
+                    </div>
+                    <div class="question-topics">
+                        ${q.topics.map(topic => `<span class="topic-tag">${topic}</span>`).join('')}
+                    </div>
+                    <div class="question-summary">${q.summary}</div>
+                    <div class="complexity-info">
+                        <div class="complexity-item">
+                            <span class="complexity-label">Time:</span> ${q.timeComplexity}
+                        </div>
+                        <div class="complexity-item">
+                            <span class="complexity-label">Space:</span> ${q.spaceComplexity}
+                        </div>
+                    </div>
+                    <div style="margin-top: 10px; padding-top: 15px; border-top: 1px solid #e9ecef;">
+                        <strong>💡 Key Approach:</strong> ${q.keyApproach}
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <a href="${encodeURIComponent(q.file)}.html" class="view-solution-btn" onclick="event.stopPropagation()">View Full Solution →</a>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter questions
+        function filterQuestions() {
+            let filtered = questions;
+
+            // Filter by difficulty
+            if (activeFilters.difficulty.size > 0) {
+                filtered = filtered.filter(q => activeFilters.difficulty.has(q.difficulty));
+            }
+
+            // Filter by topics
+            if (activeFilters.topics.size > 0) {
+                filtered = filtered.filter(q => 
+                    q.topics.some(topic => 
+                        Array.from(activeFilters.topics).some(filter => 
+                            topic.toLowerCase().includes(filter.toLowerCase())
+                        )
+                    )
+                );
+            }
+
+            // Filter by search
+            if (activeFilters.search) {
+                const searchLower = activeFilters.search.toLowerCase();
+                filtered = filtered.filter(q =>
+                    q.title.toLowerCase().includes(searchLower) ||
+                    q.summary.toLowerCase().includes(searchLower) ||
+                    q.topics.some(topic => topic.toLowerCase().includes(searchLower)) ||
+                    q.keyApproach.toLowerCase().includes(searchLower)
+                );
+            }
+
+            renderQuestions(filtered);
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search input
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                activeFilters.search = e.target.value;
+                filterQuestions();
+            });
+
+            // Difficulty filters
+            document.querySelectorAll('[data-difficulty]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const difficulty = btn.dataset.difficulty;
+                    if (activeFilters.difficulty.has(difficulty)) {
+                        activeFilters.difficulty.delete(difficulty);
+                        btn.classList.remove('active');
+                    } else {
+                        activeFilters.difficulty.add(difficulty);
+                        btn.classList.add('active');
+                    }
+                    filterQuestions();
+                });
+            });
+
+            // Topic filters
+            document.querySelectorAll('[data-topic]').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const topic = btn.dataset.topic;
+                    if (activeFilters.topics.has(topic)) {
+                        activeFilters.topics.delete(topic);
+                        btn.classList.remove('active');
+                    } else {
+                        activeFilters.topics.add(topic);
+                        btn.classList.add('active');
+                    }
+                    filterQuestions();
+                });
+            });
+
+            // Clear filters
+            document.getElementById('clearFilters').addEventListener('click', () => {
+                activeFilters = { difficulty: new Set(), topics: new Set(), search: "" };
+                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+                document.getElementById('searchInput').value = '';
+                filterQuestions();
+            });
+        }
+
+        // Open question file
+        function openQuestion(filename) {
+            window.location.href = encodeURIComponent(filename) + '.html';
+        }
+
+        // Initialize on load
+        init();
+    </script>
+</body>
+</html>

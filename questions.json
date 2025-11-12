@@ -1,0 +1,285 @@
+{
+  "metadata": {
+    "repository": "DSA Questions Collection",
+    "description": "Interview-ready solutions with detailed explanations",
+    "lastUpdated": "2025-11-12",
+    "totalQuestions": 9
+  },
+  "statistics": {
+    "easy": 0,
+    "medium": 9,
+    "hard": 0
+  },
+  "questions": [
+    {
+      "id": 1,
+      "title": "All Nodes Distance K in Binary Tree",
+      "fileName": "All Nodes Distance K in Binary Tree",
+      "difficulty": "Medium",
+      "topics": [
+        "Binary Tree",
+        "Tree",
+        "BFS",
+        "DFS",
+        "Graph"
+      ],
+      "summary": "restatement",
+      "keyApproach": "1. DFS (or iterative traversal) to fill `parent` pointers and also find the `targetNode` matching the given `target` value.",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 2,
+      "title": "Copy List with Random Pointer",
+      "fileName": "Copy List with Random Pointer",
+      "difficulty": "Medium",
+      "topics": [
+        "Graph",
+        "Linked List",
+        "Hash Table",
+        "Two Pointers"
+      ],
+      "summary": "statement: Given the head of a linked list where each node has an extra `random` pointer that can point to any node in the list or `null`, return a **deep copy** of the list. The deep copy should dupl...",
+      "keyApproach": "1. **Weave copies**: For each original node `cur`, create `copy = new Node(cur.val)` and insert it after `cur` (`cur.next = copy; copy.next = nextOrig",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "id": 3,
+      "title": "Integer to English Words",
+      "fileName": "Integer to English Words",
+      "difficulty": "Medium",
+      "topics": [
+        "DFS",
+        "Graph",
+        "Array",
+        "String",
+        "Stack"
+      ],
+      "summary": "restatement",
+      "keyApproach": "1. **Handle zero:** If `num == 0`, return `\"Zero\"`.",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 4,
+      "title": "LRU Cache",
+      "fileName": "LRU Cache",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "Graph",
+        "Linked List",
+        "Hash Table",
+        "Array"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 5,
+      "title": "Maximum Number of Robots Within Budget",
+      "fileName": "Maximum Number of Robots Within Budget",
+      "difficulty": "Medium",
+      "topics": [
+        "Tree",
+        "Graph",
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": "restatement Given two arrays `chargeTimes` and `runningCosts` of length `n` and a `budget`, find the maximum length of a contiguous subarray (consecutive robots) such that:",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Number of Ways to Select Buildings",
+      "fileName": "Number of Ways to Select Buildings",
+      "difficulty": "Medium",
+      "topics": [
+        "Graph",
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Reorganize String",
+      "fileName": "Reorganize String",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "DFS",
+        "Graph",
+        "Array",
+        "String"
+      ],
+      "summary": "restatement: Given a string `s`, rearrange its characters so that no two adjacent characters are the same. Return any valid rearrangement or return `\"\"` if it's impossible.",
+      "keyApproach": "1. Count frequencies of characters. Let `n = s.length()`. If any `freq[i] > (n+1)/2` return `\"\"`.",
+      "complexity": {
+        "time": "O(n log k)",
+        "space": "O(k)"
+      }
+    },
+    {
+      "id": 8,
+      "title": "Rotting Oranges",
+      "fileName": "Rotting Oranges",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "Graph",
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": "restatement**",
+      "keyApproach": "1. Initialize queue with all `2`s (rotten), and count all `1`s (fresh).",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 9,
+      "title": "Word Break II",
+      "fileName": "Word Break II",
+      "difficulty": "Medium",
+      "topics": [
+        "DFS",
+        "Graph",
+        "Hash Table",
+        "Array",
+        "String"
+      ],
+      "summary": "restatement",
+      "keyApproach": "1. Build `dict` from `wordDict` and compute `canBreak` boolean DP from back to front:",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    }
+  ],
+  "topicIndex": {
+    "Binary Tree": [
+      1
+    ],
+    "Tree": [
+      1,
+      5
+    ],
+    "BFS": [
+      1,
+      4,
+      7,
+      8
+    ],
+    "DFS": [
+      1,
+      3,
+      7,
+      9
+    ],
+    "Graph": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "Linked List": [
+      2,
+      4
+    ],
+    "Hash Table": [
+      2,
+      4,
+      9
+    ],
+    "Two Pointers": [
+      2,
+      5,
+      6,
+      8
+    ],
+    "Array": [
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "String": [
+      3,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "Stack": [
+      3
+    ]
+  },
+  "difficultyIndex": {
+    "Easy": [],
+    "Medium": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ],
+    "Hard": []
+  },
+  "instructions": {
+    "addingNewQuestion": "Simply add a new question file to the repository and run `python generate.py` to automatically update all files.",
+    "requiredFields": [
+      "id",
+      "title",
+      "fileName",
+      "difficulty",
+      "topics",
+      "summary",
+      "keyApproach",
+      "complexity"
+    ],
+    "optionalFields": [
+      "companies",
+      "leetcodeNumber",
+      "approaches",
+      "tags"
+    ]
+  }
+}

@@ -1,0 +1,150 @@
+## 🧩 Problem Restatement
+
+Given an array `nums` of digits (0–9), repeatedly replace the array with a **new array** where each element is the sum of two consecutive elements **mod 10**, until only one element remains.
+Return that final element — called the **triangular sum**.
+
+### Example 1
+
+**Input:** `nums = [1,2,3,4,5]`
+Process:
+
+```
+[1,2,3,4,5]
+[3,5,7,9]
+[8,2,6]
+[0,8]
+[8]
+```
+
+**Output:** `8`
+
+### Example 2
+
+**Input:** `nums = [5]`
+**Output:** `5`
+
+---
+
+## ⚙️ Constraints
+
+- `1 <= nums.length <= 1000`
+- `0 <= nums[i] <= 9`
+
+---
+
+## 🧠 Quick script to say to interviewer
+
+1. “We repeatedly replace each element by `(nums[i] + nums[i+1]) % 10` until one element remains.”
+2. “Naively doing this takes O(n²)` time, which is fine for n ≤ 1000. But we can also compute directly using combinatorics — because the last element equals a linear combination of the initial elements using binomial coefficients mod 10.”
+3. “I’ll show the direct combinatorial version (efficient and clean).”
+
+---
+
+## 💡 Approaches considered
+
+| Approach                                     | Idea                                                    | Time                              | Space | Notes                       |
+| -------------------------------------------- | ------------------------------------------------------- | --------------------------------- | ----- | --------------------------- |
+| **Brute Force Simulation**                   | Iteratively sum neighbors mod 10 until one element left | O(n²)                             | O(n)  | Simple, enough for n ≤ 1000 |
+| **Combinatorial / Pascal Triangle (Chosen)** | Final value = Σ C(n-1, i) \* nums[i] mod 10             | O(n²) or O(n) with precomputation | O(1)  | Elegant, uses combinatorics |
+
+---
+
+## 🔍 Why combinatorial works
+
+Each element `nums[i]` contributes to the final result with a coefficient equal to the **binomial coefficient** C(n-1, i).
+Thus:
+
+```
+triangularSum(nums) = Σ ( C(n-1, i) * nums[i] ) % 10
+```
+
+This follows from how Pascal’s triangle builds coefficients for sums of neighbors.
+
+We can compute this using Pascal’s triangle mod 10 or directly via iterative formula:
+
+```
+C(n-1, i) = C(n-1, i-1) * (n-i)/i
+```
+
+and take everything mod 10 along the way.
+
+---
+
+## ⏱️ Complexity
+
+- **Time:** O(n²) for brute force; O(n) for combinatorial approach.
+- **Space:** O(1).
+
+---
+
+## ✅ Java Implementation (Combinatorial Method)
+
+```java
+public class TriangularSum {
+    public int triangularSum(int[] nums) {
+        int n = nums.length;
+        // The result is sum(nums[i] * C(n-1, i)) % 10
+        long res = 0;
+        long coeff = 1; // C(n-1, 0)
+
+        for (int i = 0; i < n; i++) {
+            res = (res + coeff * nums[i]) % 10;
+            // update coefficient: C(n-1, i+1) = C(n-1, i) * (n-1-i)/(i+1)
+            coeff = coeff * (n - 1 - i) / (i + 1);
+        }
+
+        return (int) res;
+    }
+
+    // Alternative: Brute force simulation (simpler to reason)
+    public int triangularSumSimulate(int[] nums) {
+        int n = nums.length;
+        int[] arr = nums.clone();
+        for (int k = n; k > 1; k--) {
+            for (int i = 0; i < k - 1; i++) {
+                arr[i] = (arr[i] + arr[i + 1]) % 10;
+            }
+        }
+        return arr[0];
+    }
+
+    // Quick test
+    public static void main(String[] args) {
+        TriangularSum solver = new TriangularSum();
+        int[] nums1 = {1,2,3,4,5};
+        System.out.println(solver.triangularSum(nums1)); // 8
+        int[] nums2 = {5};
+        System.out.println(solver.triangularSum(nums2)); // 5
+        int[] nums3 = {9,9,9,9};
+        System.out.println(solver.triangularSum(nums3)); // test
+    }
+}
+```
+
+---
+
+## 🧾 Example walkthrough (simulation)
+
+`nums = [1,2,3,4,5]`
+
+```
+[1,2,3,4,5]
+=> [3,5,7,9] -> mod 10 => [3,5,7,9]
+=> [8,2,6]
+=> [0,8]
+=> [8]
+```
+
+Result = 8 ✅
+
+---
+
+## ✨ Optional optimization note
+
+If `n` were larger (say up to 10⁶), we’d use **modular binomial coefficient precomputation (mod 10)** or Lucas Theorem variant for digit-based moduli. But for n ≤ 1000, direct arithmetic is fine.
+
+---
+
+## 🎯 What to say to interviewer at end
+
+> “I first thought of the direct iterative process (O(n²)), then realized it’s equivalent to combining coefficients like Pascal’s triangle — so the result equals Σ C(n-1, i) \* nums[i] mod 10. That’s a classic combinatorial insight for this problem.”

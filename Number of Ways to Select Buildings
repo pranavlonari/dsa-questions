@@ -1,0 +1,116 @@
+Number of Ways to Select Buildings  
+Example 1:
+
+Input: s = "001101"
+Output: 6
+Explanation:
+The following sets of indices selected are valid:
+
+- [0,2,4] from "001101" forms "010"
+- [0,3,4] from "001101" forms "010"
+- [1,2,4] from "001101" forms "010"
+- [1,3,4] from "001101" forms "010"
+- [2,4,5] from "001101" forms "101"
+- [3,4,5] from "001101" forms "101"
+  No other selection is valid. Thus, there are 6 total ways.
+  Example 2:
+
+Input: s = "11100"
+Output: 0
+Explanation: It can be shown that there are no valid selections.
+
+Constraints:
+
+3 <= s.length <= 10^5
+s[i] is either '0' or '1'.
+
+# What to say to the interviewer (one-liner)
+
+“I’ll count contributions by choosing the middle character: every `'1'` at index `j` contributes `(#0s on the left) * (#0s on the right)` ways to form `"010"`, and every `'0'` at index `j` contributes `(#1s on the left) * (#1s on the right)` ways to form `"101"`. Summing those gives the answer in O(n) time and O(1) extra space.”
+
+---
+
+# Intuition / proof sketch
+
+Any length-3 subsequence `i < j < k` is determined by its middle index `j`.
+
+- If `s[j] == '1'`, to form `"010"` we need a `0` to the left and a `0` to the right → `leftZeros * rightZeros` choices.
+- If `s[j] == '0'`, to form `"101"` we need a `1` to the left and a `1` to the right → `leftOnes * rightOnes` choices.
+  Summing over all positions `j` counts each valid triple exactly once.
+
+---
+
+# Algorithm (O(n))
+
+1. Precompute total number of `0`s and `1`s in the string.
+2. Iterate `j` from left to right, keeping `leftZeros`/`leftOnes` counts seen so far; compute `rightZeros = totalZeros - leftZeros - (s[j]=='0'?1:0)` (or simply maintain remaining counts).
+3. For each `j`:
+
+   - if `s[j]=='1'`: add `leftZeros * rightZeros` to answer.
+   - else (`'0'`): add `leftOnes * rightOnes`.
+
+4. Update left counters and continue.
+
+Use `long` for counting (possible values ~ O(n^3) combinations bounded by n≈1e5 → fits in 64-bit).
+
+---
+
+# Complexity
+
+- Time: O(n) — single pass + O(1) ops per index.
+- Space: O(1) extra.
+
+---
+
+# Java implementation
+
+```java
+public class NumberOfWaysToSelectBuildings {
+    public long numberOfWays(String s) {
+        int n = s.length();
+        long totalZeros = 0, totalOnes = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '0') totalZeros++;
+            else totalOnes++;
+        }
+
+        long leftZeros = 0, leftOnes = 0;
+        long ans = 0;
+
+        for (int i = 0; i < n; i++) {
+            char c = s.charAt(i);
+            if (c == '0') {
+                // as center '0' contributes to "101"
+                long rightOnes = totalOnes - leftOnes;
+                ans += leftOnes * rightOnes;
+                leftZeros++;
+            } else { // c == '1'
+                // as center '1' contributes to "010"
+                long rightZeros = totalZeros - leftZeros;
+                ans += leftZeros * rightZeros;
+                leftOnes++;
+            }
+        }
+
+        return ans;
+    }
+
+    // quick tests
+    public static void main(String[] args) {
+        NumberOfWaysToSelectBuildings solver = new NumberOfWaysToSelectBuildings();
+        System.out.println(solver.numberOfWays("001101")); // expected 6
+        System.out.println(solver.numberOfWays("11100"));  // expected 0
+        System.out.println(solver.numberOfWays("010"));    // expected 1 (only [0,1,2])
+        System.out.println(solver.numberOfWays("10101"));  // check behavior
+    }
+}
+```
+
+---
+
+# Edge cases / tests to mention
+
+- All zeros or all ones → `0`.
+- Short strings `n < 3` → `0` (but by constraint `n >= 3`).
+- Mixed strings — examples above.
+- Large inputs — uses `long` to avoid overflow.
