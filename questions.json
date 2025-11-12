@@ -3,11 +3,11 @@
     "repository": "DSA Questions Collection",
     "description": "Interview-ready solutions with detailed explanations",
     "lastUpdated": "2025-11-12",
-    "totalQuestions": 11
+    "totalQuestions": 21
   },
   "statistics": {
     "easy": 0,
-    "medium": 11,
+    "medium": 21,
     "hard": 0
   },
   "questions": [
@@ -50,6 +50,22 @@
     },
     {
       "id": 3,
+      "title": "Design Parking System",
+      "fileName": "Design Parking System",
+      "difficulty": "Medium",
+      "topics": [
+        "Graph",
+        "String"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 4,
       "title": "Find Good Days to Rob the Bank",
       "fileName": "Find Good Days to Rob the Bank",
       "difficulty": "Medium",
@@ -68,7 +84,63 @@
       }
     },
     {
-      "id": 4,
+      "id": 5,
+      "title": "find Median from Data Stream",
+      "fileName": "find Median from Data Stream",
+      "difficulty": "Medium",
+      "topics": [
+        "Tree",
+        "BFS",
+        "Graph",
+        "Hash Table",
+        "Array"
+      ],
+      "summary": ". Below is an interview-ready answer you can speak to the interviewer, plus a clean Java implementation (two-heap approach), complexity, tests, and answers to the two follow-up questions.",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 6,
+      "title": "Find the K-Sum of an Array",
+      "fileName": "Find the K-Sum of an Array",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "Array",
+        "String",
+        "Greedy",
+        "Heap"
+      ],
+      "summary": "definition examples.",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 7,
+      "title": "Group Anagrams",
+      "fileName": "Group Anagrams",
+      "difficulty": "Medium",
+      "topics": [
+        "Hash Table",
+        "Array",
+        "String",
+        "Sorting"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 8,
       "title": "Integer to English Words",
       "fileName": "Integer to English Words",
       "difficulty": "Medium",
@@ -87,7 +159,7 @@
       }
     },
     {
-      "id": 5,
+      "id": 9,
       "title": "LRU Cache",
       "fileName": "LRU Cache",
       "difficulty": "Medium",
@@ -106,7 +178,7 @@
       }
     },
     {
-      "id": 6,
+      "id": 10,
       "title": "Maximum Length of Subarray With Positive Product",
       "fileName": "Maximum Length of Subarray With Positive Product",
       "difficulty": "Medium",
@@ -124,7 +196,7 @@
       }
     },
     {
-      "id": 7,
+      "id": 11,
       "title": "Maximum Number of Robots Within Budget",
       "fileName": "Maximum Number of Robots Within Budget",
       "difficulty": "Medium",
@@ -143,7 +215,26 @@
       }
     },
     {
-      "id": 8,
+      "id": 12,
+      "title": "Maximum Units on a Truck",
+      "fileName": "Maximum Units on a Truck",
+      "difficulty": "Medium",
+      "topics": [
+        "Graph",
+        "Array",
+        "String",
+        "Greedy",
+        "Sorting"
+      ],
+      "summary": "restatement (short):** You have several box types described as `[count, unitsPerBox]`. You can load at most `truckSize` boxes. Choose boxes to maximize total units loaded. Return that maximum.",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 13,
       "title": "Number of Ways to Select Buildings",
       "fileName": "Number of Ways to Select Buildings",
       "difficulty": "Medium",
@@ -161,7 +252,7 @@
       }
     },
     {
-      "id": 9,
+      "id": 14,
       "title": "Reorganize String",
       "fileName": "Reorganize String",
       "difficulty": "Medium",
@@ -180,7 +271,7 @@
       }
     },
     {
-      "id": 10,
+      "id": 15,
       "title": "Rotting Oranges",
       "fileName": "Rotting Oranges",
       "difficulty": "Medium",
@@ -199,7 +290,98 @@
       }
     },
     {
-      "id": 11,
+      "id": 16,
+      "title": "Sequentially Ordinal Rank Tracker",
+      "fileName": "Sequentially Ordinal Rank Tracker",
+      "difficulty": "Medium",
+      "topics": [
+        "Tree",
+        "BFS",
+        "Graph",
+        "String",
+        "Greedy"
+      ],
+      "summary": ". .",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 17,
+      "title": "Substring With Largest Variance",
+      "fileName": "Substring With Largest Variance",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "id": 18,
+      "title": "Sum of Subarray Ranges",
+      "fileName": "Sum of Subarray Ranges",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "String",
+        "Two Pointers",
+        "Stack",
+        "Queue"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 19,
+      "title": "Total Appeal of A String",
+      "fileName": "Total Appeal of A String",
+      "difficulty": "Medium",
+      "topics": [
+        "Graph",
+        "Array",
+        "String",
+        "Two Pointers"
+      ],
+      "summary": ". Quick answer: scan once and for each character at index `i` add `(i - lastPos[c]) * (n - i)` to the total, where `lastPos[c]` is the previous index where that character appeared (or `-1` if none). T...",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "id": 20,
+      "title": "Trapping Rain Water",
+      "fileName": "Trapping Rain Water",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "String",
+        "Two Pointers",
+        "Stack"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(1)"
+      }
+    },
+    {
+      "id": 21,
       "title": "Word Break II",
       "fileName": "Word Break II",
       "difficulty": "Medium",
@@ -224,19 +406,24 @@
     ],
     "Tree": [
       1,
-      7
+      5,
+      11,
+      16
     ],
     "BFS": [
       1,
       5,
+      6,
       9,
-      10
+      14,
+      15,
+      16
     ],
     "DFS": [
       1,
-      4,
-      9,
-      11
+      8,
+      14,
+      21
     ],
     "Graph": [
       1,
@@ -244,40 +431,40 @@
       3,
       4,
       5,
-      6,
-      7,
       8,
       9,
       10,
-      11
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      19,
+      21
     ],
     "Linked List": [
       2,
-      5
+      9
     ],
     "Hash Table": [
       2,
       5,
-      11
+      7,
+      9,
+      21
     ],
     "Two Pointers": [
       2,
-      3,
-      6,
-      7,
-      8,
-      10
-    ],
-    "Array": [
-      3,
       4,
-      5,
-      6,
-      7,
-      8,
-      9,
       10,
-      11
+      11,
+      13,
+      15,
+      17,
+      18,
+      19,
+      20
     ],
     "String": [
       3,
@@ -285,15 +472,60 @@
       6,
       7,
       8,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "Array": [
+      4,
+      5,
+      6,
+      7,
+      8,
       9,
       10,
-      11
+      11,
+      12,
+      13,
+      14,
+      15,
+      17,
+      18,
+      19,
+      20,
+      21
     ],
     "Sliding Window": [
-      3
+      4
+    ],
+    "Greedy": [
+      6,
+      12,
+      16
+    ],
+    "Heap": [
+      6
+    ],
+    "Sorting": [
+      7,
+      12
     ],
     "Stack": [
-      4
+      8,
+      18,
+      20
+    ],
+    "Queue": [
+      18
     ]
   },
   "difficultyIndex": {
@@ -309,7 +541,17 @@
       8,
       9,
       10,
-      11
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21
     ],
     "Hard": []
   },
