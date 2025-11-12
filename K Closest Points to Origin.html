@@ -437,6 +437,54 @@
           text-align: center;
         }
       }
+
+      /* Print styles for PDF export */
+      @media print {
+        body {
+          background: white;
+        }
+
+        .nav-bar,
+        .search-container,
+        .nav-buttons,
+        .action-buttons,
+        .footer,
+        .toast {
+          display: none !important;
+        }
+
+        .container {
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .question-header,
+        .question-content {
+          box-shadow: none;
+          page-break-inside: avoid;
+        }
+
+        .question-content pre {
+          page-break-inside: avoid;
+          border: 1px solid #ddd;
+        }
+
+        .question-content h1,
+        .question-content h2,
+        .question-content h3 {
+          page-break-after: avoid;
+        }
+
+        a {
+          color: #000;
+          text-decoration: none;
+        }
+
+        .difficulty {
+          border: 1px solid #000;
+        }
+      }
     </style>
   </head>
   <body>
@@ -501,6 +549,9 @@
           </button>
           <button class="btn btn-secondary" onclick="exportToMarkdown()">
             📥 Export MD
+          </button>
+          <button class="btn btn-secondary" onclick="exportToPDF()">
+            📄 Export PDF
           </button>
           <button class="btn btn-primary" onclick="shareQuestion()">
             🔗 Share
@@ -822,6 +873,25 @@ for (int[] p : points) {
         URL.revokeObjectURL(url);
 
         showToast("📥 Markdown file downloaded!");
+      }
+
+      // Export to PDF
+      function exportToPDF() {
+        // Hide elements that shouldn't appear in PDF
+        const elementsToHide = document.querySelectorAll(
+          ".nav-bar, .search-container, .nav-buttons, .action-buttons, .footer, #toast"
+        );
+        elementsToHide.forEach((el) => (el.style.display = "none"));
+
+        // Trigger print dialog
+        window.print();
+
+        // Restore hidden elements after print
+        setTimeout(() => {
+          elementsToHide.forEach((el) => (el.style.display = ""));
+        }, 100);
+
+        showToast("📄 PDF export dialog opened!");
       }
 
       // Share question
