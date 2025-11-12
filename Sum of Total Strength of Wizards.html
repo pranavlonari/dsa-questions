@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sum of Total Strength of Wizards - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Sum of Total Strength of Wizards</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Array</span><span class="topic-tag">Two Pointers</span><span class="topic-tag">Stack</span><span class="topic-tag">Queue</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Sum of Total Strength of Wizards</p>
+
+<p>As the ruler of a kingdom, you have an army of wizards at your command.</p>
+
+<p>You are given a 0-indexed integer array strength, where strength[i] denotes the strength of the ith wizard. For a contiguous group of wizards (i.e. the wizards' strengths form a subarray of strength), the total strength is defined as the product of the following two values:</p>
+
+<p>The strength of the weakest wizard in the group.
+The total of all the individual strengths of the wizards in the group.
+Return the sum of the total strengths of all contiguous groups of wizards. Since the answer may be very large, return it modulo 109 + 7.</p>
+
+<p>A subarray is a contiguous non-empty sequence of elements within an array.</p>
+
+<p>Example 1:</p>
+
+<p>Input: strength = [1,3,1,2]
+Output: 44
+Explanation: The following are all the contiguous groups of wizards:</p>
+
+<ul>
+<li>[1] from [1,3,1,2] has a total strength of min([1]) _ sum([1]) = 1 _ 1 = 1</li>
+<li>[3] from [1,3,1,2] has a total strength of min([3]) _ sum([3]) = 3 _ 3 = 9</li>
+<li>[1] from [1,3,1,2] has a total strength of min([1]) _ sum([1]) = 1 _ 1 = 1</li>
+<li>[2] from [1,3,1,2] has a total strength of min([2]) _ sum([2]) = 2 _ 2 = 4</li>
+<li>[1,3] from [1,3,1,2] has a total strength of min([1,3]) _ sum([1,3]) = 1 _ 4 = 4</li>
+<li>[3,1] from [1,3,1,2] has a total strength of min([3,1]) _ sum([3,1]) = 1 _ 4 = 4</li>
+<li>[1,2] from [1,3,1,2] has a total strength of min([1,2]) _ sum([1,2]) = 1 _ 3 = 3</li>
+<li>[1,3,1] from [1,3,1,2] has a total strength of min([1,3,1]) _ sum([1,3,1]) = 1 _ 5 = 5</li>
+<li>[3,1,2] from [1,3,1,2] has a total strength of min([3,1,2]) _ sum([3,1,2]) = 1 _ 6 = 6</li>
+<li>[1,3,1,2] from [1,3,1,2] has a total strength of min([1,3,1,2]) _ sum([1,3,1,2]) = 1 _ 7 = 7</li>
+</ul>
+  The sum of all the total strengths is 1 + 9 + 1 + 4 + 4 + 4 + 3 + 5 + 6 + 7 = 44.
+  Example 2:
+
+<p>Input: strength = [5,4,6]
+Output: 213
+Explanation: The following are all the contiguous groups of wizards:</p>
+
+<ul>
+<li>[5] from [5,4,6] has a total strength of min([5]) _ sum([5]) = 5 _ 5 = 25</li>
+<li>[4] from [5,4,6] has a total strength of min([4]) _ sum([4]) = 4 _ 4 = 16</li>
+<li>[6] from [5,4,6] has a total strength of min([6]) _ sum([6]) = 6 _ 6 = 36</li>
+<li>[5,4] from [5,4,6] has a total strength of min([5,4]) _ sum([5,4]) = 4 _ 9 = 36</li>
+<li>[4,6] from [5,4,6] has a total strength of min([4,6]) _ sum([4,6]) = 4 _ 10 = 40</li>
+<li>[5,4,6] from [5,4,6] has a total strength of min([5,4,6]) _ sum([5,4,6]) = 4 _ 15 = 60</li>
+</ul>
+  The sum of all the total strengths is 25 + 16 + 36 + 36 + 40 + 60 = 213.
+
+<p>Constraints:</p>
+
+<p>1 <= strength.length <= 10^5
+1 <= strength[i] <= 10^9</p>
+
+<p>class Solution {
+public int totalStrength(int[] strength) {</p>
+
+<p>}</p>
+
+<p>}
+Great problem — classic and a bit tricky. I'll explain the intuition and derive a clean <code>O(n)</code> algorithm using monotonic stacks and prefix-of-prefix sums, show why it works, analyze complexity, then give a production-ready Java implementation (careful with indices and modulo arithmetic).</p>
+
+<p>---</p>
+
+<h2>Problem recap (short)</h2>
+
+<p>For every contiguous subarray, its <strong>total strength</strong> = <code>(minimum element of subarray) * (sum of elements in the subarray)</code>. Return the sum of total strengths over <strong>all</strong> contiguous, non-empty subarrays, modulo <code>10^9 + 7</code>.</p>
+
+<p>Brute-force over all <code>O(n^2)</code> subarrays and computing min+sum is too slow for <code>n ≤ 10^5</code>. We need an <code>O(n)</code> or <code>O(n log n)</code> method.</p>
+
+<p>---</p>
+
+<h2>Key idea</h2>
+
+<p>Treat each element <code>strength[i]</code> as the <strong>minimum</strong> of some set of subarrays. Count the total contribution of <code>strength[i]</code> as the minimum across all subarrays where it is the minimum. Then sum over <code>i</code>.</p>
+
+<p>If for index <code>i</code> we know the nearest index to the left with a strictly smaller value (<code>L</code>) and the nearest index to the right with a smaller-or-equal value (<code>R</code>), then every subarray that uses <code>strength[i]</code> as the minimum must have its left endpoint <code>l</code> in <code>(L, i]</code> and right endpoint <code>r</code> in <code>[i, R)</code>. Number of choices = <code>(i - L) * (R - i)</code>. But we need not only count subarrays, we need the <strong>sum</strong> of sums of elements in those subarrays. That is, for all <code>l ∈ (L..i]</code> and <code>r ∈ [i..R-1]</code>, we need <code>sum(nums[l..r])</code>. Multiply that total by <code>strength[i]</code> to get <code>i</code>'s contribution.</p>
+
+<p>So the subproblem is: for given <code>i, L, R</code>, compute:</p>
+
+<p><pre><code>TotalSubarraySum_i = sum_{l=L+1..i} sum_{r=i..R-1} sum(nums[l..r])</code></pre></p>
+
+<p>We can rewrite <code>sum(nums[l..r])</code> using prefix sums <code>pre[k] = sum(nums[0..k-1])</code> as <code>pre[r+1] - pre[l]</code>. Thus</p>
+
+<p><pre><code>Total = sum_{l} sum_{r} (pre[r+1] - pre[l])
+      = (sum_{r} pre[r+1]) * (#left choices) - (sum_{l} pre[l]) * (#right choices)</code></pre></p>
+
+<p>Both <code>sum_{r} pre[r+1]</code> and <code>sum_{l} pre[l]</code> are sums of prefix sums over ranges; we can compute them quickly using a second-level prefix sum <code>pre2</code> where <code>pre2[k] = sum_{t=0..k-1} pre[t]</code>.</p>
+
+<p>With careful indexing (0-based arrays, <code>pre[0] = 0</code>), the final closed-form expression becomes (this is the commonly used, compact formula):</p>
+
+<p>For <code>L = prevLess[i]</code> (index of previous strictly smaller), <code>R = nextLessOrEqual[i]</code> (index of next strictly smaller or equal),
+define:</p>
+
+<ul>
+<li><code>leftCount = i - L</code></li>
+<li><code>rightCount = R - i</code></li>
+</ul>
+
+<p>Then</p>
+
+<p><pre><code>TotalSubarraySum_i = leftCount * (pre2[R] - pre2[i+1]) - rightCount * (pre2[i+1] - pre2[L+1])
+Contribution_i = strength[i] * TotalSubarraySum_i</code></pre></p>
+
+<p>We'll sum these contributions for all <code>i</code> and take modulo <code>MOD = 1_000_000_007</code>.</p>
+
+<p>(You'll see the <code>pre2</code> offsets <code>R</code>, <code>i+1</code>, <code>L+1</code> in code — these come from converting <code>sum_{r=i..R-1} pre[r+1]</code> and <code>sum_{l=L+1..i} pre[l]</code> into <code>pre2</code> lookups. Careful off-by-one is crucial.)</p>
+
+<p>---</p>
+
+<h2>How to obtain L and R</h2>
+
+<p>Use monotonic stacks:</p>
+
+<ul>
+<li><code>prevLess[i]</code>: index of previous element <strong>strictly less than</strong> <code>strength[i]</code>. Compute left-to-right with a stack that keeps strictly increasing values.</li>
+<li><code>nextLessOrEqual[i]</code>: index of next element <strong>less than or equal to</strong> <code>strength[i]</code>. Compute right-to-left with a stack that keeps strictly increasing values but using <code><</code> vs <code><=</code> appropriately to handle duplicates consistently.</li>
+</ul>
+
+<p>This tie-breaking (strict on the left, non-strict on the right) ensures each subarray is assigned to exactly one minimum index when equal elements exist.</p>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Building <code>L</code> and <code>R</code> via stacks: <code>O(n)</code> time, <code>O(n)</code> space.</li>
+<li>Building <code>pre</code> and <code>pre2</code>: <code>O(n)</code>.</li>
+<li>One pass to accumulate contributions: <code>O(n)</code>.</li>
+</ul>
+  Total: <code>O(n)</code> time, <code>O(n)</code> space.
+
+<p>---</p>
+
+<h2>Java implementation</h2>
+
+<p><pre><code>import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int totalStrength(int[] strength) {
+        final int MOD = 1_000_000_007;
+        int n = strength.length;
+
+        // 1) prefix sums: pre[i] = sum of strength[0..i-1], length n+1
+        long[] pre = new long[n + 1];
+        for (int i = 0; i < n; i++) pre[i + 1] = (pre[i] + strength[i]) % MOD;
+
+        // 2) prefix of prefix sums: pre2[i] = sum of pre[0..i-1], length n+2 if needed
+        long[] pre2 = new long[n + 2];
+        for (int i = 0; i <= n; i++) {
+            pre2[i + 1] = (pre2[i] + pre[i]) % MOD;
+        }
+
+        // 3) prevLess: index of previous strictly smaller element
+        int[] prevLess = new int[n];
+        Deque<Integer> st = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            while (!st.isEmpty() && strength[st.peek()] >= strength[i]) st.pop();
+            prevLess[i] = st.isEmpty() ? -1 : st.peek();
+            st.push(i);
+        }
+
+        // 4) nextLessOrEqual: index of next element strictly smaller OR equal (i.e. <=)
+        int[] nextLessOrEqual = new int[n];
+        st.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            while (!st.isEmpty() && strength[st.peek()] > strength[i]) st.pop();
+            nextLessOrEqual[i] = st.isEmpty() ? n : st.peek();
+            st.push(i);
+        }
+
+        // 5) accumulate contributions
+        long ans = 0L;
+        for (int i = 0; i < n; i++) {
+            int L = prevLess[i];
+            int R = nextLessOrEqual[i];
+            long leftCount = i - L;
+            long rightCount = R - i;
+
+            // Using pre2:
+            // sumR = sum_{r=i..R-1} pre[r+1] = pre2[R+1?] careful with indices.
+            // With our pre and pre2 definitions:
+            // - pre[k] = sum strength[0..k-1], k in [0..n]
+            // - pre2[t] = sum(pre[0..t-1]), so pre2[u] - pre2[v] = sum pre[v..u-1]
+            // We need:
+            //   sumR = sum_{r=i..R-1} pre[r+1] = sum_{x = i+1 .. R} pre[x] = pre2[R+1?] - pre2[i+1?]
+            // With our pre2 indexing above, sum_{x = A..B} pre[x] = pre2[B+1] - pre2[A].
+            // So sumR = pre2[R+1] - pre2[i+1]
+            // And sumL = sum_{l=L+1..i} pre[l] = pre2[i+1] - pre2[L+1]
+            // Then TotalSubarraySum_i = leftCount * sumR - rightCount * sumL
+
+            long sumR = (pre2[R + 1] - pre2[i + 1]) % MOD;
+            long sumL = (pre2[i + 1] - pre2[L + 1]) % MOD;
+            if (sumR < 0) sumR += MOD;
+            if (sumL < 0) sumL += MOD;
+
+            long totalForI = ( (leftCount % MOD) * sumR % MOD - (rightCount % MOD) * sumL % MOD ) % MOD;
+            if (totalForI < 0) totalForI += MOD;
+
+            ans = (ans + ( (strength[i] % MOD) * totalForI ) % MOD) % MOD;
+        }
+
+        return (int) ans;
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h2>Implementation notes & careful points</h2>
+
+<ul>
+<li><strong>Indexing</strong>: The trickiest part is getting the <code>pre</code> and <code>pre2</code> index offsets correct. In the code above:</li>
+</ul>
+
+<ul>
+<li><code>pre[k]</code> = sum of <code>strength[0..k-1]</code> (length <code>n+1</code>, <code>pre[0]=0</code>).</li>
+<li><code>pre2[t]</code> = sum of <code>pre[0..t-1]</code> (length <code>n+2</code>, <code>pre2[0]=0</code>). Thus <code>sum_{x=A..B} pre[x] = pre2[B+1] - pre2[A]</code>.</li>
+<li>Using that, we derived <code>sumR = sum_{r=i..R-1} pre[r+1] = sum_{x = i+1..R} pre[x] = pre2[R+1] - pre2[i+1]</code>.</li>
+<li>And <code>sumL = sum_{l=L+1..i} pre[l] = pre2[i+1] - pre2[L+1]</code>.</li>
+</ul>
+
+<ul>
+<li><strong>Modulo</strong>: Because sums can be large (strength up to 1e9, n up to 1e5), we use <code>long</code> and take modulo <code>1e9+7</code> at each step. Be careful to normalize negative values after subtraction.</li>
+<li><strong>Monotonic stack tie-breaking</strong>: We pop while <code>strength[stack.peek()] >= strength[i]</code> for <code>prevLess</code> (strict less to left), and while <code>strength[stack.peek()] > strength[i]</code> for <code>nextLessOrEqual</code> (non-strict to the right). This is a standard convention that ensures each subarray with equal minima is assigned to exactly one index.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Example quick check (small)</h2>
+
+<p>For <code>strength = [1,3,1,2]</code> the function returns <code>44</code> (as in the prompt). For <code>[5,4,6]</code> it returns <code>213</code>.</p>
+
+<p>---</p></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

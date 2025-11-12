@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Substring With Largest Variance - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Substring With Largest Variance</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Tree</span><span class="topic-tag">Array</span><span class="topic-tag">String</span><span class="topic-tag">Two Pointers</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Substring With Largest Variance</p>
+
+<p>The variance of a string is defined as the largest difference between the number of occurrences of any 2 characters present in the string. Note the two characters may or may not be the same.</p>
+
+<p>Given a string s consisting of lowercase English letters only, return the largest variance possible among all substrings of s.</p>
+
+<p>A substring is a contiguous sequence of characters within a string.</p>
+
+<p>Example 1:</p>
+
+<p>Input: s = "aababbb"
+Output: 3
+Explanation:
+All possible variances along with their respective substrings are listed below:</p>
+
+<ul>
+<li>Variance 0 for substrings "a", "aa", "ab", "abab", "aababb", "ba", "b", "bb", and "bbb".</li>
+<li>Variance 1 for substrings "aab", "aba", "abb", "aabab", "ababb", "aababbb", and "bab".</li>
+<li>Variance 2 for substrings "aaba", "ababbb", "abbb", and "babb".</li>
+<li>Variance 3 for substring "babbb".</li>
+</ul>
+  Since the largest possible variance is 3, we return it.
+  Example 2:
+
+<p>Input: s = "abcde"
+Output: 0
+Explanation:
+No letter occurs more than once in s, so the variance of every substring is 0.</p>
+
+<p>Constraints:</p>
+
+<p>1 <= s.length <= 10^4
+s consists of lowercase English letters.</p>
+
+<p>class Solution {
+public int largestVariance(String s) {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>---</p>
+
+<h3>Idea (short)</h3>
+
+<p>We want the largest difference between counts of _any two_ letters inside some substring. We can fix an <strong>ordered pair</strong> of distinct letters <code>(x,y)</code> and ask: what is the maximum value of <code>count(x) - count(y)</code> over all substrings? If we compute that for every ordered pair and take the maximum, we get the answer (because variance is the largest difference between counts for some pair, and the order matters — we should examine both <code>count(x)-count(y)</code> and <code>count(y)-count(x)</code>).</p>
+
+<p>For a fixed ordered pair <code>(x,y)</code> we can reduce the problem to a maximum subarray (Kadane) style problem by scanning <code>s</code> and treating:</p>
+
+<ul>
+<li><code>x</code> as <code>+1</code></li>
+<li><code>y</code> as <code>-1</code></li>
+<li>any other character as <code>0</code> (or skip it)</li>
+</ul>
+
+<p>We want the best subarray sum, <strong>but</strong> with the additional requirement that the chosen substring must contain at least one <code>y</code> (so the difference is meaningful). A vanilla Kadane might produce a max sum that contains no <code>y</code> at all (just many <code>x</code>), and we must ignore that because variance between <code>x</code> and <code>y</code> requires both to be present. To enforce that, while scanning we track whether the current running sum includes at least one <code>y</code>. Only when seen a <code>y</code> do we update the global answer.</p>
+
+<p>There is one more subtlety: when the running sum becomes negative, we reset it to zero (like Kadane). But this can miss some optimal substrings where an initial <code>-1</code> (a <code>y</code>) should be included (for example if many <code>x</code> come after it). To capture both possibilities we run the same process twice: once on <code>s</code> left→right and once on the reversed string. Doing both directions ensures we capture substrings where the first occurrence among the pair is the <code>y</code> (negative contribution) and still leads to the best result later.</p>
+
+<p>Finally, repeat this for every ordered pair <code>(x,y)</code> of distinct letters (26 × 25 = 650 pairs). Each pass runs in O(n), so overall O(26² · n) which is fine for <code>n ≤ 10^4</code>.</p>
+
+<p>---</p>
+
+<h2>Correctness sketch</h2>
+
+<ul>
+<li>Any substring's variance is <code>max_{a,b} |count_a - count_b|</code>, i.e. the maximum over ordered pairs (we will test both orders).</li>
+<li>For a fixed <code>(x,y)</code> the maximum of <code>count(x) - count(y)</code> over substrings equals the maximum subarray sum in the sequence mapped as above with the constraint that the substring contains at least one <code>y</code>. Our Kadane-like scan that only updates the answer when a <code>y</code> has been included exactly computes this value.</li>
+<li>Running both left→right and right→left ensures we don't miss cases where an optimal substring starts with <code>y</code> (i.e. initial negative) and later recovers.</li>
+<li>Therefore checking all ordered pairs (and both traversal directions) yields the maximum variance overall.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>For each ordered pair of distinct letters: O(n) work.</li>
+<li>Number of ordered pairs = 26 × 25 = 650 constant.</li>
+<li>Total complexity: <code>O(26^2 * n)</code> ≈ <code>O(n)</code> for constraints (n ≤ 10⁴) — perfectly fine.</li>
+<li>Space: <code>O(1)</code> extra (besides input).</li>
+</ul>
+
+<p>---</p>
+
+<h2>Java implementation</h2>
+
+<p><pre><code>class Solution {
+    public int largestVariance(String s) {
+        int n = s.length();
+        int ans = 0;
+
+        // iterate over all ordered pairs (a,b) of distinct letters
+        for (char a = 'a'; a <= 'z'; a++) {
+            for (char b = 'a'; b <= 'z'; b++) {
+                if (a == b) continue;
+                // run Kadane-like on s left->right
+                ans = Math.max(ans, kadaneForPair(s, a, b));
+                // run Kadane-like on reversed s to capture substrings that start with b
+                ans = Math.max(ans, kadaneForPair(new StringBuilder(s).reverse().toString(), a, b));
+            }
+        }
+        return ans;
+    }
+
+    // Kadane-like routine for ordered pair (a,b) returning max(count(a)-count(b))
+    // among substrings that include at least one b. Characters other than a and b are ignored.
+    private int kadaneForPair(String s, char a, char b) {
+        int best = 0;
+        int run = 0;          // current running sum
+        boolean seenB = false; // whether current run includes at least one b
+
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (c == a) {
+                run += 1;
+            } else if (c == b) {
+                run -= 1;
+                seenB = true;
+            } else {
+                // other characters: treat as 0, simply continue
+            }
+
+            // Only update best if we've seen at least one b in current run
+            if (seenB) {
+                best = Math.max(best, run);
+            }
+
+            // If running sum drops below 0, reset the run:
+            // drop current run because further extension from negative sum is not helpful.
+            if (run < 0) {
+                run = 0;
+                seenB = false; // reset tracking of b for new run
+            }
+        }
+        return best;
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h2>Example: <code>s = "aababbb"</code></h2>
+
+<ul>
+<li>The algorithm will check all pairs; for pair (<code>b</code>,<code>a</code>) one of the passes yields maximum <code>3</code> for substring <code>"babbb"</code> (counts: b=4, a=1 → difference = 3). The routine returns <code>3</code>.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Notes / variations</h2>
+
+<ul>
+<li>You can also optimize by precomputing which characters actually appear in <code>s</code> and only iterating pairs among those letters, but for 26 letters that micro-optimization is unnecessary.</li>
+<li>Some implementations combine forward/backward behavior by more elaborate handling of the running sum and remaining counts, but the two-pass approach is simple and reliable.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

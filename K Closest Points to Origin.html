@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>K Closest Points to Origin - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">K Closest Points to Origin</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">BFS</span><span class="topic-tag">DFS</span><span class="topic-tag">Array</span><span class="topic-tag">Greedy</span><span class="topic-tag">Heap</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>K Closest Points to Origin</p>
+
+<p>Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).</p>
+
+<p>The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).</p>
+
+<p>You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).</p>
+
+<p>class Solution {
+public int[][] kClosest(int[][] points, int k) {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>Example 1:</p>
+
+<p>Input: points = [[1,3],[-2,2]], k = 1
+Output: [[-2,2]]
+Explanation:
+The distance between (1, 3) and the origin is sqrt(10).
+The distance between (-2, 2) and the origin is sqrt(8).
+Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
+We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].
+Example 2:</p>
+
+<p>Input: points = [[3,3],[5,-1],[-2,4]], k = 2
+Output: [[3,3],[-2,4]]
+Explanation: The answer [[-2,4],[3,3]] would also be accepted.</p>
+
+<p>Constraints:</p>
+
+<p>1 <= k <= points.length <= 10^4
+-10^4 <= xi, yi <= 10^4</p>
+
+<p>---</p>
+
+<p>What to say to the interviewer (one-liner)
+“I’ll either use a max-heap of size <code>k</code> (O(n log k)) or use quickselect to partition the array around the k-th smallest distance (average O(n)). I’ll implement quickselect which returns the first k points whose distances are ≤ the k-th smallest distance.”</p>
+
+<p>---</p>
+
+<p>Approaches (brief)</p>
+
+<ul>
+<li><strong>Max-heap (priority queue)</strong>: push points with key = distance², keep size ≤ k by evicting largest. Final heap contains k closest points. Simpler to implement; time O(n log k), space O(k).</li>
+<li><strong>Quickselect (chosen)</strong>: partition points by distance² and recursively shrink to find k-th smallest distance; then return first k points. Average time O(n), worst-case O(n²) but practical and faster for large inputs.</li>
+</ul>
+
+<p>I’ll show the Quickselect implementation and include a small heap-based alternative.</p>
+
+<p>---</p>
+
+<p>Java — Quickselect implementation (average O(n) time, O(1) extra space)</p>
+
+<p><pre><code>import java.util.Random;
+
+class Solution {
+    private final Random rand = new Random();
+
+    public int[][] kClosest(int[][] points, int k) {
+        if (k >= points.length) return points.clone();
+
+        // quickselect partition to put k closest points in points[0..k-1]
+        quickSelect(points, 0, points.length - 1, k - 1);
+
+        int[][] res = new int[k][2];
+        for (int i = 0; i < k; i++) res[i] = points[i];
+        return res;
+    }
+
+    // quickselect to ensure that indices <= target are the smallest distances
+    private void quickSelect(int[][] pts, int left, int right, int targetIdx) {
+        while (left <= right) {
+            int pivotIndex = left + rand.nextInt(right - left + 1);
+            int pivotPos = partition(pts, left, right, pivotIndex);
+            if (pivotPos == targetIdx) return;
+            else if (pivotPos < targetIdx) left = pivotPos + 1;
+            else right = pivotPos - 1;
+        }
+    }
+
+    // partition around pivotIndex, return final pivot position
+    private int partition(int[][] pts, int left, int right, int pivotIndex) {
+        long pivotDist = dist2(pts[pivotIndex]);
+        swap(pts, pivotIndex, right); // move pivot to end
+        int store = left;
+        for (int i = left; i < right; i++) {
+            if (dist2(pts[i]) <= pivotDist) {
+                swap(pts, store, i);
+                store++;
+            }
+        }
+        swap(pts, store, right); // move pivot to its final place
+        return store;
+    }
+
+    private long dist2(int[] p) {
+        long x = p[0], y = p[1];
+        return x * x + y * y;
+    }
+
+    private void swap(int[][] a, int i, int j) {
+        int[] tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+
+    private static void print(int[][] arr) {
+        System.out.print("[");
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print("[" + arr[i][0] + "," + arr[i][1] + "]");
+            if (i + 1 < arr.length) System.out.print(",");
+        }
+        System.out.println("]");
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<p>Heap alternative (simpler to reason about)</p>
+
+<p><pre><code>// Use a max-heap of size k keyed by distance squared.
+PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> Long.compare(dist2(b), dist2(a)));
+for (int[] p : points) {
+    pq.offer(p);
+    if (pq.size() > k) pq.poll(); // remove farthest among seen
+}
+// pq contains k closest points</code></pre></p>
+
+<p>---</p>
+
+<p>Complexity</p>
+
+<ul>
+<li>Quickselect: average O(n) time, O(1) extra space (in-place). Worst-case O(n²) but random pivot avoids typical worst-cases.</li>
+<li>Heap: O(n log k) time, O(k) space.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

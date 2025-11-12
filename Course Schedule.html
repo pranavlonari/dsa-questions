@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Schedule - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Course Schedule</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">BFS</span><span class="topic-tag">DFS</span><span class="topic-tag">Graph</span><span class="topic-tag">Array</span><span class="topic-tag">String</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Course Schedule</p>
+
+<p>There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.</p>
+
+<p>For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.</p>
+
+<p>Example 1:</p>
+
+<p>Input: numCourses = 2, prerequisites = [[1,0]]
+Output: true
+Explanation: There are a total of 2 courses to take.
+To take course 1 you should have finished course 0. So it is possible.
+Example 2:</p>
+
+<p>Input: numCourses = 2, prerequisites = [[1,0],[0,1]]
+Output: false
+Explanation: There are a total of 2 courses to take.
+To take course 1 you should have finished course 0, and to take course 0 you should also have finished course 1. So it is impossible.</p>
+
+<p>Constraints:</p>
+
+<p>1 <= numCourses <= 2000
+0 <= prerequisites.length <= 5000
+prerequisites[i].length == 2
+0 <= ai, bi < numCourses
+All the pairs prerequisites[i] are unique.</p>
+
+<h1>Short script to say to the interviewer</h1>
+
+<p>“Model courses as a directed graph where an edge <code>b -> a</code> means <code>b</code> is a prerequisite of <code>a</code>. We can finish all courses iff the directed graph is <strong>acyclic</strong>. I’ll use Kahn’s algorithm (BFS topological sort): compute in-degrees, repeatedly remove nodes with in-degree 0 and decrement neighbors — if we remove all nodes the graph is acyclic and we can finish; otherwise there’s a cycle and we cannot. This runs in <code>O(V+E)</code> time and <code>O(V+E)</code> space.”</p>
+
+<p>---</p>
+
+<h1>Approaches considered (brief)</h1>
+
+<ol>
+<li><strong>Kahn’s algorithm (BFS, chosen)</strong> — maintain in-degree array, queue of zero in-degree nodes. Simple to reason about and easy to implement.</li>
+<li><strong>DFS cycle detection</strong> — run DFS with a visited + recursion-stack marker; detect back edge → cycle. Also <code>O(V+E)</code> but slightly more error-prone in interviews for iterative explanation.</li>
+</ol>
+
+<p>I’ll provide the Kahn BFS implementation (clean and standard). I’ll also summarize the DFS idea at the end.</p>
+
+<p>---</p>
+
+<h1>Why Kahn’s algorithm works (intuition)</h1>
+
+<p>If there is a node with in-degree 0, it has no prerequisites and can be taken now. Removing it may expose other nodes whose prerequisites are now satisfied. If we can repeatedly remove nodes until none remain, there was no cycle. If any node remains with positive in-degree and the queue is empty, those nodes form (or depend on) a cycle.</p>
+
+<p>---</p>
+
+<h1>Complexity</h1>
+
+<ul>
+<li>Time: <code>O(numCourses + P)</code> where <code>P = prerequisites.length</code> (each edge and node processed constant times).</li>
+<li>Space: <code>O(numCourses + P)</code> for adjacency lists and in-degree array.</li>
+</ul>
+
+<p>---</p>
+
+<h1>Java implementation (Kahn's BFS / topological-sort)</h1>
+
+<p><pre><code>import java.util.*;
+
+public class CourseSchedule {
+    // Return true if we can finish all courses
+    public boolean canFinish(int numCourses, int[][] prerequisites) {
+        // adjacency list: graph[from] -> list of to
+        List<List<Integer>> graph = new ArrayList<>(numCourses);
+        for (int i = 0; i < numCourses; i++) graph.add(new ArrayList<>());
+
+        int[] indeg = new int[numCourses];
+
+        // build graph and indegree
+        for (int[] p : prerequisites) {
+            int course = p[0];
+            int prereq = p[1];
+            graph.get(prereq).add(course); // edge prereq -> course
+            indeg[course]++;
+        }
+
+        // queue of courses with indegree 0 (no prerequisites)
+        ArrayDeque<Integer> q = new ArrayDeque<>();
+        for (int i = 0; i < numCourses; i++) {
+            if (indeg[i] == 0) q.offer(i);
+        }
+
+        int removed = 0;
+        while (!q.isEmpty()) {
+            int cur = q.poll();
+            removed++;
+            for (int nei : graph.get(cur)) {
+                indeg[nei]--;
+                if (indeg[nei] == 0) q.offer(nei);
+            }
+        }
+
+        // if removed all nodes, no cycle -> can finish all courses
+        return removed == numCourses;
+    }
+
+    // quick tests
+    public static void main(String[] args) {
+        CourseSchedule cs = new CourseSchedule();
+
+        System.out.println(cs.canFinish(2, new int[][]{{1,0}}));              // true
+        System.out.println(cs.canFinish(2, new int[][]{{1,0},{0,1}}));      // false
+        System.out.println(cs.canFinish(4, new int[][]{{1,0},{2,0},{3,1},{3,2}})); // true
+        System.out.println(cs.canFinish(1, new int[][]{}));                 // true
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h1>DFS alternative (brief)</h1>
+
+<ul>
+<li>Run DFS from every unvisited node. Use three-state array: <code>0 = unvisited</code>, <code>1 = visiting (in recursion stack)</code>, <code>2 = visited</code>.</li>
+<li>If during DFS you try to visit a node with state <code>1</code>, you found a back edge → cycle → return false.</li>
+<li>If no DFS finds a back edge, return true.</li>
+<li>Also <code>O(V+E)</code> time and <code>O(V)</code> recursion stack in worst case.</li>
+</ul>
+
+<p>---</p>
+
+<h1>Edge cases / tests to mention</h1>
+
+<ul>
+<li><code>numCourses = 1</code>, <code>prerequisites = []</code> → <code>true</code>.</li>
+<li>Empty prerequisites → always <code>true</code>.</li>
+<li>Single cycle → <code>false</code> (e.g., <code>[[0,1],[1,0]]</code>).</li>
+<li>Multiple independent components — must ensure all nodes processed.</li>
+<li>Large <code>numCourses</code> with many prerequisites — algorithm scales to constraints.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

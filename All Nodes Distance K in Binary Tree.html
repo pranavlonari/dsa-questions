@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Nodes Distance K in Binary Tree - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">All Nodes Distance K in Binary Tree</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Binary Tree</span><span class="topic-tag">Tree</span><span class="topic-tag">BFS</span><span class="topic-tag">DFS</span><span class="topic-tag">Graph</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><h1>Problem restatement</h1>
+
+<p>Given the root of a binary tree, a target node value, and integer <code>k</code>, return the values of all nodes that are distance <code>k</code> from the target node. Distance is measured by edges. Return nodes in any order.</p>
+
+<p>Input (example 1)
+<code>root = [3,5,1,6,2,0,8,null,null,7,4], target = 5, k = 2</code>
+Output: <code>[7,4,1]</code> (order can vary)</p>
+
+<p>Input (example 2)
+<code>root = [1], target = 1, k = 3</code>
+Output: <code>[]</code></p>
+
+<p>Constraints (provided):</p>
+
+<ul>
+<li>number of nodes ∈ [1, 500]</li>
+<li><code>0 <= Node.val <= 500</code>, all values unique</li>
+<li><code>target</code> is guaranteed to be the value of one node in the tree</li>
+<li><code>0 <= k <= 1000</code></li>
+</ul>
+
+<p>/\<em>\</em></p>
+
+<ul>
+<li>Definition for a binary tree node.</li>
+<li>public class TreeNode {</li>
+<li>int val;</li>
+<li>TreeNode left;</li>
+<li>TreeNode right;</li>
+<li>TreeNode(int x) { val = x; }</li>
+<li>}</li>
+</ul>
+  \*/
+  class Solution {
+  public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+      }
+  }
+
+<p>---</p>
+
+<h2>Quick script to say to the interviewer</h2>
+
+<ol>
+<li>"I'll convert the tree into an undirected graph by recording parent pointers for each node, then run a BFS from the target node to collect nodes at distance <code>k</code>."</li>
+<li>"This is O(n) time and O(n) space and is straightforward to implement and reason about."</li>
+<li>"Alternatively, there is a recursive DFS-only approach that returns distances from target and collects nodes, which avoids an explicit parent map — but BFS+parent is simpler and clear."</li>
+</ol>
+
+<p>---</p>
+
+<h2>Approaches considered (pros / cons)</h2>
+
+<ol>
+<li><strong>Parent-map + BFS (chosen)</strong></li>
+</ol>
+
+<ul>
+<li>Pros: Simple, easy to code, intuitive: BFS naturally gives distance layers.</li>
+<li>Cons: Extra O(n) space for parent pointers.</li>
+</ul>
+
+<ol>
+<li><strong>Single recursive DFS that returns distances</strong></li>
+</ol>
+
+<ul>
+<li>Pros: No explicit parent map; more elegant recursion.</li>
+<li>Cons: Slightly trickier to implement correctly in interview under time pressure.</li>
+</ul>
+
+<ol>
+<li><strong>Transform to graph and run BFS</strong> (equivalent to parent-map approach).</li>
+</ol>
+
+<p>I choose <strong>parent-map + BFS</strong> for clarity and reliability.</p>
+
+<p>---</p>
+
+<h2>Detailed chosen approach (step-by-step)</h2>
+
+<ul>
+<li>Data structures: <code>Map<TreeNode, TreeNode> parent</code> to map child → parent; <code>Queue<TreeNode></code> for BFS; <code>Set<TreeNode></code> visited to avoid revisits.</li>
+<li>Steps:</li>
+</ul>
+
+<ol>
+<li>DFS (or iterative traversal) to fill <code>parent</code> pointers and also find the <code>targetNode</code> matching the given <code>target</code> value.</li>
+<li>BFS starting from <code>targetNode</code>, level by level. Maintain a <code>dist</code> counter or iterate level-by-level for <code>k</code> rounds:</li>
+</ol>
+
+<ul>
+<li>If <code>k == 0</code>, return <code>[target.val]</code>.</li>
+<li>For each node popped, push its <code>left</code>, <code>right</code>, and <code>parent</code> (if not null and not visited).</li>
+</ul>
+
+<ol>
+<li>When BFS has performed <code>k</code> levels, the nodes in the queue are exactly distance <code>k</code>. Collect their values and return.</li>
+</ol>
+
+<ul>
+<li>Correctness: BFS explores all nodes at increasing distances from the target; parent pointers allow moving up the tree.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Time: O(n) — one traversal to build parents + BFS up to n nodes.</li>
+<li>Space: O(n) — parent map, visited set and queue may hold up to O(n) nodes.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Java implementation (clean & commented)</h2>
+
+<p><pre><code>import java.util.*;
+
+// Definition for a binary tree node.
+class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+    TreeNode(int x) { val = x; }
+}
+
+public class NodesDistanceK {
+    public List<Integer> distanceK(TreeNode root, int targetVal, int k) {
+        if (root == null) return Collections.emptyList();
+
+        // 1) Build parent pointers and find the target node by value
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        TreeNode targetNode = buildParents(root, parent, targetVal);
+        if (targetNode == null) return Collections.emptyList(); // safety, although target guaranteed present
+
+        // 2) BFS from target node
+        List<Integer> result = new ArrayList<>();
+        if (k == 0) {
+            result.add(targetNode.val);
+            return result;
+        }
+
+        Queue<TreeNode> q = new ArrayDeque<>();
+        Set<TreeNode> visited = new HashSet<>();
+        q.offer(targetNode);
+        visited.add(targetNode);
+        int dist = 0;
+
+        while (!q.isEmpty()) {
+            int size = q.size();
+            if (dist == k) {
+                // Collect all nodes currently in queue (they are at distance k)
+                for (TreeNode node : q) result.add(node.val);
+                return result;
+            }
+            // Expand one BFS level
+            for (int i = 0; i < size; i++) {
+                TreeNode node = q.poll();
+                // neighbors: left, right, parent
+                if (node.left != null && visited.add(node.left)) q.offer(node.left);
+                if (node.right != null && visited.add(node.right)) q.offer(node.right);
+                TreeNode p = parent.get(node);
+                if (p != null && visited.add(p)) q.offer(p);
+            }
+            dist++;
+        }
+
+        // If we exit loop without collecting, no nodes at distance k
+        return result;
+    }
+
+    // Helper: populate parent map and return the node with value == targetVal (or null)
+    private TreeNode buildParents(TreeNode root, Map<TreeNode, TreeNode> parent, int targetVal) {
+        TreeNode targetNode = null;
+        Deque<TreeNode> stack = new ArrayDeque<>();
+        stack.push(root);
+        while (!stack.isEmpty()) {
+            TreeNode node = stack.pop();
+            if (node.val == targetVal) targetNode = node;
+            if (node.left != null) {
+                parent.put(node.left, node);
+                stack.push(node.left);
+            }
+            if (node.right != null) {
+                parent.put(node.right, node);
+                stack.push(node.right);
+            }
+        }
+        return targetNode;
+    }
+
+    // --- Example quick tests ---
+    public static void main(String[] args) {
+        // Build example tree: [3,5,1,6,2,0,8,null,null,7,4]
+        TreeNode root = new TreeNode(3);
+        root.left = new TreeNode(5);
+        root.right = new TreeNode(1);
+        root.left.left = new TreeNode(6);
+        root.left.right = new TreeNode(2);
+        root.left.right.left = new TreeNode(7);
+        root.left.right.right = new TreeNode(4);
+        root.right.left = new TreeNode(0);
+        root.right.right = new TreeNode(8);
+
+        NodesDistanceK solver = new NodesDistanceK();
+        System.out.println(solver.distanceK(root, 5, 2)); // expected [7,4,1] (order may vary)
+        System.out.println(solver.distanceK(root, 1, 3)); // expected [7,4]?
+        // Example 2:
+        TreeNode single = new TreeNode(1);
+        System.out.println(solver.distanceK(single, 1, 3)); // expected []
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h2>Tests & edge-cases to mention</h2>
+
+<ul>
+<li><code>k == 0</code> → return <code>[target]</code>.</li>
+<li><code>target</code> is leaf / root: BFS handles both (parents allow upward movement).</li>
+<li><code>k</code> larger than tree height → <code>[]</code>.</li>
+<li>Single-node tree with <code>k > 0</code> → <code>[]</code>.</li>
+<li>Trees where many nodes are at distance k — BFS returns all.</li>
+</ul>
+
+<p>---</p>
+
+<p>---</p>
+
+<h2>Plan (what to say)</h2>
+
+<ol>
+<li>Do one traversal to record each node’s parent (so we can move up the tree).</li>
+<li>Run a BFS starting from the <code>target</code> node and expand to its <code>left</code>, <code>right</code>, and <code>parent</code> neighbors.</li>
+<li>Stop BFS once we have expanded <code>k</code> levels; all nodes in the queue then are distance <code>k</code>.</li>
+</ol>
+   This is <code>O(n)</code> time and <code>O(n)</code> space.
+
+<p>---</p>
+
+<h2>Why this works</h2>
+
+<p>Treat the tree as an undirected graph by adding parent pointers. BFS from the target explores nodes by increasing distance; after <code>k</code> levels the nodes in the frontier are exactly those at distance <code>k</code>.</p>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Time: <code>O(n)</code> (one pass to build parents + BFS up to all nodes).</li>
+<li>Space: <code>O(n)</code> for parent map + visited set + queue.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Java implementation (BFS + parent map)</h2>
+
+<p><pre><code>/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+
+import java.util.*;
+
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        List<Integer> result = new ArrayList<>();
+        if (root == null) return result;
+
+        // 1) Build parent pointers with a DFS/BFS
+        Map<TreeNode, TreeNode> parent = new HashMap<>();
+        buildParents(root, null, parent);
+
+        // 2) BFS from target
+        Queue<TreeNode> q = new ArrayDeque<>();
+        Set<TreeNode> visited = new HashSet<>();
+        q.offer(target);
+        visited.add(target);
+
+        int dist = 0;
+        while (!q.isEmpty()) {
+            if (dist == k) {
+                // all nodes currently in queue are at distance k
+                for (TreeNode node : q) result.add(node.val);
+                return result;
+            }
+            int sz = q.size();
+            for (int i = 0; i < sz; i++) {
+                TreeNode cur = q.poll();
+                // neighbors: left, right, parent
+                if (cur.left != null && visited.add(cur.left)) q.offer(cur.left);
+                if (cur.right != null && visited.add(cur.right)) q.offer(cur.right);
+                TreeNode p = parent.get(cur);
+                if (p != null && visited.add(p)) q.offer(p);
+            }
+            dist++;
+        }
+
+        // if we exhaust the graph without reaching distance k
+        return result;
+    }
+
+    private void buildParents(TreeNode node, TreeNode par, Map<TreeNode, TreeNode> parent) {
+        if (node == null) return;
+        parent.put(node, par);
+        buildParents(node.left, node, parent);
+        buildParents(node.right, node, parent);
+    }
+}</code></pre></p></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

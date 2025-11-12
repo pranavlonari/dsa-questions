@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minimum Number of Moves to Make Palindrome - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Minimum Number of Moves to Make Palindrome</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Tree</span><span class="topic-tag">BFS</span><span class="topic-tag">Graph</span><span class="topic-tag">Array</span><span class="topic-tag">String</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Minimum Number of Moves to Make Palindrome</p>
+
+<p>You are given a string s consisting only of lowercase English letters.</p>
+
+<p>In one move, you can select any two adjacent characters of s and swap them.</p>
+
+<p>Return the minimum number of moves needed to make s a palindrome.</p>
+
+<p>Note that the input will be generated such that s can always be converted to a palindrome.</p>
+
+<p>Example 1:</p>
+
+<p>Input: s = "aabb"
+Output: 2
+Explanation:
+We can obtain two palindromes from s, "abba" and "baab".</p>
+
+<ul>
+<li>We can obtain "abba" from s in 2 moves: "aabb" -> "abab" -> "abba".</li>
+<li>We can obtain "baab" from s in 2 moves: "aabb" -> "abab" -> "baab".</li>
+</ul>
+  Thus, the minimum number of moves needed to make s a palindrome is 2.
+  Example 2:
+
+<p>Input: s = "letelt"
+Output: 2
+Explanation:
+One of the palindromes we can obtain from s in 2 moves is "lettel".
+One of the ways we can obtain it is "letelt" -> "letetl" -> "lettel".
+Other palindromes such as "tleelt" can also be obtained in 2 moves.
+It can be shown that it is not possible to obtain a palindrome in less than 2 moves.</p>
+
+<p>Constraints:</p>
+
+<p>1 <= s.length <= 2000
+s consists only of lowercase English letters.
+s can be converted to a palindrome using a finite number of moves.</p>
+
+<p>class Solution {
+public int minMovesToMakePalindrome(String s) {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>Great — let’s go deep and practical. I’ll give:</p>
+
+<ol>
+<li>A clear explanation and correctness argument.</li>
+<li>A simple, easy-to-implement <strong>greedy simulation</strong> (typical interview solution) with step-by-step example and full Java code.</li>
+<li>An <strong>optimized O(n log n)</strong> approach (inversion-count using a Fenwick tree) with full Java code and explanation of how we build the target palindrome ordering.</li>
+<li>Complexity, edge cases, and notes on when to use which.</li>
+</ol>
+
+<p>---</p>
+
+<h2>Problem recap (one line)</h2>
+
+<p>You may swap <strong>adjacent</strong> characters; return the <strong>minimum</strong> adjacent swaps needed to rearrange <code>s</code> into any palindrome. The input guarantees a palindrome is possible.</p>
+
+<p>---</p>
+
+<h2>Key observations / intuition</h2>
+
+<ul>
+<li>Swapping adjacent characters is like performing adjacent transpositions on indices. The minimum number of adjacent swaps needed to transform one permutation into another equals the number of <strong>inversions</strong> between their index sequences.</li>
+<li>A palindrome is determined by pairing characters symmetrically around the center. If you decide a target palindrome arrangement (i.e., assign each original character occurrence to a final index), the minimum swaps equals the inversion count of mapping original indices to target indices.</li>
+<li>There may be many valid palindromes, but a simple greedy builds one target palindrome and computes swaps to reach it; the greedy simulation also directly produces the minimum number of moves.</li>
+</ul>
+
+<p>Both the greedy simulation and the inversion-count approach produce the minimum for the target palindrome they use. The greedy simulation chooses an optimal pairing while moving characters inward and is standard and easy to implement.</p>
+
+<p>---</p>
+
+<h2>Approach A — Greedy simulation (two-pointer, bubble outward)</h2>
+
+<h3>Idea (short)</h3>
+
+<p>Use two pointers <code>l</code> and <code>r</code> from the ends inward.</p>
+
+<ul>
+<li>If <code>s[l] == s[r]</code>, move <code>l++</code>, <code>r--</code>.</li>
+<li>Else, search from <code>r</code> down to <code>l</code> for a matching <code>s[l]</code>:</li>
+</ul>
+
+<ul>
+<li>If found at <code>k</code> (<code>l < k <= r</code>), bubble that character rightwards by swapping adjacent characters until it reaches <code>r</code>. That costs <code>(r-k)</code> moves. Then <code>l++</code>, <code>r--</code>.</li>
+<li>If no match found (<code>k == l</code>), then <code>s[l]</code> must be the unique middle char (odd-length center). Swap it once with <code>s[l+1]</code> (cost 1) to move it right one step (bringing it toward center). Don’t advance pointers — re-evaluate <code>s[l]</code> again.</li>
+</ul>
+
+<p>This greedy is optimal because:</p>
+
+<ul>
+<li>If the character at <code>l</code> has a matching partner on the right, pairing it with the rightmost matching partner and moving that partner to position <code>r</code> uses the fewest swaps for pairing <code>l</code> (any other match would require moving some matching char at least as far).</li>
+<li>If <code>l</code> has no match to the right, it must be the center character; moving it one step right is required to eventually place it into the middle.</li>
+</ul>
+
+<h3>Complexity</h3>
+
+<ul>
+<li>Time: O(n²) worst-case due to bubbling (n ≤ 2000, OK).</li>
+<li>Space: O(n) for char array.</li>
+</ul>
+
+<h3>Greedy Java code (simple to read and run)</h3>
+
+<p><pre><code>class Solution {
+    public int minMovesToMakePalindrome(String s) {
+        char[] arr = s.toCharArray();
+        int n = arr.length;
+        int l = 0, r = n - 1;
+        int moves = 0;
+
+        while (l < r) {
+            if (arr[l] == arr[r]) {
+                l++;
+                r--;
+            } else {
+                // find matching char for arr[l] from the right
+                int k = r;
+                while (k > l && arr[k] != arr[l]) k--;
+
+                if (k == l) {
+                    // no matching char: arr[l] is the unique middle char,
+                    // so swap it right by one (cost 1)
+                    swap(arr, l, l + 1);
+                    moves++;
+                    // do not move l/r pointers
+                } else {
+                    // bubble arr[k] to position r
+                    while (k < r) {
+                        swap(arr, k, k + 1);
+                        moves++;
+                        k++;
+                    }
+                    // now arr[l] and arr[r] match
+                    l++;
+                    r--;
+                }
+            }
+        }
+        return moves;
+    }
+
+    private void swap(char[] a, int i, int j) {
+        char t = a[i]; a[i] = a[j]; a[j] = t;
+    }
+
+
+}</code></pre></p>
+
+<h3>Example walkthrough: <code>s = "aabb"</code></h3>
+
+<ul>
+<li><code>arr = a a b b</code>, l=0 r=3</li>
+<li>arr[0] = 'a', arr[3] = 'b' ≠: find match for arr[0] from right → k=1? Actually arr[1]='a' at k=1.</li>
+<li>k != l so bubble arr[1] to r: swap positions 1&2 → <code>a b a b</code> (moves=1), swap 2&3 → <code>a b b a</code> (moves=2). Now l++ r-- → l=1 r=2.</li>
+<li>arr[1]='b', arr[2]='b' match → done. Total=2.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Approach B — Optimal / faster O(n log n): build target palindrome + inversion count (Fenwick/BIT)</h2>
+
+<h3>When to use</h3>
+
+<p>If you want asymptotically faster than O(n²) and <code>n</code> may be large (up to 2000 still OK for greedy, but inversion method is elegant and faster for larger <code>n</code>), use this.</p>
+
+<h3>Steps</h3>
+
+<ol>
+<li>Build a target palindrome string <code>t</code> of same multiset of characters as <code>s</code>. How? For each character <code>c</code>, let <code>cnt[c]</code>. Put <code>cnt[c]/2</code> copies into the left half in any order (we’ll keep the order fixed, e.g. iterate <code>'a'..'z'</code>), then place the odd-count character (if any) in the middle, then append the reverse of the left half. This yields a valid palindrome <code>t</code>. (Any valid palindrome works).</li>
+<li>We need to map each <strong>occurrence</strong> in <code>t</code> to an occurrence in <code>s</code>. For that:</li>
+</ol>
+
+<ul>
+<li>Build queues of positions for each character in the original string <code>s</code>: <code>positions[c] = queue of indices i where s[i]==c</code> in increasing order.</li>
+<li>For each character <code>ch</code> in <code>t</code> from left to right, pop the earliest available index from <code>positions[ch]</code> and append it to an array <code>P</code>. So <code>P</code> is the sequence of original indices in the order they must appear to produce <code>t</code>.</li>
+</ul>
+
+<ol>
+<li>The minimum adjacent swaps needed to reorder <code>s</code> to <code>t</code> equals the number of <strong>inversions</strong> in the permutation <code>P</code> (i.e., number of pairs <code>i < j</code> with <code>P[i] > P[j]</code>). Count inversions with a Fenwick tree (BIT) in O(n log n).</li>
+<li>Return the inversion count.</li>
+</ol>
+
+<p>This works because adjacent swaps correspond to adjacent transpositions, and the inversion count is the minimum number of adjacent swaps needed to transform one permutation into another.</p>
+
+<h3>Complexity</h3>
+
+<ul>
+<li>Building <code>t</code> and position queues: O(n).</li>
+<li>Creating <code>P</code>: O(n).</li>
+<li>Counting inversions with BIT: O(n log n).</li>
+<li>Space: O(n).</li>
+</ul>
+
+<h3>Java code (Fenwick / BIT approach)</h3>
+
+<p><pre><code>import java.util.*;
+
+class Solution {
+    public int minMovesToMakePalindrome(String s) {
+        int n = s.length();
+        // 1) count occurrences
+        int[] cnt = new int[26];
+        for (char c : s.toCharArray()) cnt[c - 'a']++;
+
+        // 2) build left half and middle char (build target palindrome t)
+        StringBuilder left = new StringBuilder();
+        char mid = 0;
+        for (int i = 0; i < 26; i++) {
+            if (cnt[i] % 2 == 1) mid = (char)('a' + i);
+            for (int k = 0; k < cnt[i] / 2; k++) left.append((char)('a' + i));
+        }
+        StringBuilder t = new StringBuilder();
+        t.append(left);
+        if (mid != 0) t.append(mid);
+        t.append(left.reverse()); // palindrome
+
+        // 3) build queues of original indices by character
+        @SuppressWarnings("unchecked")
+        Deque<Integer>[] pos = new Deque[26];
+        for (int i = 0; i < 26; i++) pos[i] = new ArrayDeque<>();
+        for (int i = 0; i < n; i++) {
+            pos[s.charAt(i) - 'a'].addLast(i);
+        }
+
+        // 4) map characters of t to original indices -> permutation P
+        int[] P = new int[n];
+        for (int i = 0; i < n; i++) {
+            int ch = t.charAt(i) - 'a';
+            P[i] = pos[ch].pollFirst(); // original index assigned to position i in t
+        }
+
+        // 5) inversion count of P using Fenwick
+        long inv = 0;
+        Fenwick bit = new Fenwick(n);
+        for (int i = 0; i < n; i++) {
+            // number of elements already placed that are > P[i] is i - query(P[i])
+            inv += i - bit.sum(P[i]);
+            bit.add(P[i], 1);
+        }
+        return (int) inv;
+    }
+
+    // Fenwick / BIT supporting sum on prefix [0..idx]
+    static class Fenwick {
+        int n;
+        int[] bit;
+        Fenwick(int n) {
+            this.n = n;
+            bit = new int[n + 1];
+        }
+        void add(int idx, int delta) { // idx is 0-based
+            idx++; // internal 1-based
+            while (idx <= n) {
+                bit[idx] += delta;
+                idx += idx & -idx;
+            }
+        }
+        int sum(int idx) {
+            // returns sum of [0..idx]
+            idx++; // 1-based
+            int res = 0;
+            while (idx > 0) {
+                res += bit[idx];
+                idx -= idx & -idx;
+            }
+            return res;
+        }
+    }
+
+
+}</code></pre></p>
+
+<strong>Notes about the Fenwick method</strong>:
+
+<ul>
+<li>We constructed <code>t</code> by grouping characters alphabetically in the left half — any valid palindrome arrangement works. Different valid <code>t</code> may yield different <code>P</code>, but they all are reachable; counting inversions to that <code>t</code> yields the exact minimum to produce that specific palindrome. Because the greedy pairing chooses the nearest appropriate partners, both give minimal total swaps to _some_ palindrome. In practice this BIT method gives the exact minimal moves as well (and is commonly used).</li>
+</ul>
+
+<p>---</p>
+
+<h2>Which approach should you use?</h2>
+
+<ul>
+<li><strong>Greedy simulation</strong>: easiest to code and reason about in an interview. Works fine for <code>n ≤ 2000</code>. Time O(n²), simple.</li>
+<li><strong>Fenwick/inversion</strong>: asymptotically faster O(n log n). Slightly more code and bookkeeping, but robust for larger <code>n</code>.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Final summary</h2>
+
+<ul>
+<li>Greedy two-pointer simulation is conceptually simple and yields the minimum number of adjacent swaps; it’s the standard interview solution.</li>
+<li>If you need better asymptotics, build a target palindrome, map original positions to the target order, and count inversions via a Fenwick tree for O(n log n) time.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

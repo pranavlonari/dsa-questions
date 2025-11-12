@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequentially Ordinal Rank Tracker - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Sequentially Ordinal Rank Tracker</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">BFS</span><span class="topic-tag">Graph</span><span class="topic-tag">String</span><span class="topic-tag">Greedy</span><span class="topic-tag">Heap</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Sequentially Ordinal Rank Tracker</p>
+
+<p>A scenic location is represented by its name and attractiveness score, where name is a unique string among all locations and score is an integer. Locations can be ranked from the best to the worst. The higher the score, the better the location. If the scores of two locations are equal, then the location with the lexicographically smaller name is better.</p>
+
+<p>You are building a system that tracks the ranking of locations with the system initially starting with no locations. It supports:</p>
+
+<p>Adding scenic locations, one at a time.
+Querying the ith best location of all locations already added, where i is the number of times the system has been queried (including the current query).
+For example, when the system is queried for the 4th time, it returns the 4th best location of all locations already added.
+Note that the test data are generated so that at any time, the number of queries does not exceed the number of locations added to the system.</p>
+
+<p>Implement the SORTracker class:</p>
+
+<p>SORTracker() Initializes the tracker system.
+void add(string name, int score) Adds a scenic location with name and score to the system.
+string get() Queries and returns the ith best location, where i is the number of times this method has been invoked (including this invocation).</p>
+
+<p>Example 1:</p>
+
+<p>Input
+["SORTracker", "add", "add", "get", "add", "get", "add", "get", "add", "get", "add", "get", "get"]
+[[], ["bradford", 2], ["branford", 3], [], ["alps", 2], [], ["orland", 2], [], ["orlando", 3], [], ["alpine", 2], [], []]
+Output
+[null, null, null, "branford", null, "alps", null, "bradford", null, "bradford", null, "bradford", "orland"]</p>
+
+<p>Explanation
+SORTracker tracker = new SORTracker(); // Initialize the tracker system.
+tracker.add("bradford", 2); // Add location with name="bradford" and score=2 to the system.
+tracker.add("branford", 3); // Add location with name="branford" and score=3 to the system.
+tracker.get(); // The sorted locations, from best to worst, are: branford, bradford.
+// Note that branford precedes bradford due to its higher score (3 > 2).
+// This is the 1st time get() is called, so return the best location: "branford".
+tracker.add("alps", 2); // Add location with name="alps" and score=2 to the system.
+tracker.get(); // Sorted locations: branford, alps, bradford.
+// Note that alps precedes bradford even though they have the same score (2).
+// This is because "alps" is lexicographically smaller than "bradford".
+// Return the 2nd best location "alps", as it is the 2nd time get() is called.
+tracker.add("orland", 2); // Add location with name="orland" and score=2 to the system.
+tracker.get(); // Sorted locations: branford, alps, bradford, orland.
+// Return "bradford", as it is the 3rd time get() is called.
+tracker.add("orlando", 3); // Add location with name="orlando" and score=3 to the system.
+tracker.get(); // Sorted locations: branford, orlando, alps, bradford, orland.
+// Return "bradford".
+tracker.add("alpine", 2); // Add location with name="alpine" and score=2 to the system.
+tracker.get(); // Sorted locations: branford, orlando, alpine, alps, bradford, orland.
+// Return "bradford".
+tracker.get(); // Sorted locations: branford, orlando, alpine, alps, bradford, orland.
+// Return "orland".</p>
+
+<p>Constraints:</p>
+
+<p>name consists of lowercase English letters, and is unique among all locations.
+1 <= name.length <= 10
+1 <= score <= 10^5
+At any time, the number of calls to get does not exceed the number of calls to add.
+At most 4 \* 10^4 calls in total will be made to add and get.</p>
+
+<p>class SORTracker {</p>
+
+<p>public SORTracker() {</p>
+
+<p>}</p>
+
+<p>public void add(String name, int score) {</p>
+
+<p>}</p>
+
+<p>public String get() {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>/\<em>\</em></p>
+
+<ul>
+<li>Your SORTracker object will be instantiated and called as such:</li>
+<li>SORTracker obj = new SORTracker();</li>
+<li>obj.add(name,score);</li>
+<li>String param_2 = obj.get();</li>
+</ul>
+  \*/
+
+<h3>Approach — high level</h3>
+
+<p>We must support two operations:</p>
+
+<ul>
+<li><code>add(name, score)</code>: add a new unique location.</li>
+<li><code>get()</code>: return the _i_-th best location where _i_ is the number of times <code>get()</code> has been called so far.</li>
+</ul>
+
+<p>Keep the set of added locations partitioned so that we can always return the current _i_-th best quickly.</p>
+
+<p>A clean, common solution is to maintain <strong>two priority queues</strong>:</p>
+
+<ul>
+<li><code>left</code> holds the current top <code>k</code> locations, where <code>k</code> = number of <code>get()</code> calls so far.</li>
+</ul>
+  We store them such that <strong>the worst (k-th best) among <code>left</code> is at the head</strong> (<code>left.peek()</code> gives the current answer).
+<ul>
+<li><code>right</code> holds all other locations, with the <strong>best</strong> among them at the head so we can promote it into <code>left</code> when needed.</li>
+</ul>
+
+<p>We keep these invariants:</p>
+
+<ul>
+<li><code>left.size() == k</code> (after each <code>get()</code>).</li>
+<li>every element in <code>left</code> is at least as good as every element in <code>right</code>.</li>
+</ul>
+
+<p>Ranking rule (better first):</p>
+
+<ul>
+<li>higher <code>score</code> is better;</li>
+<li>if equal score, lexicographically <strong>smaller</strong> name is better.</li>
+</ul>
+
+<p>With correctly chosen comparators:</p>
+
+<ul>
+<li><code>right.peek()</code> gives the best candidate to promote,</li>
+<li><code>left.peek()</code> gives the current k-th best (the one <code>get()</code> must return).</li>
+</ul>
+
+<strong>Operation details</strong>
+
+<ul>
+<li><code>add(name,score)</code>: always insert into <code>right</code>. Then, if the new element in <code>right</code> is better than <code>left</code>'s worst, swap the two heads so <code>left</code> remains the k best elements.</li>
+<li><code>get()</code>: increment <code>k</code>; if <code>left.size() < k</code> move <code>right.poll()</code> (the best from <code>right</code>) into <code>left</code>. Then return <code>left.peek().name</code>.</li>
+</ul>
+
+<p>This meets the requirements and is efficient: each <code>add</code>/<code>get</code> does only <code>O(log n)</code> heap operations.</p>
+
+<p>---</p>
+
+<h3>Java implementation</h3>
+
+<p><pre><code>import java.util.PriorityQueue;
+
+class SORTracker {
+    private static class Node {
+        String name;
+        int score;
+        Node(String name, int score) { this.name = name; this.score = score; }
+    }
+
+    // left: stores current top-k elements, with the WORST of them at the head
+    // (so left.peek() is the k-th best and is the answer to get()).
+    private final PriorityQueue<Node> left;
+
+    // right: stores the rest, with the BEST among them at the head (so we can promote it)
+    private final PriorityQueue<Node> right;
+
+    // how many times get() has been called
+    private int k;
+
+    public SORTracker() {
+        // left comparator: worst first -> smaller score first, if tie larger name first
+        left = new PriorityQueue<>((a, b) -> {
+            if (a.score != b.score) return Integer.compare(a.score, b.score);
+            return b.name.compareTo(a.name); // reverse lexicographic so "larger" name is considered worse
+        });
+
+        // right comparator: best first -> larger score first, if tie lexicographically smaller name first
+        right = new PriorityQueue<>((a, b) -> {
+            if (a.score != b.score) return Integer.compare(b.score, a.score);
+            return a.name.compareTo(b.name);
+        });
+
+        k = 0;
+    }
+
+    public void add(String name, int score) {
+        Node node = new Node(name, score);
+        // always add to right first
+        right.offer(node);
+
+        // If left not empty and the best in right is strictly better than the worst in left,
+        // swap their heads so left always contains the best elements.
+        if (!left.isEmpty() && !right.isEmpty()) {
+            Node bestRight = right.peek();
+            Node worstLeft = left.peek();
+            if (isBetter(bestRight, worstLeft)) {
+                // swap
+                right.poll();
+                left.poll();
+                left.offer(bestRight);
+                right.offer(worstLeft);
+            }
+        }
+    }
+
+    public String get() {
+        k++; // this is the k-th query
+        // ensure left has exactly k elements
+        if (left.size() < k) {
+            left.offer(right.poll());
+        }
+        return left.peek().name;
+    }
+
+    // helper: return true if a is strictly better than b by ranking rules
+    private boolean isBetter(Node a, Node b) {
+        if (a.score != b.score) return a.score > b.score;
+        return a.name.compareTo(b.name) < 0; // lexicographically smaller name is better
+    }
+
+    // Optional main for quick local tests
+    public static void main(String[] args) {
+        SORTracker tracker = new SORTracker();
+        tracker.add("bradford", 2);
+        tracker.add("branford", 3);
+        System.out.println(tracker.get()); // "branford"
+        tracker.add("alps", 2);
+        System.out.println(tracker.get()); // "alps"
+        tracker.add("orland", 2);
+        System.out.println(tracker.get()); // "bradford"
+        tracker.add("orlando", 3);
+        System.out.println(tracker.get()); // "bradford"
+        tracker.add("alpine", 2);
+        System.out.println(tracker.get()); // "bradford"
+        System.out.println(tracker.get()); // "orland"
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h3>Complexity</h3>
+
+<ul>
+<li><code>add</code>: <code>O(log n)</code> for the <code>offer</code> and (possibly) one <code>poll</code>/<code>offer</code> swap.</li>
+<li><code>get</code>: <code>O(log n)</code> when moving an element from <code>right</code> to <code>left</code>.</li>
+<li>Space: <code>O(n)</code> for storing all entries (where <code>n</code> is number of <code>add</code> calls).</li>
+</ul>
+
+<p>---</p>
+
+<h3>Notes</h3>
+
+<ul>
+<li>The comparators are chosen so <code>left.peek()</code> returns the _worst_ item among the current top-k items (the k-th best). That simplifies <code>get()</code> to <code>return left.peek().name</code>.</li>
+<li>Invariants are kept on each <code>add</code> and <code>get</code>: <code>left</code> holds the best <code>k</code> items and <code>right</code> the remainder.</li>
+<li>The code assumes the problem guarantee that the number of <code>get()</code> calls never exceeds the number of <code>add()</code> calls.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

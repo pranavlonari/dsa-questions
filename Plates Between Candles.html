@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plates Between Candles - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Plates Between Candles</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Graph</span><span class="topic-tag">Array</span><span class="topic-tag">String</span><span class="topic-tag">Two Pointers</span><span class="topic-tag">Sorting</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Plates Between Candles</p>
+
+<p>There is a long table with a line of plates and candles arranged on top of it. You are given a 0-indexed string s consisting of characters '_' and '|' only, where a '_' represents a plate and a '|' represents a candle.</p>
+
+<p>You are also given a 0-indexed 2D integer array queries where queries[i] = [lefti, righti] denotes the substring s[lefti...righti] (inclusive). For each query, you need to find the number of plates between candles that are in the substring. A plate is considered between candles if there is at least one candle to its left and at least one candle to its right in the substring.</p>
+
+<p>For example, s = "||<strong>||</strong>|_", and a query [3, 8] denotes the substring "_||\<em>\</em>|". The number of plates between candles in this substring is 2, as each of the two plates has at least one candle in the substring to its left and right.
+Return an integer array answer where answer[i] is the answer to the ith query.</p>
+
+<p>Example 1:</p>
+
+<p>ex-1
+Input: s = "<strong>|</strong>|\<em>\</em>\*|", queries = [[2,5],[5,9]]
+Output: [2,3]
+Explanation:</p>
+
+<ul>
+<li>queries[0] has two plates between candles.</li>
+<li>queries[1] has three plates between candles.</li>
+</ul>
+  Example 2:
+
+<p>ex-2
+Input: s = "<strong>\<em>|</strong>|<strong>\</strong></em>|<strong>||</strong>|\*", queries = [[1,17],[4,5],[14,17],[5,11],[15,16]]
+Output: [9,0,0,0,0]
+Explanation:</p>
+
+<ul>
+<li>queries[0] has nine plates between candles.</li>
+<li>The other queries have zero plates between candles.</li>
+</ul>
+
+<p>Constraints:</p>
+
+<p>3 <= s.length <= 10^5
+s consists of '\*' and '|' characters.
+1 <= queries.length <= 10^5
+queries[i].length == 2
+0 <= lefti <= righti < s.length</p>
+
+<p>class Solution {
+public int[] platesBetweenCandles(String s, int[][] queries) {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<p>Sure — let’s go deep and careful. I’ll explain the problem, give the clean, optimal algorithm and a correctness argument, show a step-by-step worked example, discuss edge cases and complexity, and finally provide a polished Java implementation you can paste and run.</p>
+
+<p>> <strong>Note about characters:</strong> the problem statement uses two symbols interchangeably in samples (<code>'_'</code> / <code>'<em>'</code>) for plates and <code>'|'</code> for candles. The algorithm below treats any character that is _not_ <code>'|'</code> as a plate (or you can change it to treat <code>'</em>'</code> as plate). I’ll assume plates are <code>'*'</code> since your examples use that; if your input uses <code>'_'</code> just replace checks accordingly.</p>
+
+<p>---</p>
+
+<h2>Problem recap (short)</h2>
+
+<p>Given a string <code>s</code> of length <code>n</code> containing candles <code>'|'</code> and plates <code>'*'</code> (or <code>'_'</code>), and multiple queries <code>[L, R]</code> asking about the substring <code>s[L..R]</code>, return the number of plates that lie between two candles <strong>within that substring</strong>. A plate is counted iff there exists at least one candle somewhere to the left of it inside the substring and at least one candle somewhere to the right of it inside the substring.</p>
+
+<p>---</p>
+
+<h2>Key observation (intuitive)</h2>
+
+<p>For a substring <code>s[L..R]</code> to have plates counted, you need:</p>
+
+<ul>
+<li>the index <code>a = first_candle_index ≥ L</code>, and</li>
+<li>the index <code>b = last_candle_index ≤ R</code>,</li>
+</ul>
+  with <code>a < b</code>. Then the plates counted are exactly the number of plate characters strictly between <code>a</code> and <code>b</code>, i.e. <code>plates_between = prefixPlates[b] - prefixPlates[a]</code> if <code>prefixPlates[i]</code> is number of plates in <code>s[0..i]</code>.
+
+<p>So for each query we:</p>
+
+<ol>
+<li>Find <code>a = nextCandle[L]</code> (first candle at or after L).</li>
+<li>Find <code>b = prevCandle[R]</code> (last candle at or before R).</li>
+<li>If <code>a == -1</code> or <code>b == -1</code> or <code>a >= b</code> → result is 0.</li>
+<li>Else answer = <code>prefix[b] - prefix[a]</code>.</li>
+</ol>
+
+<p>We can precompute <code>prefix</code>, <code>prevCandle</code>, and <code>nextCandle</code> in one linear scan each and then answer each query in O(1).</p>
+
+<p>---</p>
+
+<h2>Preprocessing details</h2>
+
+<ol>
+<li><strong>prefix array</strong> <code>prefix[i]</code>: number of plates (<code>*</code>) in the prefix <code>s[0..i]</code>.</li>
+</ol>
+
+<ul>
+<li><code>prefix[0] = (s[0] == '*') ? 1 : 0</code></li>
+<li><code>prefix[i] = prefix[i-1] + (s[i] == '*' ? 1 : 0)</code>.</li>
+</ul>
+
+<ol>
+<li><strong>prevCandle[i]</strong>: index of nearest candle at or before <code>i</code> (or <code>-1</code> if none).</li>
+</ol>
+
+<ul>
+<li>Scan left→right; keep <code>last = -1</code>; when <code>s[i] == '|'</code> set <code>last = i</code>; set <code>prevCandle[i] = last</code>.</li>
+</ul>
+
+<ol>
+<li><strong>nextCandle[i]</strong>: index of nearest candle at or after <code>i</code> (or <code>-1</code> if none).</li>
+</ol>
+
+<ul>
+<li>Scan right→left; keep <code>next = -1</code>; when <code>s[i] == '|'</code> set <code>next = i</code>; set <code>nextCandle[i] = next</code>.</li>
+</ul>
+
+<p>With those arrays, each query is constant time.</p>
+
+<p>---</p>
+
+<h2>Correctness proof (brief)</h2>
+
+<p>If the first candle inside <code>[L,R]</code> is <code>a</code> and the last candle inside <code>[L,R]</code> is <code>b</code> and <code>a<b</code>, then any plate that is between two candles in the substring must lie at an index <code>i</code> with <code>a < i < b</code> and be a plate. Conversely, any plate in <code>(a,b)</code> is between the candle at <code>a</code> (or some candle to its left inside substring) and a candle at <code>b</code>. So counting plates in <code>(a,b)</code> is exactly the desired count. The precomputed arrays yield those values exactly.</p>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Preprocessing: O(n) time and O(n) space for the three arrays.</li>
+<li>Each query: O(1).</li>
+<li>Total: O(n + q) time and O(n) space where <code>q = queries.length</code>.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Edge cases</h2>
+
+<ul>
+<li>No candles at all → <code>prevCandle</code> and <code>nextCandle</code> contain <code>-1</code>, every query returns 0.</li>
+<li>Only one candle inside the query → <code>a == b</code> → no plates between → 0.</li>
+<li>Query bounds touching candle indices: using <code>>=</code> and <code><=</code> is correct because we use first candle <code>≥ L</code> and last candle <code>≤ R</code>.</li>
+<li>If input uses <code>'_'</code> for plates instead of <code>'*'</code>, change the plate check accordingly.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Worked example (step-by-step)</h2>
+
+<p>Take <code>s = "<strong>|</strong>|<em></em>*|"</code> and queries <code>[[2,5],[5,9]]</code> (from your example).</p>
+
+<ol>
+<li>Precompute <code>prefix</code> (# plates up to index):</li>
+</ol>
+
+<ul>
+<li>s indices: 0 1 2 3 4 5 6 7 8 9</li>
+<li>chars: \<em> _ | _ _ | _ \</em> \* |</li>
+<li>prefix: 1 2 2 3 4 4 5 6 7 7</li>
+</ul>
+
+<ol>
+<li><code>prevCandle</code> (left nearest candle index):</li>
+</ol>
+
+<ul>
+<li>prevCandle: -1 -1 2 2 2 5 5 5 5 9 (indexes with candle propagate right)</li>
+</ul>
+
+<ol>
+<li><code>nextCandle</code> (right nearest candle index):</li>
+</ol>
+
+<ul>
+<li>nextCandle: 2 2 2 5 5 5 9 9 9 9</li>
+</ul>
+
+<p>Query <code>q0 = [2,5]</code>:</p>
+
+<ul>
+<li><code>a = nextCandle[2] = 2</code>, <code>b = prevCandle[5] = 5</code>, <code>a < b</code>.</li>
+<li>answer = <code>prefix[5] - prefix[2] = 4 - 2 = 2</code> → matches example.</li>
+</ul>
+
+<p>Query <code>q1 = [5,9]</code>:</p>
+
+<ul>
+<li><code>a = nextCandle[5] = 5</code>, <code>b = prevCandle[9] = 9</code>, <code>a < b</code>.</li>
+<li>answer = <code>prefix[9] - prefix[5] = 7 - 4 = 3</code> → matches example.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Variants / alternatives</h2>
+
+<ul>
+<li><strong>Binary search on sorted candle indices:</strong> You can store the positions of candles in a list and for each query binary-search the first candle ≥ L and the last candle ≤ R. That uses O(k log n) for k queries and O(c) space where c = number of candles. Equivalent complexity but slightly more code. The prefix approach is simpler and O(1) per query.</li>
+<li><strong>Space optimization:</strong> If memory is tight and you have many queries, you can store only <code>prefix</code> and <code>nextCandle</code> (or only candle positions and prefix-is-enough) — but O(n) space is fine for n ≤ 1e5.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Java implementation (polished)</h2>
+
+<p><pre><code>class Solution {
+    public int[] platesBetweenCandles(String s, int[][] queries) {
+        int n = s.length();
+        int[] prefix = new int[n];
+        int[] prevCandle = new int[n];
+        int[] nextCandle = new int[n];
+
+        // prefix: number of plates '*' up to index i
+        prefix[0] = (s.charAt(0) == '*') ? 1 : 0;
+        for (int i = 1; i < n; i++) {
+            prefix[i] = prefix[i - 1] + (s.charAt(i) == '*' ? 1 : 0);
+        }
+
+        // prevCandle: index of the nearest '|' at or before i (-1 if none)
+        int last = -1;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '|') last = i;
+            prevCandle[i] = last;
+        }
+
+        // nextCandle: index of the nearest '|' at or after i (-1 if none)
+        last = -1;
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) == '|') last = i;
+            nextCandle[i] = last;
+        }
+
+        int q = queries.length;
+        int[] ans = new int[q];
+        for (int i = 0; i < q; i++) {
+            int L = queries[i][0];
+            int R = queries[i][1];
+            int a = nextCandle[L];  // first candle >= L
+            int b = prevCandle[R];  // last candle <= R
+            if (a == -1 || b == -1 || a >= b) {
+                ans[i] = 0;
+            } else {
+                ans[i] = prefix[b] - prefix[a];
+            }
+        }
+
+        return ans;
+    }
+
+    // optional main for quick testing
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        String s1 = "**|**|***|";
+        int[][] queries1 = new int[][]{{2,5},{5,9}};
+        int[] res1 = sol.platesBetweenCandles(s1, queries1);
+        System.out.println(java.util.Arrays.toString(res1)); // [2, 3]
+
+        String s2 = "***|**|*****|**||**|*";
+        int[][] queries2 = new int[][]{{1,17},{4,5},{14,17},{5,11},{15,16}};
+        int[] res2 = sol.platesBetweenCandles(s2, queries2);
+        System.out.println(java.util.Arrays.toString(res2)); // [9,0,0,0,0]
+    }
+}</code></pre></p>
+
+<p>---</p></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

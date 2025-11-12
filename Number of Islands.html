@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Number of Islands - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Number of Islands</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">Tree</span><span class="topic-tag">BFS</span><span class="topic-tag">DFS</span><span class="topic-tag">Graph</span><span class="topic-tag">Hash Table</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.</p>
+
+<p>An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.</p>
+
+
+
+<p>Example 1:</p>
+
+<p>Input: grid = [
+  ["1","1","1","1","0"],
+  ["1","1","0","1","0"],
+  ["1","1","0","0","0"],
+  ["0","0","0","0","0"]
+]
+Output: 1
+Example 2:</p>
+
+<p>Input: grid = [
+  ["1","1","0","0","0"],
+  ["1","1","0","0","0"],
+  ["0","0","1","0","0"],
+  ["0","0","0","1","1"]
+]
+Output: 3</p>
+
+<p>Constraints:</p>
+
+<p>m == grid.length
+n == grid[i].length
+1 <= m, n <= 300
+grid[i][j] is '0' or '1'.</p>
+
+<h1>Solution — Number of Islands</h1>
+
+<p>> “I’ll scan the grid. Every time I see an unvisited land cell <code>'1'</code>, that’s a new island — do a flood-fill (DFS/BFS) from there to mark the whole connected component as visited (turn cells to <code>'0'</code> or use a visited set). Increment the island count and continue. This is O(m·n) time and O(1) extra space if we mark visited in-place (or O(m·n) extra if using a visited array).”</p>
+
+<p>---</p>
+
+<h2>Approaches (brief)</h2>
+
+<ol>
+<li><strong>Depth-First Search (DFS)</strong> — recursive or stack-based. Visit each <code>'1'</code> and recurse to its 4 neighbors, marking visited. Simple and common. Beware recursion depth if grid large (but m,n ≤ 300 is safe for recursion in most environments).</li>
+<li><strong>Breadth-First Search (BFS)</strong> — iterative with queue; avoids recursion. Also O(m·n).</li>
+<li><strong>Union-Find (Disjoint Set)</strong> — union adjacent lands, then count distinct roots. Slightly more code, useful if you need online merging, but heavier for this simple problem.</li>
+</ol>
+
+<p>I’ll present a clean BFS implementation (iterative). DFS version is equally good.</p>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<em> Time: <code>O(m </em> n)</code> — each cell processed/visited at most once.
+<em> Space: BFS queue worst-case <code>O(m </em> n)</code> (island covering almost whole grid). If we mark visited in-place, no extra <code>visited</code> array; otherwise need <code>O(m * n)</code> for it.
+
+<p>---</p>
+
+<p>class Solution {
+    public int numIslands(char[][] grid) {
+        
+    }
+}</p>
+
+
+
+<p>---</p>
+
+<h2>Problem recap (quick)</h2>
+
+<p>Given an <code>m × n</code> grid of <code>'1'</code> (land) and <code>'0'</code> (water), count connected components of <code>'1'</code> where connectivity is 4-directional (up/down/left/right). Each connected component is an island.</p>
+
+<p>---</p>
+
+<h2>High-level idea / intuition</h2>
+
+<p>Every time you encounter an unvisited <code>'1'</code>, that cell belongs to a new island. Flood-fill (visit) every land cell reachable from it (marking them visited) so you don’t count them again. Repeat scanning the grid — the number of times you start a flood-fill equals the number of islands.</p>
+
+<p>Flood-fill can be done with:</p>
+
+<ul>
+<li><strong>BFS</strong> (queue) — iterative level-order traversal,</li>
+<li><strong>DFS</strong> (stack or recursion) — depth-first traversal,</li>
+<li><strong>Union-Find</strong> — union adjacent lands into sets, count distinct roots.</li>
+</ul>
+
+<p>All are correct and run in <code>O(m·n)</code> time (each cell visited a constant number of times).</p>
+
+<p>---</p>
+
+<h2>Correctness argument</h2>
+
+<ul>
+<li>Each flood-fill explores exactly the connected component of <code>'1'</code> containing the start cell (because we expand to all 4-neighbors and only to <code>'1'</code>), and we mark visited immediately so we never start again on the same component.</li>
+<li>Therefore each connected component causes exactly one flood-fill and increments the count exactly once.</li>
+<li>Conversely, any <code>'1'</code> belongs to exactly one connected component so it will be discovered by exactly one flood-fill.</li>
+<li>Thus the count equals the number of islands.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<p>Let <code>m = grid.length</code>, <code>n = grid[0].length</code>, <code>N = m * n</code>.</p>
+
+<ul>
+<li><strong>Time:</strong> <code>O(N)</code> — each cell is inspected; each <code>'1'</code> is enqueued/recursed and processed at most once.</li>
+<li><strong>Space:</strong></li>
+</ul>
+
+<ul>
+<li>BFS queue worst-case <code>O(N)</code> (when most cells are land and the queue grows).</li>
+<li>DFS recursion stack worst-case <code>O(N)</code> (but recursion may overflow if N large).</li>
+<li>Union-Find arrays: <code>O(N)</code> for parent/size arrays.</li>
+<li>If marking visited in-place (setting <code>'1' -> '0'</code>), you avoid an extra boolean <code>visited[]</code>. Otherwise you need <code>O(N)</code> extra.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Implementations</h2>
+
+<h3>1) BFS (iterative) — robust, avoids recursion-depth</h3>
+
+<p>Marks visited in-place by setting <code>'1'</code> → <code>'0'</code>. This is the most common safe approach.</p>
+
+<p><pre><code>import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        int islands = 0;
+        final int[] dr = {-1, 1, 0, 0};
+        final int[] dc = {0, 0, -1, 1};
+
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                if (grid[r][c] == '1') {
+                    islands++;
+                    // BFS
+                    Deque<int[]> q = new ArrayDeque<>();
+                    q.offer(new int[]{r, c});
+                    grid[r][c] = '0'; // mark visited
+                    while (!q.isEmpty()) {
+                        int[] cur = q.poll();
+                        int rr = cur[0], cc = cur[1];
+                        for (int k = 0; k < 4; k++) {
+                            int nr = rr + dr[k], nc = cc + dc[k];
+                            if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] == '1') {
+                                grid[nr][nc] = '0';
+                                q.offer(new int[]{nr, nc});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return islands;
+    }
+}</code></pre></p>
+
+<strong>Notes</strong>
+
+<ul>
+<li>Uses <code>ArrayDeque</code> for queue.</li>
+<li>Modifies <code>grid</code>. If you must preserve <code>grid</code>, allocate a boolean <code>visited[][]</code>.</li>
+</ul>
+
+<p>---</p>
+
+<h3>2) DFS (recursive) — simple code but watch recursion limit</h3>
+
+<p><pre><code>class Solution {
+    private int m, n;
+    private char[][] grid;
+
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        this.grid = grid;
+        m = grid.length; n = grid[0].length;
+        int count = 0;
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    count++;
+                    dfs(i, j);
+                }
+            }
+        }
+        return count;
+    }
+
+    private void dfs(int r, int c) {
+        if (r < 0 || r >= m || c < 0 || c >= n || grid[r][c] != '1') return;
+        grid[r][c] = '0';
+        dfs(r - 1, c);
+        dfs(r + 1, c);
+        dfs(r, c - 1);
+        dfs(r, c + 1);
+    }
+}</code></pre></p>
+
+<strong>Caution:</strong> recursion depth could be up to <code>O(N)</code> in pathological cases (a 1×N strip of land). With <code>m,n ≤ 300</code> the worst-case <code>N = 90,000</code> — recursion may overflow Java call stack. For safety prefer BFS or iterative DFS.
+
+<p>---</p>
+
+<h3>3) DFS (iterative stack) — avoids recursion depth problems</h3>
+
+<p><pre><code>import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        int m = grid.length, n = grid[0].length, islands = 0;
+        final int[] dr = {-1,1,0,0}, dc = {0,0,-1,1};
+
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == '1') {
+                    islands++;
+                    Deque<int[]> stack = new ArrayDeque<>();
+                    stack.push(new int[]{i, j});
+                    grid[i][j] = '0';
+                    while (!stack.isEmpty()) {
+                        int[] cur = stack.pop();
+                        int r = cur[0], c = cur[1];
+                        for (int k = 0; k < 4; k++) {
+                            int nr = r + dr[k], nc = c + dc[k];
+                            if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] == '1') {
+                                grid[nr][nc] = '0';
+                                stack.push(new int[]{nr, nc});
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return islands;
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h3>4) Union-Find (Disjoint Set) — good if you want to support merges or queries</h3>
+
+<p>Union adjacent <code>1</code> cells, then count distinct roots among land cells.</p>
+
+<p><pre><code>class UnionFind {
+    int[] parent;
+    int[] size;
+    int count; // number of sets
+    UnionFind(int n) {
+        parent = new int[n];
+        size = new int[n];
+        for (int i = 0; i < n; i++) { parent[i] = i; size[i] = 1; }
+        count = n;
+    }
+    int find(int x) {
+        while (parent[x] != x) {
+            parent[x] = parent[parent[x]];
+            x = parent[x];
+        }
+        return x;
+    }
+    void union(int x, int y) {
+        int rx = find(x), ry = find(y);
+        if (rx == ry) return;
+        if (size[rx] < size[ry]) { int t = rx; rx = ry; ry = t; }
+        parent[ry] = rx;
+        size[rx] += size[ry];
+        count--;
+    }
+}
+
+class Solution {
+    public int numIslands(char[][] grid) {
+        if (grid == null || grid.length == 0) return 0;
+        int m = grid.length, n = grid[0].length;
+        UnionFind uf = new UnionFind(m * n);
+        int water = 0;
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                if (grid[r][c] == '0') {
+                    water++;
+                } else {
+                    int idx = r * n + c;
+                    // union right and down neighbors if land
+                    if (r + 1 < m && grid[r + 1][c] == '1') uf.union(idx, (r+1)*n + c);
+                    if (c + 1 < n && grid[r][c + 1] == '1') uf.union(idx, r*n + (c+1));
+                }
+            }
+        }
+        // count distinct roots among land cells
+        java.util.Set<Integer> roots = new java.util.HashSet<>();
+        for (int r = 0; r < m; r++) {
+            for (int c = 0; c < n; c++) {
+                if (grid[r][c] == '1') {
+                    roots.add(uf.find(r*n + c));
+                }
+            }
+        }
+        return roots.size();
+    }
+}</code></pre></p>
+
+<strong>Note</strong>: Union-Find builds unions for the entire grid; if you do <code>count = totalCells - water</code> you can keep track of islands as <code>count - merged</code> but using a set of roots is simpler.
+
+<p>---</p>
+
+<h2>Worked example (trace) — BFS on example 2</h2>
+
+<p>Grid:</p>
+
+<p><pre><code>1 1 0 0 0
+1 1 0 0 0
+0 0 1 0 0
+0 0 0 1 1</code></pre></p>
+
+<p>Scan cell (0,0) = '1' → islands=1, BFS marks (0,0),(0,1),(1,0),(1,1) to '0'. Continue scanning, next '1' is (2,2) → islands=2, BFS marks it. Next '1' is (3,3) → islands=3, BFS marks (3,3),(3,4). Done → return 3.</p>
+
+<p>---</p>
+
+<h2>Practical implementation tips & pitfalls</h2>
+
+<ul>
+<li><strong>Mark visited in-place</strong> (<code>grid[r][c] = '0'</code>) is memory efficient and fast. If you must keep the original grid, create a <code>boolean visited[m][n]</code>.</li>
+<li><strong>Recursion limits</strong>: Java recursion depth is limited (stack overflow possible). For <code>m,n ≤ 300</code>, worst-case contiguous land of length 90k may overflow. Use BFS or iterative DFS for safety.</li>
+<li><strong>Queue/stack performance</strong>: <code>ArrayDeque</code> is good for both queue and stack. Avoid <code>LinkedList</code> for frequent poll/offer in Java.</li>
+<li><strong>4-direction loops</strong>: Use small arrays <code>dr = {-1,1,0,0}</code> and <code>dc = {0,0,-1,1}</code> to avoid copy-paste errors.</li>
+<li><strong>Mutable input</strong>: If the caller expects <code>grid</code> unchanged, create a copy or use a visited array.</li>
+<li><strong>Large grids</strong>: All solutions are linear; memory overhead is the queue or UF arrays. For very large grids, prefer in-place marking + BFS.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Which variant to use in interviews</h2>
+
+<ul>
+<li><strong>BFS iterative</strong>: robust, easy to explain, no recursion worries. Usually best.</li>
+<li><strong>DFS recursive</strong>: succinct, fine if grid is not huge or constraints ensure recursion depth safe.</li>
+<li><strong>Union-Find</strong>: nice when you want to show knowledge of DSU, but takes more code and memory. Use if interview asks for different operations later.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Summary checklist you can say aloud</h2>
+
+<ul>
+<li>“I scan the grid. When I find an unvisited <code>'1'</code> I increment count and flood-fill from it to mark all connected <code>'1'</code>s visited. Flood-fill can be done with BFS or DFS. Each cell processed once → O(m·n) time, O(m·n) worst-case space for the BFS queue or DSU arrays. Implementation detail: I mark visited in-place by setting <code>'1'</code>→<code>'0'</code> so I don’t need extra visited array.”</li>
+</ul>
+
+<p>---</p>
+
+</div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>

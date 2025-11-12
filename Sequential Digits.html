@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sequential Digits - DSA Questions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #24292e;
+        background: #f6f8fa;
+      }
+
+      /* Navigation Bar */
+      .nav-bar {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-brand {
+        font-size: 1.5rem;
+        font-weight: bold;
+        text-decoration: none;
+        color: white;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 1.5rem;
+        align-items: center;
+      }
+
+      .nav-links a {
+        color: white;
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background 0.3s;
+      }
+
+      .nav-links a:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      /* Container */
+      .container {
+        max-width: 1200px;
+        margin: 2rem auto;
+        padding: 0 2rem;
+      }
+
+      /* Header Section */
+      .question-header {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        margin-bottom: 2rem;
+      }
+
+      .question-title {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #1a202c;
+      }
+
+      .question-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .difficulty {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      .difficulty.easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty.medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty.hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        display: inline-block;
+        padding: 0.3rem 0.8rem;
+        background: #e1e4e8;
+        color: #586069;
+        border-radius: 15px;
+        font-size: 0.85rem;
+        margin: 0.2rem;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-top: 1.5rem;
+      }
+
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+      }
+
+      .btn-primary:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-secondary {
+        background: #e1e4e8;
+        color: #24292e;
+      }
+
+      .btn-secondary:hover:not(:disabled) {
+        background: #d1d5da;
+      }
+
+      .btn-success {
+        background: linear-gradient(135deg, #56ab2f 0%, #a8e063 100%);
+        color: white;
+      }
+
+      .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(86, 171, 47, 0.4);
+      }
+
+      .btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Navigation Buttons */
+      .nav-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      /* Content Section */
+      .question-content {
+        background: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-content h1 {
+        font-size: 1.8rem;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        color: #1a202c;
+        border-bottom: 2px solid #e1e4e8;
+        padding-bottom: 0.5rem;
+      }
+
+      .question-content h2 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.8rem;
+        color: #2d3748;
+      }
+
+      .question-content h3 {
+        font-size: 1.2rem;
+        margin-top: 1.2rem;
+        margin-bottom: 0.6rem;
+        color: #4a5568;
+      }
+
+      .question-content p {
+        margin-bottom: 1rem;
+        color: #4a5568;
+      }
+
+      .question-content pre {
+        background: #1e1e1e;
+        color: #d4d4d4;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        line-height: 1.5;
+      }
+
+      .question-content code {
+        background: #f6f8fa;
+        color: #e83e8c;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-family: "Consolas", "Monaco", monospace;
+        font-size: 0.9em;
+      }
+
+      .question-content pre code {
+        background: transparent;
+        color: inherit;
+        padding: 0;
+      }
+
+      .question-content ul,
+      .question-content ol {
+        margin-left: 2rem;
+        margin-bottom: 1rem;
+      }
+
+      .question-content li {
+        margin-bottom: 0.5rem;
+        color: #4a5568;
+      }
+
+      .question-content strong {
+        color: #1a202c;
+        font-weight: 600;
+      }
+
+      .question-content em {
+        color: #718096;
+      }
+
+      /* Search Bar */
+      .search-container {
+        margin-bottom: 1.5rem;
+      }
+
+      .search-box {
+        width: 100%;
+        padding: 0.8rem 1rem;
+        border: 2px solid #e1e4e8;
+        border-radius: 8px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+      }
+
+      .search-box:focus {
+        outline: none;
+        border-color: #667eea;
+      }
+
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 2rem;
+        color: #6c757d;
+        margin-top: 3rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1024px) {
+        .container {
+          max-width: 95%;
+          padding: 0 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.75rem;
+        }
+
+        .question-content h1 {
+          font-size: 1.6rem;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .nav-bar {
+          flex-direction: column;
+          gap: 1rem;
+          padding: 1rem;
+        }
+
+        .nav-links {
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 0.8rem;
+        }
+
+        .nav-links a {
+          padding: 0.4rem 0.8rem;
+          font-size: 0.9rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1.5rem;
+        }
+
+        .question-title {
+          font-size: 1.5rem;
+        }
+
+        .question-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.8rem;
+        }
+
+        .action-buttons,
+        .nav-buttons {
+          flex-direction: column;
+        }
+
+        .btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .question-content h1 {
+          font-size: 1.4rem;
+        }
+
+        .question-content h2 {
+          font-size: 1.2rem;
+        }
+
+        .question-content h3 {
+          font-size: 1.1rem;
+        }
+
+        .question-content pre {
+          padding: 1rem;
+          font-size: 0.85rem;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .container {
+          margin: 1rem auto;
+          padding: 0 1rem;
+        }
+
+        .nav-brand {
+          font-size: 1.2rem;
+        }
+
+        .question-header,
+        .question-content {
+          padding: 1rem;
+          border-radius: 8px;
+        }
+
+        .question-title {
+          font-size: 1.3rem;
+        }
+
+        .btn {
+          padding: 0.6rem 1rem;
+          font-size: 0.9rem;
+        }
+
+        .difficulty,
+        .topic-tag {
+          font-size: 0.8rem;
+          padding: 0.3rem 0.6rem;
+        }
+
+        .question-content pre {
+          font-size: 0.8rem;
+          padding: 0.8rem;
+        }
+      }
+
+      /* Toast notification */
+      .toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        background: #28a745;
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.3s;
+        z-index: 2000;
+      }
+
+      .toast.show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 480px) {
+        .toast {
+          bottom: 1rem;
+          right: 1rem;
+          left: 1rem;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav-bar">
+      <a href="index.html" class="nav-brand">🧠 DSA Questions</a>
+      <div class="nav-links">
+        <a href="index.html">🏠 Home</a>
+        <a href="https://github.com/pranavlonari/dsa-questions" target="_blank"
+          >📁 GitHub</a
+        >
+      </div>
+    </nav>
+
+    <div class="container">
+      <!-- Search Bar -->
+      <div class="search-container">
+        <input
+          type="text"
+          id="searchBox"
+          class="search-box"
+          placeholder="🔍 Search questions..."
+        />
+      </div>
+
+      <!-- Navigation Buttons -->
+      <div class="nav-buttons">
+        <button
+          id="prevBtn"
+          class="btn btn-secondary"
+          onclick="navigateToPrev()"
+        >
+          ← Previous
+        </button>
+        <button
+          id="nextBtn"
+          class="btn btn-secondary"
+          onclick="navigateToNext()"
+        >
+          Next →
+        </button>
+        <button class="btn btn-primary" onclick="navigateToRandom()">
+          🎲 Random Question
+        </button>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title">Sequential Digits</h1>
+
+        <div class="question-meta">
+          <span class="difficulty medium">Medium</span>
+          <div class="topics">
+            <span class="topic-tag">BFS</span><span class="topic-tag">Graph</span><span class="topic-tag">Array</span><span class="topic-tag">String</span><span class="topic-tag">Two Pointers</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="action-buttons">
+          <button class="btn btn-success" onclick="copyCode()">
+            📋 Copy Code
+          </button>
+          <button class="btn btn-secondary" onclick="exportToMarkdown()">
+            📥 Export MD
+          </button>
+          <button class="btn btn-primary" onclick="shareQuestion()">
+            🔗 Share
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Content -->
+      <div class="question-content"><p>Sequential Digits</p>
+
+<p>An integer has sequential digits if and only if each digit in the number is one more than the previous digit.</p>
+
+<p>Return a sorted list of all the integers in the range [low, high] inclusive that have sequential digits.</p>
+
+<p>Example 1:</p>
+
+<p>Input: low = 100, high = 300
+Output: [123,234]
+Example 2:</p>
+
+<p>Input: low = 1000, high = 13000
+Output: [1234,2345,3456,4567,5678,6789,12345]</p>
+
+<p>Constraints:</p>
+
+<p>10 <= low <= high <= 10^9</p>
+
+<p>---</p>
+
+<p>class Solution {
+public List<Integer> sequentialDigits(int low, int high) {</p>
+
+<p>}</p>
+
+<p>}</p>
+
+<h2>Idea (high level)</h2>
+
+<p>Treat the grid as a graph where every rotten orange spreads to its 4-directional neighbors each minute. This is a <strong>multi-source BFS</strong>: start BFS from _all_ rotten oranges at once (they are the initial frontier). Each BFS level corresponds to one minute passing. As we visit neighbors that are fresh oranges, we mark them rotten and add them to the queue for the next minute. Track the number of fresh oranges remaining — when it reaches 0 we have the minimum minutes.</p>
+
+<p>---</p>
+
+<h2>Algorithm (step-by-step)</h2>
+
+<ol>
+<li>Scan the grid once to:</li>
+</ol>
+
+<ul>
+<li>Count <code>fresh</code> oranges.</li>
+<li>Enqueue all rotten oranges (their coordinates) into a queue.</li>
+</ul>
+
+<ol>
+<li>If <code>fresh == 0</code> → return <code>0</code> immediately (no time needed).</li>
+<li>Initialize <code>minutes = 0</code>.</li>
+<li>While the queue is not empty and <code>fresh > 0</code>:</li>
+</ol>
+
+<ul>
+<li>Process all nodes currently in the queue (<code>size = queue.size()</code>), this represents all rotten oranges that will infect neighbors in this minute.</li>
+<li>For each node in this layer:</li>
+</ul>
+
+<ul>
+<li>Check its four neighbors (up/down/left/right).</li>
+<li>If a neighbor is a fresh orange (<code>1</code>), turn it rotten (<code>2</code>), enqueue it, and decrement <code>fresh</code>.</li>
+</ul>
+
+<ul>
+<li>After processing the current layer, increment <code>minutes</code> (one minute passed).</li>
+</ul>
+
+<ol>
+<li>After the BFS loop:</li>
+</ol>
+
+<ul>
+<li>If <code>fresh == 0</code> return <code>minutes</code>.</li>
+<li>Else return <code>-1</code> (some fresh oranges couldn't be reached).</li>
+</ul>
+
+<p>This yields the minimum minutes because BFS explores in increasing time (minute) order from the initial rotten oranges.</p>
+
+<p>---</p>
+
+<h2>Correctness intuition</h2>
+
+<ul>
+<li>BFS from all rotten oranges in parallel models simultaneous infection steps.</li>
+<li>Each layer of BFS corresponds exactly to oranges that become rotten at minute <code>t</code>.</li>
+<li>We only mark oranges rotten when we first visit them, so they receive the earliest possible infection time.</li>
+<li>Since we stop when <code>fresh</code> reaches 0, the minute counter is the minimum required.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Let <code>m</code> × <code>n</code> be grid dimensions and <code>N = m*n</code>.</li>
+<li>Time: O(N). Each cell is visited at most once (we only enqueue fresh→rotten transitions).</li>
+<li>Space: O(N) worst-case for the queue (when most cells are rotten/became rotten).</li>
+</ul>
+
+<p>---</p>
+
+<h2>Worked example (your input)</h2>
+
+<p><pre><code>grid =
+[ [2,1,1],
+  [1,1,0],
+  [0,1,1] ]</code></pre></p>
+
+<ul>
+<li>Initial fresh = 5, queue contains initially rotten at (0,0).</li>
+<li>minute = 0:</li>
+</ul>
+
+<ul>
+<li>process queue size 1: (0,0) infects (0,1) and (1,0) → fresh becomes 3, enqueue them.</li>
+<li>minute -> 1</li>
+</ul>
+
+<ul>
+<li>minute = 1:</li>
+</ul>
+
+<ul>
+<li>process (0,1) and (1,0):</li>
+</ul>
+
+<ul>
+<li>(0,1) infects (0,2) (fresh -> 2)</li>
+<li>(1,0) infects (1,1) (fresh -> 1)</li>
+<li>enqueue (0,2),(1,1)</li>
+</ul>
+
+<ul>
+<li>minute -> 2</li>
+</ul>
+
+<ul>
+<li>minute = 2:</li>
+</ul>
+
+<ul>
+<li>process (0,2),(1,1):</li>
+</ul>
+
+<ul>
+<li>(1,1) infects (2,1) (fresh -> 0) and enqueue (2,1)</li>
+<li>(0,2) has no new fresh neighbors</li>
+</ul>
+
+<ul>
+<li>minute -> 3</li>
+</ul>
+
+<ul>
+<li>But note we increment minutes after each level — after processing the layer that caused fresh to drop to 0, minutes = 3. However, some implementations return 4 depending on counting approach — our implementation below increments minutes after processing and returns minutes when fresh==0. For this grid the standard answer is <strong>4</strong> per problem statement; that means the BFS layering in that formulation leads to minutes=4. To match the expected output you must ensure minute counting matches the problem's notion. The implementation below is the standard and returns <code>4</code> for the provided input.</li>
+</ul>
+
+<p>(Important: different minute-increment placement conventions exist. The code below follows the common pattern that matches the canonical problem outputs.)</p>
+
+<p>---</p>
+
+<h2>Edge cases</h2>
+
+<ul>
+<li>No fresh oranges at start → return <code>0</code>.</li>
+<li>No rotten oranges and at least one fresh → impossible → <code>-1</code>.</li>
+<li>Fresh oranges isolated by zeros → BFS finishes with <code>fresh > 0</code> → return <code>-1</code>.</li>
+<li>Small grids (1×1) handled naturally.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Clean Java implementation</h2>
+
+<p><pre><code>import java.util.ArrayDeque;
+import java.util.Deque;
+
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int m = grid.length;
+        int n = grid[0].length;
+
+        Deque<int[]> queue = new ArrayDeque<>();
+        int fresh = 0;
+
+        // 1) Initialize queue with all rotten oranges and count fresh ones
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                if (grid[i][j] == 2) {
+                    queue.offer(new int[]{i, j});
+                } else if (grid[i][j] == 1) {
+                    fresh++;
+                }
+            }
+        }
+
+        // If no fresh oranges, no time needed
+        if (fresh == 0) return 0;
+
+        final int[][] DIRS = {{-1,0},{1,0},{0,-1},{0,1}};
+        int minutes = 0;
+
+        // 2) BFS by levels; each level = one minute
+        while (!queue.isEmpty() && fresh > 0) {
+            int size = queue.size();
+            for (int k = 0; k < size; k++) {
+                int[] cur = queue.poll();
+                int r = cur[0], c = cur[1];
+
+                for (int[] d : DIRS) {
+                    int nr = r + d[0];
+                    int nc = c + d[1];
+
+                    // if neighbor is inside grid and fresh, rot it
+                    if (nr >= 0 && nr < m && nc >= 0 && nc < n && grid[nr][nc] == 1) {
+                        grid[nr][nc] = 2;        // mark rotten
+                        fresh--;                // one fewer fresh orange
+                        queue.offer(new int[]{nr, nc});
+                    }
+                }
+            }
+            // finished processing this minute's rotting, increment minute counter
+            minutes++;
+        }
+
+        // If all fresh oranges became rotten return minutes, else impossible (-1)
+        return (fresh == 0) ? minutes : -1;
+    }
+
+    // Quick test
+    public static void main(String[] args) {
+        Solution sol = new Solution();
+        int[][] grid1 = {
+            {2,1,1},
+            {1,1,0},
+            {0,1,1}
+        };
+        System.out.println(sol.orangesRotting(grid1)); // expected 4
+
+        int[][] grid2 = {
+            {2,1,1},
+            {0,1,1},
+            {1,0,1}
+        };
+        System.out.println(sol.orangesRotting(grid2)); // expected -1
+
+        int[][] grid3 = {
+            {0,2}
+        };
+        System.out.println(sol.orangesRotting(grid3)); // expected 0
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h2>Summary</h2>
+
+<ul>
+<li>Use multi-source BFS starting from all rotten oranges.</li>
+<li>Each BFS level corresponds to 1 minute of rotting.</li>
+<li>Track fresh count and stop early when it becomes 0.</li>
+<li>Time O(m·n), space O(m·n) in worst case.</li>
+</ul></div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p>
+        Made with ❤️ for Interview Preparation |
+        <a
+          href="https://github.com/pranavlonari/dsa-questions"
+          style="color: #667eea"
+          >Contribute on GitHub</a
+        >
+      </p>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+      // Load questions data
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions.json
+      fetch("questions.json")
+        .then((response) => response.json())
+        .then((data) => {
+          questionsData = data.questions;
+          initializePage();
+        })
+        .catch((error) => {
+          console.error("Error loading questions:", error);
+        });
+
+      function initializePage() {
+        // Get current question filename from URL
+        const fileName = getCurrentFileName();
+
+        // Find current question index
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === fileName
+        );
+
+        // Update navigation buttons
+        updateNavigationButtons();
+      }
+
+      function getCurrentFileName() {
+        // Get the current HTML filename without extension
+        const path = window.location.pathname;
+        const filename = path.split("/").pop();
+        // Remove .html extension to match with fileName in questions.json
+        return filename.replace(".html", "");
+      }
+
+      function updateNavigationButtons() {
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        } else {
+          prevBtn.disabled = false;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        } else {
+          nextBtn.disabled = false;
+        }
+      }
+
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href = `${prevQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href = `${nextQuestion.fileName}.html`;
+        }
+      }
+
+      function navigateToRandom() {
+        const randomIndex = Math.floor(Math.random() * questionsData.length);
+        const randomQuestion = questionsData[randomIndex];
+        window.location.href = `${randomQuestion.fileName}.html`;
+      }
+
+      // Search functionality
+      document
+        .getElementById("searchBox")
+        .addEventListener("input", function (e) {
+          const searchTerm = e.target.value.toLowerCase();
+          if (searchTerm.length < 2) return;
+
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+
+          if (results.length > 0 && e.key === "Enter") {
+            window.location.href = `${results[0].fileName}.html`;
+          }
+        });
+
+      document
+        .getElementById("searchBox")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            const searchTerm = e.target.value.toLowerCase();
+            const results = questionsData.filter(
+              (q) =>
+                q.title.toLowerCase().includes(searchTerm) ||
+                q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+            );
+
+            if (results.length > 0) {
+              window.location.href = `${results[0].fileName}.html`;
+            } else {
+              showToast("No questions found!");
+            }
+          }
+        });
+
+      // Copy code functionality
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll("pre code");
+        if (codeBlocks.length === 0) {
+          showToast("No code found to copy!");
+          return;
+        }
+
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n";
+          allCode += block.textContent;
+        });
+
+        navigator.clipboard
+          .writeText(allCode)
+          .then(() => {
+            showToast("✅ Code copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy code");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Export to markdown
+      function exportToMarkdown() {
+        const title = document.querySelector(".question-title").textContent;
+        const content = document.querySelector(".question-content").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title.replace(/[^a-z0-9]/gi, "-").toLowerCase()}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("📥 Markdown file downloaded!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.querySelector(".question-title").textContent;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              text: `Check out this DSA question: ${title}`,
+              url: url,
+            })
+            .then(() => {
+              showToast("✅ Shared successfully!");
+            })
+            .catch((err) => {
+              console.log("Share failed:", err);
+              copyUrlToClipboard(url);
+            });
+        } else {
+          copyUrlToClipboard(url);
+        }
+      }
+
+      function copyUrlToClipboard(url) {
+        navigator.clipboard
+          .writeText(url)
+          .then(() => {
+            showToast("🔗 Link copied to clipboard!");
+          })
+          .catch((err) => {
+            showToast("❌ Failed to copy link");
+            console.error("Copy failed:", err);
+          });
+      }
+
+      // Toast notification
+      function showToast(message) {
+        const toast = document.getElementById("toast");
+        toast.textContent = message;
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+    </script>
+  </body>
+</html>
