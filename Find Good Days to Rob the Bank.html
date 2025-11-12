@@ -1,0 +1,1013 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find Good Days to Rob the Bank - DSA Solutions</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.8;
+        color: #333;
+        background: #f5f7fa;
+      }
+
+      /* Header Navigation */
+      .top-nav {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .nav-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .nav-brand {
+        font-size: 1.3em;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .nav-brand a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .nav-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .nav-btn {
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+      }
+
+      .nav-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: translateY(-2px);
+      }
+
+      .nav-btn.primary {
+        background: white;
+        color: #667eea;
+        font-weight: 600;
+      }
+
+      .nav-btn.primary:hover {
+        background: #f8f9fa;
+      }
+
+      /* Main Container */
+      .container {
+        max-width: 1200px;
+        margin: 30px auto;
+        padding: 0 20px;
+      }
+
+      /* Question Navigation */
+      .question-nav {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .nav-group {
+        display: flex;
+        gap: 10px;
+      }
+
+      .question-btn {
+        padding: 10px 20px;
+        background: white;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #333;
+        text-decoration: none;
+      }
+
+      .question-btn:hover:not(:disabled) {
+        border-color: #667eea;
+        color: #667eea;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);
+      }
+
+      .question-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+
+      /* Search Bar */
+      .search-container {
+        position: relative;
+        flex: 1;
+        min-width: 250px;
+        max-width: 400px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 10px 40px 10px 15px;
+        border: 2px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: all 0.3s;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: #999;
+      }
+
+      /* Question Header */
+      .question-header {
+        background: white;
+        border-radius: 12px;
+        padding: 30px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .question-title {
+        font-size: 2em;
+        font-weight: 700;
+        color: #1a1a1a;
+        margin-bottom: 15px;
+      }
+
+      .question-meta {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .difficulty-badge {
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+
+      .difficulty-easy {
+        background: #d4edda;
+        color: #155724;
+      }
+
+      .difficulty-medium {
+        background: #fff3cd;
+        color: #856404;
+      }
+
+      .difficulty-hard {
+        background: #f8d7da;
+        color: #721c24;
+      }
+
+      .topic-tag {
+        background: #e7f3ff;
+        color: #0066cc;
+        padding: 6px 14px;
+        border-radius: 16px;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      /* Action Buttons */
+      .action-buttons {
+        background: white;
+        border-radius: 12px;
+        padding: 20px;
+        margin-bottom: 25px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        padding: 10px 20px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+      }
+
+      .action-btn.secondary {
+        background: white;
+        color: #667eea;
+        border: 2px solid #667eea;
+      }
+
+      .action-btn.secondary:hover {
+        background: #f8f9fa;
+      }
+
+      /* Content Area */
+      .content-wrapper {
+        background: white;
+        border-radius: 12px;
+        padding: 35px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-bottom: 25px;
+      }
+
+      .content-wrapper h1,
+      .content-wrapper h2,
+      .content-wrapper h3 {
+        color: #1a1a1a;
+        margin-top: 30px;
+        margin-bottom: 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .content-wrapper h1 {
+        font-size: 1.8em;
+      }
+
+      .content-wrapper h2 {
+        font-size: 1.5em;
+      }
+
+      .content-wrapper h3 {
+        font-size: 1.3em;
+      }
+
+      .content-wrapper h1:first-child,
+      .content-wrapper h2:first-child,
+      .content-wrapper h3:first-child {
+        margin-top: 0;
+      }
+
+      .content-wrapper p {
+        margin-bottom: 15px;
+      }
+
+      .content-wrapper ul,
+      .content-wrapper ol {
+        margin-left: 25px;
+        margin-bottom: 15px;
+      }
+
+      .content-wrapper li {
+        margin-bottom: 8px;
+      }
+
+      /* Code Blocks */
+      .content-wrapper pre {
+        background: #f6f8fa;
+        border: 1px solid #e1e4e8;
+        border-radius: 8px;
+        padding: 20px;
+        overflow-x: auto;
+        margin: 20px 0;
+        position: relative;
+      }
+
+      .content-wrapper code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .content-wrapper p code,
+      .content-wrapper li code {
+        background: #f6f8fa;
+        padding: 2px 6px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        border: 1px solid #e1e4e8;
+      }
+
+      /* Copy Button for Code */
+      .code-block {
+        position: relative;
+      }
+
+      .copy-code-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        padding: 6px 12px;
+        background: #667eea;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+        opacity: 0.8;
+        transition: all 0.3s;
+      }
+
+      .copy-code-btn:hover {
+        opacity: 1;
+      }
+
+      .copy-code-btn.copied {
+        background: #28a745;
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        background: #28a745;
+        color: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Footer */
+      footer {
+        background: white;
+        border-radius: 12px;
+        padding: 25px;
+        text-align: center;
+        color: #666;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+      }
+
+      footer a {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      footer a:hover {
+        text-decoration: underline;
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .nav-container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .nav-actions {
+          width: 100%;
+        }
+
+        .nav-btn {
+          flex: 1;
+          justify-content: center;
+        }
+
+        .question-nav {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .nav-group {
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        .search-container {
+          max-width: 100%;
+        }
+
+        .question-title {
+          font-size: 1.5em;
+        }
+
+        .content-wrapper {
+          padding: 20px;
+        }
+
+        .action-buttons {
+          flex-direction: column;
+        }
+
+        .action-btn {
+          width: 100%;
+          justify-content: center;
+        }
+
+        .toast {
+          right: 15px;
+          left: 15px;
+          bottom: 15px;
+        }
+      }
+
+      /* Loading Animation */
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 3px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 1s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Print Styles */
+      @media print {
+        .top-nav,
+        .question-nav,
+        .action-buttons,
+        .toast {
+          display: none;
+        }
+
+        .container {
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+
+        .content-wrapper {
+          box-shadow: none;
+          padding: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Top Navigation -->
+    <nav class="top-nav">
+      <div class="nav-container">
+        <div class="nav-brand">
+          <span>🚀</span>
+          <a href="index.html">DSA Questions</a>
+        </div>
+        <div class="nav-actions">
+          <a href="index.html" class="nav-btn primary">
+            <span>📚</span> All Questions
+          </a>
+          <button onclick="toggleTheme()" class="nav-btn">
+            <span id="theme-icon">🌙</span> Theme
+          </button>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Question Navigation -->
+      <div class="question-nav">
+        <div class="nav-group">
+          <button class="question-btn" id="prevBtn" onclick="navigateToPrev()">
+            <span>←</span> Previous
+          </button>
+          <button class="question-btn" id="nextBtn" onclick="navigateToNext()">
+            Next <span>→</span>
+          </button>
+        </div>
+        <div class="search-container">
+          <input
+            type="text"
+            class="search-input"
+            id="searchInput"
+            placeholder="Search questions..."
+          />
+          <span class="search-icon">🔍</span>
+        </div>
+        <div class="nav-group">
+          <button class="question-btn" onclick="showRandomQuestion()">
+            <span>🎲</span> Random
+          </button>
+        </div>
+      </div>
+
+      <!-- Question Header -->
+      <div class="question-header">
+        <h1 class="question-title" id="questionTitle">Find Good Days to Rob the Bank</h1>
+        <div class="question-meta" id="questionMeta">
+          <span class="difficulty-badge difficulty-medium"
+            >Medium</span
+          >
+          <span class="topic-tag">Graph</span><span class="topic-tag">Array</span><span class="topic-tag">String</span><span class="topic-tag">Two Pointers</span><span class="topic-tag">Sliding Window</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="action-btn" onclick="copyContent()">
+          <span>📋</span> Copy All
+        </button>
+        <button class="action-btn" onclick="copyCode()">
+          <span>💻</span> Copy Code
+        </button>
+        <button class="action-btn secondary" onclick="exportToPDF()">
+          <span>📄</span> Export PDF
+        </button>
+        <button class="action-btn secondary" onclick="exportToMarkdown()">
+          <span>📝</span> Export MD
+        </button>
+        <button class="action-btn secondary" onclick="shareQuestion()">
+          <span>🔗</span> Share
+        </button>
+      </div>
+
+      <!-- Question Content -->
+      <div class="content-wrapper" id="questionContent"><p>Find Good Days to Rob the Bank</p>
+
+<p>Example 1:</p>
+
+<p>Input: security = [5,3,3,3,5,6,2], time = 2
+Output: [2,3]
+Explanation:
+On day 2, we have security[0] >= security[1] >= security[2] <= security[3] <= security[4].
+On day 3, we have security[1] >= security[2] >= security[3] <= security[4] <= security[5].
+No other days satisfy this condition, so days 2 and 3 are the only good days to rob the bank.
+Example 2:</p>
+
+<p>Input: security = [1,1,1,1,1], time = 0
+Output: [0,1,2,3,4]
+Explanation:
+Since time equals 0, every day is a good day to rob the bank, so return every day.
+Example 3:</p>
+
+<p>Input: security = [1,2,3,4,5,6], time = 2
+Output: []
+Explanation:
+No day has 2 days before it that have a non-increasing number of guards.
+Thus, no day is a good day to rob the bank, so return an empty list.</p>
+
+<p>Constraints:</p>
+
+<p>1 <= security.length <= 10^5
+0 <= security[i], time <= 10^5</p>
+
+<h1>Problem restatement (short)</h1>
+
+<p>We are given an array <code>security</code> and an integer <code>time</code>. A day <code>i</code> is <strong>good</strong> if the <code>time</code> days before <code>i</code> are non-increasing (<code>security[j] >= security[j+1]</code>), and the <code>time</code> days after <code>i</code> are non-decreasing (<code>security[j] <= security[j+1]</code>). Return all good days' indices (in any order).</p>
+
+<h2>Quick script to say to the interviewer</h2>
+
+<ol>
+<li>“I’ll precompute two arrays: <code>left[i]</code> = number of consecutive non-increasing days ending at <code>i</code>, and <code>right[i]</code> = number of consecutive non-decreasing days starting at <code>i</code>.”</li>
+<li>“Then day <code>i</code> is valid iff <code>left[i] >= time</code> and <code>right[i] >= time</code>. This is O(n) time and O(n) space.”</li>
+<li>“If <code>time == 0</code> every day qualifies; otherwise we only check indices <code>time..n-1-time</code>.”</li>
+</ol>
+
+<p>---</p>
+
+<h2>Intuition</h2>
+
+<p>For each day <code>i</code> we need to know:</p>
+
+<ul>
+<li>how many consecutive previous days (including <code>i</code>) satisfy <code>security[k-1] >= security[k]</code> — call this <code>left[i]</code>, and</li>
+<li>how many consecutive following days (including <code>i</code>) satisfy <code>security[k] <= security[k+1]</code> — call this <code>right[i]</code>.</li>
+</ul>
+
+<p>If both counts are at least <code>time</code>, then <code>i</code> has <code>time</code> days before that are non-increasing and <code>time</code> days after that are non-decreasing.</p>
+
+<p>---</p>
+
+<h2>Algorithm (O(n) time, O(n) space)</h2>
+
+<ol>
+<li>If <code>time == 0</code>, return all indices <code>0..n-1</code>.</li>
+<li>Build <code>left</code>:</li>
+</ol>
+
+<ul>
+<li><code>left[0] = 0</code>.</li>
+<li>For <code>i = 1..n-1</code>: if <code>security[i] <= security[i-1]</code> then <code>left[i] = left[i-1] + 1</code> else <code>left[i] = 0</code>.</li>
+<li>Build <code>right</code>:</li>
+</ul>
+
+<ul>
+<li><code>right[n-1] = 0</code>.</li>
+<li>For <code>i = n-2 .. 0</code>: if <code>security[i] <= security[i+1]</code> then <code>right[i] = right[i+1] + 1</code> else <code>right[i] = 0</code>.</li>
+<li>Collect all <code>i</code> where <code>left[i] >= time && right[i] >= time</code>.</li>
+<li>Return the list.</li>
+</ul>
+
+<p>---</p>
+
+<h2>Complexity</h2>
+
+<ul>
+<li>Time: O(n) — each array scanned a constant number of times.</li>
+<li>Space: O(n) — two integer arrays <code>left</code> and <code>right</code> of size <code>n</code>. (Can be reduced to O(1) with two passes and window technique, but O(n) is simplest.)</li>
+</ul>
+
+<p>---</p>
+
+<h2>Java implementation (clean & commented)</h2>
+
+<p><pre><code>import java.util.*;
+
+public class GoodDaysToRobBank {
+    public List<Integer> goodDaysToRobBank(int[] security, int time) {
+        int n = security.length;
+        List<Integer> res = new ArrayList<>();
+        if (time == 0) {
+            // every day is valid
+            for (int i = 0; i < n; i++) res.add(i);
+            return res;
+        }
+        if (n == 0) return res;
+
+        int[] left = new int[n];  // left[i] = consecutive non-increasing days ending at i (excluding comparisons beyond)
+        int[] right = new int[n]; // right[i] = consecutive non-decreasing days starting at i
+
+        // build left: compare current with previous
+        left[0] = 0;
+        for (int i = 1; i < n; i++) {
+            if (security[i] <= security[i - 1]) left[i] = left[i - 1] + 1;
+            else left[i] = 0;
+        }
+
+        // build right: compare current with next
+        right[n - 1] = 0;
+        for (int i = n - 2; i >= 0; i--) {
+            if (security[i] <= security[i + 1]) right[i] = right[i + 1] + 1;
+            else right[i] = 0;
+        }
+
+        // collect indices that satisfy both sides
+        for (int i = 0; i < n; i++) {
+            if (left[i] >= time && right[i] >= time) res.add(i);
+        }
+        return res;
+    }
+
+    // quick tests
+    public static void main(String[] args) {
+        GoodDaysToRobBank solver = new GoodDaysToRobBank();
+
+        System.out.println(solver.goodDaysToRobBank(new int[]{5,3,3,3,5,6,2}, 2)); // [2,3]
+        System.out.println(solver.goodDaysToRobBank(new int[]{1,1,1,1,1}, 0));       // [0,1,2,3,4]
+        System.out.println(solver.goodDaysToRobBank(new int[]{1,2,3,4,5,6}, 2));   // []
+    }
+}</code></pre></p>
+
+<p>---</p>
+
+<h2>Edge cases to mention</h2>
+
+<ul>
+<li><code>time == 0</code> → all days valid.</li>
+<li><code>time</code> larger than possible window (e.g., <code>time > n/2</code>) → likely empty result.</li>
+<li>Constant arrays (all equal) — many days may satisfy both conditions.</li>
+<li>Large <code>n</code> up to 1e5 — algorithm still O(n).</li>
+</ul>
+
+</div>
+
+      <!-- Footer -->
+      <footer>
+        <p><strong>Part of DSA Questions Collection</strong></p>
+        <p>
+          <a href="index.html">Browse All Questions</a> •
+          <a
+            href="https://github.com/pranavlonari/dsa-questions"
+            target="_blank"
+            >GitHub</a
+          >
+          •
+          <a href="#" onclick="window.print(); return false;">Print</a>
+        </p>
+        <p style="margin-top: 10px; font-size: 0.9em">
+          💡 Interview-ready solutions with detailed explanations
+        </p>
+      </footer>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+      <span>✓</span>
+      <span id="toastMessage">Copied to clipboard!</span>
+    </div>
+
+    <script>
+      // Question data from questions.json
+      let questionsData = [];
+      let currentQuestionIndex = -1;
+
+      // Load questions data
+      async function loadQuestionsData() {
+        try {
+          const response = await fetch("questions.json");
+          questionsData = (await response.json()).questions;
+          initializeNavigation();
+        } catch (error) {
+          console.error("Error loading questions:", error);
+        }
+      }
+
+      // Initialize navigation
+      function initializeNavigation() {
+        const currentFileName = getCurrentFileName();
+        currentQuestionIndex = questionsData.findIndex(
+          (q) => q.fileName === currentFileName
+        );
+
+        // Update prev/next buttons
+        const prevBtn = document.getElementById("prevBtn");
+        const nextBtn = document.getElementById("nextBtn");
+
+        if (currentQuestionIndex <= 0) {
+          prevBtn.disabled = true;
+        }
+
+        if (
+          currentQuestionIndex >= questionsData.length - 1 ||
+          currentQuestionIndex === -1
+        ) {
+          nextBtn.disabled = true;
+        }
+
+        // Add code copy buttons
+        addCopyButtonsToCode();
+      }
+
+      // Get current file name
+      function getCurrentFileName() {
+        const path = window.location.pathname;
+        const fileName = decodeURIComponent(
+          path.substring(path.lastIndexOf("/") + 1)
+        );
+        return fileName || "Find Good Days to Rob the Bank";
+      }
+
+      // Navigate to previous question
+      function navigateToPrev() {
+        if (currentQuestionIndex > 0) {
+          const prevQuestion = questionsData[currentQuestionIndex - 1];
+          window.location.href =
+            encodeURIComponent(prevQuestion.fileName) + ".html";
+        }
+      }
+
+      // Navigate to next question
+      function navigateToNext() {
+        if (
+          currentQuestionIndex < questionsData.length - 1 &&
+          currentQuestionIndex !== -1
+        ) {
+          const nextQuestion = questionsData[currentQuestionIndex + 1];
+          window.location.href =
+            encodeURIComponent(nextQuestion.fileName) + ".html";
+        }
+      }
+
+      // Show random question
+      function showRandomQuestion() {
+        if (questionsData.length > 0) {
+          const randomIndex = Math.floor(Math.random() * questionsData.length);
+          const randomQuestion = questionsData[randomIndex];
+          window.location.href =
+            encodeURIComponent(randomQuestion.fileName) + ".html";
+        }
+      }
+
+      // Search functionality
+      document.getElementById("searchInput")?.addEventListener("input", (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        if (searchTerm.length > 2) {
+          const results = questionsData.filter(
+            (q) =>
+              q.title.toLowerCase().includes(searchTerm) ||
+              q.topics.some((t) => t.toLowerCase().includes(searchTerm))
+          );
+          // Could show dropdown with results
+          console.log("Search results:", results);
+        }
+      });
+
+      // Copy all content
+      function copyContent() {
+        const content = document.getElementById("questionContent").innerText;
+        copyToClipboard(content, "All content copied!");
+      }
+
+      // Copy only code blocks
+      function copyCode() {
+        const codeBlocks = document.querySelectorAll(
+          "#questionContent pre code"
+        );
+        let allCode = "";
+        codeBlocks.forEach((block, index) => {
+          if (index > 0) allCode += "\n\n// ================\n\n";
+          allCode += block.innerText;
+        });
+
+        if (allCode) {
+          copyToClipboard(allCode, "Code copied!");
+        } else {
+          showToast("No code found!", "error");
+        }
+      }
+
+      // Copy to clipboard helper
+      function copyToClipboard(text, message) {
+        navigator.clipboard
+          .writeText(text)
+          .then(() => {
+            showToast(message);
+          })
+          .catch((err) => {
+            console.error("Failed to copy:", err);
+            showToast("Failed to copy!", "error");
+          });
+      }
+
+      // Show toast notification
+      function showToast(message, type = "success") {
+        const toast = document.getElementById("toast");
+        const toastMessage = document.getElementById("toastMessage");
+
+        toastMessage.textContent = message;
+        toast.style.background = type === "error" ? "#dc3545" : "#28a745";
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3000);
+      }
+
+      // Export to PDF
+      function exportToPDF() {
+        showToast("Preparing PDF...", "success");
+        setTimeout(() => {
+          window.print();
+        }, 500);
+      }
+
+      // Export to Markdown
+      function exportToMarkdown() {
+        const title = document.getElementById("questionTitle").innerText;
+        const content = document.getElementById("questionContent").innerText;
+
+        const markdown = `# ${title}\n\n${content}`;
+
+        const blob = new Blob([markdown], { type: "text/markdown" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${title}.md`;
+        a.click();
+        URL.revokeObjectURL(url);
+
+        showToast("Markdown exported!");
+      }
+
+      // Share question
+      function shareQuestion() {
+        const title = document.getElementById("questionTitle").innerText;
+        const url = window.location.href;
+
+        if (navigator.share) {
+          navigator
+            .share({
+              title: title,
+              url: url,
+            })
+            .then(() => {
+              showToast("Shared successfully!");
+            })
+            .catch(() => {
+              copyToClipboard(url, "Link copied!");
+            });
+        } else {
+          copyToClipboard(url, "Link copied!");
+        }
+      }
+
+      // Add copy buttons to code blocks
+      function addCopyButtonsToCode() {
+        const codeBlocks = document.querySelectorAll("#questionContent pre");
+        codeBlocks.forEach((block, index) => {
+          const button = document.createElement("button");
+          button.className = "copy-code-btn";
+          button.innerHTML = "📋 Copy";
+          button.onclick = function () {
+            const code =
+              block.querySelector("code")?.innerText || block.innerText;
+            copyToClipboard(code, "Code copied!");
+            button.innerHTML = "✓ Copied";
+            button.classList.add("copied");
+            setTimeout(() => {
+              button.innerHTML = "📋 Copy";
+              button.classList.remove("copied");
+            }, 2000);
+          };
+          block.style.position = "relative";
+          block.appendChild(button);
+        });
+      }
+
+      // Theme toggle (optional)
+      function toggleTheme() {
+        // Implement dark mode if desired
+        showToast("Theme toggle coming soon!");
+      }
+
+      // Keyboard shortcuts
+      document.addEventListener("keydown", (e) => {
+        // Alt + Left Arrow - Previous
+        if (e.altKey && e.key === "ArrowLeft") {
+          navigateToPrev();
+        }
+        // Alt + Right Arrow - Next
+        if (e.altKey && e.key === "ArrowRight") {
+          navigateToNext();
+        }
+        // Ctrl + K - Search
+        if (e.ctrlKey && e.key === "k") {
+          e.preventDefault();
+          document.getElementById("searchInput").focus();
+        }
+      });
+
+      // Initialize on page load
+      loadQuestionsData();
+    </script>
+  </body>
+</html>

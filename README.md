@@ -8,19 +8,23 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 |---|---------|------------|--------|----------|
 | 1 | [All Nodes Distance K in Binary Tree](#all-nodes-distance-k-in-binary-tree) | Medium | Binary Tree, Tree, BFS | [View](./All%20Nodes%20Distance%20K%20in%20Binary%20Tree) |
 | 2 | [Copy List with Random Pointer](#copy-list-with-random-pointer) | Medium | Graph, Linked List, Hash Table | [View](./Copy%20List%20with%20Random%20Pointer) |
-| 3 | [Integer to English Words](#integer-to-english-words) | Medium | DFS, Graph, Array | [View](./Integer%20to%20English%20Words) |
-| 4 | [LRU Cache](#lru-cache) | Medium | BFS, Graph, Linked List | [View](./LRU%20Cache) |
-| 5 | [Maximum Number of Robots Within Budget](#maximum-number-of-robots-within-budget) | Medium | Tree, Graph, Array | [View](./Maximum%20Number%20of%20Robots%20Within%20Budget) |
-| 6 | [Number of Ways to Select Buildings](#number-of-ways-to-select-buildings) | Medium | Graph, Array, String | [View](./Number%20of%20Ways%20to%20Select%20Buildings) |
-| 7 | [Reorganize String](#reorganize-string) | Medium | BFS, DFS, Graph | [View](./Reorganize%20String) |
-| 8 | [Rotting Oranges](#rotting-oranges) | Medium | BFS, Graph, Array | [View](./Rotting%20Oranges) |
-| 9 | [Word Break II](#word-break-ii) | Medium | DFS, Graph, Hash Table | [View](./Word%20Break%20II) |
+| 3 | [Find Good Days to Rob the Bank](#find-good-days-to-rob-the-bank) | Medium | Graph, Array, String | [View](./Find%20Good%20Days%20to%20Rob%20the%20Bank) |
+| 4 | [Integer to English Words](#integer-to-english-words) | Medium | DFS, Graph, Array | [View](./Integer%20to%20English%20Words) |
+| 5 | [LRU Cache](#lru-cache) | Medium | BFS, Graph, Linked List | [View](./LRU%20Cache) |
+| 6 | [Maximum Length of Subarray With Positive Product](#maximum-length-of-subarray-with-positive-product) | Medium | Graph, Array, String | [View](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product) |
+| 7 | [Maximum Number of Robots Within Budget](#maximum-number-of-robots-within-budget) | Medium | Tree, Graph, Array | [View](./Maximum%20Number%20of%20Robots%20Within%20Budget) |
+| 8 | [Number of Ways to Select Buildings](#number-of-ways-to-select-buildings) | Medium | Graph, Array, String | [View](./Number%20of%20Ways%20to%20Select%20Buildings) |
+| 9 | [Reorganize String](#reorganize-string) | Medium | BFS, DFS, Graph | [View](./Reorganize%20String) |
+| 10 | [Rotting Oranges](#rotting-oranges) | Medium | BFS, Graph, Array | [View](./Rotting%20Oranges) |
+| 11 | [Word Break II](#word-break-ii) | Medium | DFS, Graph, Hash Table | [View](./Word%20Break%20II) |
 
 ## 🔍 Search by Topic
 
 ### Array
+- [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
 - [Integer to English Words](./Integer%20to%20English%20Words)
 - [LRU Cache](./LRU%20Cache)
+- [Maximum Length of Subarray With Positive Product](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product)
 - [Maximum Number of Robots Within Budget](./Maximum%20Number%20of%20Robots%20Within%20Budget)
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
 - [Reorganize String](./Reorganize%20String)
@@ -45,8 +49,10 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 ### Graph
 - [All Nodes Distance K in Binary Tree](./All%20Nodes%20Distance%20K%20in%20Binary%20Tree)
 - [Copy List with Random Pointer](./Copy%20List%20with%20Random%20Pointer)
+- [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
 - [Integer to English Words](./Integer%20to%20English%20Words)
 - [LRU Cache](./LRU%20Cache)
+- [Maximum Length of Subarray With Positive Product](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product)
 - [Maximum Number of Robots Within Budget](./Maximum%20Number%20of%20Robots%20Within%20Budget)
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
 - [Reorganize String](./Reorganize%20String)
@@ -62,11 +68,16 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [Copy List with Random Pointer](./Copy%20List%20with%20Random%20Pointer)
 - [LRU Cache](./LRU%20Cache)
 
+### Sliding Window
+- [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
+
 ### Stack
 - [Integer to English Words](./Integer%20to%20English%20Words)
 
 ### String
+- [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
 - [Integer to English Words](./Integer%20to%20English%20Words)
+- [Maximum Length of Subarray With Positive Product](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product)
 - [Maximum Number of Robots Within Budget](./Maximum%20Number%20of%20Robots%20Within%20Budget)
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
 - [Reorganize String](./Reorganize%20String)
@@ -79,6 +90,8 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 
 ### Two Pointers
 - [Copy List with Random Pointer](./Copy%20List%20with%20Random%20Pointer)
+- [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
+- [Maximum Length of Subarray With Positive Product](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product)
 - [Maximum Number of Robots Within Budget](./Maximum%20Number%20of%20Robots%20Within%20Budget)
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
 - [Rotting Oranges](./Rotting%20Oranges)
@@ -115,6 +128,21 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 
 ---
 
+### Find Good Days to Rob the Bank
+**Difficulty:** Medium  
+**Topics:** Graph, Array, String, Two Pointers, Sliding Window  
+**Key Concepts:**
+- restatement (short)...
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(n)
+
+**Quick Approach:**
+...
+
+[📄 View Full Solution](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
+
+---
+
 ### Integer to English Words
 **Difficulty:** Medium  
 **Topics:** DFS, Graph, Array, String, Stack  
@@ -142,6 +170,21 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 ...
 
 [📄 View Full Solution](./LRU%20Cache)
+
+---
+
+### Maximum Length of Subarray With Positive Product
+**Difficulty:** Medium  
+**Topics:** Graph, Array, String, Two Pointers  
+**Key Concepts:**
+- ...
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(1)
+
+**Quick Approach:**
+...
+
+[📄 View Full Solution](./Maximum%20Length%20of%20Subarray%20With%20Positive%20Product)
 
 ---
 
@@ -247,9 +290,9 @@ For a better browsing experience with search and filtering, open [index.html](./
 
 ## 📊 Statistics
 
-- **Total Questions:** 9
+- **Total Questions:** 11
 - **Easy:** 0
-- **Medium:** 9
+- **Medium:** 11
 - **Hard:** 0
 
 ---
