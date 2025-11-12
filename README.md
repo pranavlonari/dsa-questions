@@ -19,14 +19,17 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 | 11 | [Maximum Number of Robots Within Budget](#maximum-number-of-robots-within-budget) | Medium | Tree, Graph, Array | [View](./Maximum%20Number%20of%20Robots%20Within%20Budget) |
 | 12 | [Maximum Units on a Truck](#maximum-units-on-a-truck) | Medium | Graph, Array, String | [View](./Maximum%20Units%20on%20a%20Truck) |
 | 13 | [Number of Ways to Select Buildings](#number-of-ways-to-select-buildings) | Medium | Graph, Array, String | [View](./Number%20of%20Ways%20to%20Select%20Buildings) |
-| 14 | [Reorganize String](#reorganize-string) | Medium | BFS, DFS, Graph | [View](./Reorganize%20String) |
-| 15 | [Rotting Oranges](#rotting-oranges) | Medium | BFS, Graph, Array | [View](./Rotting%20Oranges) |
-| 16 | [Sequentially Ordinal Rank Tracker](#sequentially-ordinal-rank-tracker) | Medium | Tree, BFS, Graph | [View](./Sequentially%20Ordinal%20Rank%20Tracker) |
-| 17 | [Substring With Largest Variance](#substring-with-largest-variance) | Medium | Array, String, Two Pointers | [View](./Substring%20With%20Largest%20Variance) |
-| 18 | [Sum of Subarray Ranges](#sum-of-subarray-ranges) | Medium | Array, String, Two Pointers | [View](./Sum%20of%20Subarray%20Ranges) |
-| 19 | [Total Appeal of A String](#total-appeal-of-a-string) | Medium | Graph, Array, String | [View](./Total%20Appeal%20of%20A%20String) |
-| 20 | [Trapping Rain Water](#trapping-rain-water) | Medium | Array, String, Two Pointers | [View](./Trapping%20Rain%20Water) |
-| 21 | [Word Break II](#word-break-ii) | Medium | DFS, Graph, Hash Table | [View](./Word%20Break%20II) |
+| 14 | [Race Car](#race-car) | Medium | BFS, Hash Table, String | [View](./Race%20Car) |
+| 15 | [Reorganize String](#reorganize-string) | Medium | BFS, DFS, Graph | [View](./Reorganize%20String) |
+| 16 | [Rotting Oranges](#rotting-oranges) | Medium | BFS, Graph, Array | [View](./Rotting%20Oranges) |
+| 17 | [Sequential Digits](#sequential-digits) | Medium | BFS, Array, String | [View](./Sequential%20Digits) |
+| 18 | [Sequentially Ordinal Rank Tracker](#sequentially-ordinal-rank-tracker) | Medium | Tree, BFS, Graph | [View](./Sequentially%20Ordinal%20Rank%20Tracker) |
+| 19 | [Substring With Largest Variance](#substring-with-largest-variance) | Medium | Array, String, Two Pointers | [View](./Substring%20With%20Largest%20Variance) |
+| 20 | [Sum of Subarray Ranges](#sum-of-subarray-ranges) | Medium | Array, String, Two Pointers | [View](./Sum%20of%20Subarray%20Ranges) |
+| 21 | [Sum of Total Strength of Wizards](#sum-of-total-strength-of-wizards) | Medium | Array, String, Two Pointers | [View](./Sum%20of%20Total%20Strength%20of%20Wizards) |
+| 22 | [Total Appeal of A String](#total-appeal-of-a-string) | Medium | Graph, Array, String | [View](./Total%20Appeal%20of%20A%20String) |
+| 23 | [Trapping Rain Water](#trapping-rain-water) | Medium | Array, String, Two Pointers | [View](./Trapping%20Rain%20Water) |
+| 24 | [Word Break II](#word-break-ii) | Medium | DFS, Graph, Hash Table | [View](./Word%20Break%20II) |
 
 ## 🔍 Search by Topic
 
@@ -43,8 +46,10 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
 - [Reorganize String](./Reorganize%20String)
 - [Rotting Oranges](./Rotting%20Oranges)
+- [Sequential Digits](./Sequential%20Digits)
 - [Substring With Largest Variance](./Substring%20With%20Largest%20Variance)
 - [Sum of Subarray Ranges](./Sum%20of%20Subarray%20Ranges)
+- [Sum of Total Strength of Wizards](./Sum%20of%20Total%20Strength%20of%20Wizards)
 - [Total Appeal of A String](./Total%20Appeal%20of%20A%20String)
 - [Trapping Rain Water](./Trapping%20Rain%20Water)
 - [Word Break II](./Word%20Break%20II)
@@ -54,8 +59,10 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [find Median from Data Stream](./find%20Median%20from%20Data%20Stream)
 - [Find the K-Sum of an Array](./Find%20the%20K-Sum%20of%20an%20Array)
 - [LRU Cache](./LRU%20Cache)
+- [Race Car](./Race%20Car)
 - [Reorganize String](./Reorganize%20String)
 - [Rotting Oranges](./Rotting%20Oranges)
+- [Sequential Digits](./Sequential%20Digits)
 - [Sequentially Ordinal Rank Tracker](./Sequentially%20Ordinal%20Rank%20Tracker)
 
 ### Binary Tree
@@ -66,6 +73,14 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [Integer to English Words](./Integer%20to%20English%20Words)
 - [Reorganize String](./Reorganize%20String)
 - [Word Break II](./Word%20Break%20II)
+
+### DP
+- [Race Car](./Race%20Car)
+- [Sequential Digits](./Sequential%20Digits)
+
+### Dynamic Programming
+- [Race Car](./Race%20Car)
+- [Sequential Digits](./Sequential%20Digits)
 
 ### Graph
 - [All Nodes Distance K in Binary Tree](./All%20Nodes%20Distance%20K%20in%20Binary%20Tree)
@@ -95,6 +110,7 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [find Median from Data Stream](./find%20Median%20from%20Data%20Stream)
 - [Group Anagrams](./Group%20Anagrams)
 - [LRU Cache](./LRU%20Cache)
+- [Race Car](./Race%20Car)
 - [Word Break II](./Word%20Break%20II)
 
 ### Heap
@@ -106,6 +122,7 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 
 ### Queue
 - [Sum of Subarray Ranges](./Sum%20of%20Subarray%20Ranges)
+- [Sum of Total Strength of Wizards](./Sum%20of%20Total%20Strength%20of%20Wizards)
 
 ### Sliding Window
 - [Find Good Days to Rob the Bank](./Find%20Good%20Days%20to%20Rob%20the%20Bank)
@@ -117,6 +134,7 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 ### Stack
 - [Integer to English Words](./Integer%20to%20English%20Words)
 - [Sum of Subarray Ranges](./Sum%20of%20Subarray%20Ranges)
+- [Sum of Total Strength of Wizards](./Sum%20of%20Total%20Strength%20of%20Wizards)
 - [Trapping Rain Water](./Trapping%20Rain%20Water)
 
 ### String
@@ -129,11 +147,14 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [Maximum Number of Robots Within Budget](./Maximum%20Number%20of%20Robots%20Within%20Budget)
 - [Maximum Units on a Truck](./Maximum%20Units%20on%20a%20Truck)
 - [Number of Ways to Select Buildings](./Number%20of%20Ways%20to%20Select%20Buildings)
+- [Race Car](./Race%20Car)
 - [Reorganize String](./Reorganize%20String)
 - [Rotting Oranges](./Rotting%20Oranges)
+- [Sequential Digits](./Sequential%20Digits)
 - [Sequentially Ordinal Rank Tracker](./Sequentially%20Ordinal%20Rank%20Tracker)
 - [Substring With Largest Variance](./Substring%20With%20Largest%20Variance)
 - [Sum of Subarray Ranges](./Sum%20of%20Subarray%20Ranges)
+- [Sum of Total Strength of Wizards](./Sum%20of%20Total%20Strength%20of%20Wizards)
 - [Total Appeal of A String](./Total%20Appeal%20of%20A%20String)
 - [Trapping Rain Water](./Trapping%20Rain%20Water)
 - [Word Break II](./Word%20Break%20II)
@@ -153,6 +174,7 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 - [Rotting Oranges](./Rotting%20Oranges)
 - [Substring With Largest Variance](./Substring%20With%20Largest%20Variance)
 - [Sum of Subarray Ranges](./Sum%20of%20Subarray%20Ranges)
+- [Sum of Total Strength of Wizards](./Sum%20of%20Total%20Strength%20of%20Wizards)
 - [Total Appeal of A String](./Total%20Appeal%20of%20A%20String)
 - [Trapping Rain Water](./Trapping%20Rain%20Water)
 
@@ -353,6 +375,21 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 
 ---
 
+### Race Car
+**Difficulty:** Medium  
+**Topics:** BFS, Hash Table, String, Dynamic Programming, DP  
+**Key Concepts:**
+- (LeetCode 818). I'll explain a neat dynamic-programming / greedy solution (memoized recursion) that ...
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(n)
+
+**Quick Approach:**
+...
+
+[📄 View Full Solution](./Race%20Car)
+
+---
+
 ### Reorganize String
 **Difficulty:** Medium  
 **Topics:** BFS, DFS, Graph, Array, String  
@@ -380,6 +417,21 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 1. Initialize queue with all `2`s (rotten), and count all `1`s (fresh)....
 
 [📄 View Full Solution](./Rotting%20Oranges)
+
+---
+
+### Sequential Digits
+**Difficulty:** Medium  
+**Topics:** BFS, Array, String, Dynamic Programming, DP  
+**Key Concepts:**
+- ...
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(n)
+
+**Quick Approach:**
+...
+
+[📄 View Full Solution](./Sequential%20Digits)
 
 ---
 
@@ -425,6 +477,21 @@ Welcome to my Data Structures and Algorithms questions repository! This collecti
 ...
 
 [📄 View Full Solution](./Sum%20of%20Subarray%20Ranges)
+
+---
+
+### Sum of Total Strength of Wizards
+**Difficulty:** Medium  
+**Topics:** Array, String, Two Pointers, Stack, Queue  
+**Key Concepts:**
+- recap (one line)...
+- **Time Complexity:** O(n)
+- **Space Complexity:** O(n)
+
+**Quick Approach:**
+...
+
+[📄 View Full Solution](./Sum%20of%20Total%20Strength%20of%20Wizards)
 
 ---
 
@@ -500,9 +567,9 @@ For a better browsing experience with search and filtering, open [index.html](./
 
 ## 📊 Statistics
 
-- **Total Questions:** 21
+- **Total Questions:** 24
 - **Easy:** 0
-- **Medium:** 21
+- **Medium:** 24
 - **Hard:** 0
 
 ---

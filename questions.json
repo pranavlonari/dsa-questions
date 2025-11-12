@@ -3,11 +3,11 @@
     "repository": "DSA Questions Collection",
     "description": "Interview-ready solutions with detailed explanations",
     "lastUpdated": "2025-11-12",
-    "totalQuestions": 21
+    "totalQuestions": 24
   },
   "statistics": {
     "easy": 0,
-    "medium": 21,
+    "medium": 24,
     "hard": 0
   },
   "questions": [
@@ -253,6 +253,26 @@
     },
     {
       "id": 14,
+      "title": "Race Car",
+      "fileName": "Race Car",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "Hash Table",
+        "String",
+        "Dynamic Programming",
+        "DP"
+      ],
+      "summary": "(LeetCode 818). I'll explain a neat dynamic-programming / greedy solution (memoized recursion) that runs very fast for `target ≤ 10^4`, then give a clean Java implementation you can use in an intervie...",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      },
+      "leetcodeNumber": 818
+    },
+    {
+      "id": 15,
       "title": "Reorganize String",
       "fileName": "Reorganize String",
       "difficulty": "Medium",
@@ -271,7 +291,7 @@
       }
     },
     {
-      "id": 15,
+      "id": 16,
       "title": "Rotting Oranges",
       "fileName": "Rotting Oranges",
       "difficulty": "Medium",
@@ -290,7 +310,26 @@
       }
     },
     {
-      "id": 16,
+      "id": 17,
+      "title": "Sequential Digits",
+      "fileName": "Sequential Digits",
+      "difficulty": "Medium",
+      "topics": [
+        "BFS",
+        "Array",
+        "String",
+        "Dynamic Programming",
+        "DP"
+      ],
+      "summary": "",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 18,
       "title": "Sequentially Ordinal Rank Tracker",
       "fileName": "Sequentially Ordinal Rank Tracker",
       "difficulty": "Medium",
@@ -309,7 +348,7 @@
       }
     },
     {
-      "id": 17,
+      "id": 19,
       "title": "Substring With Largest Variance",
       "fileName": "Substring With Largest Variance",
       "difficulty": "Medium",
@@ -326,7 +365,7 @@
       }
     },
     {
-      "id": 18,
+      "id": 20,
       "title": "Sum of Subarray Ranges",
       "fileName": "Sum of Subarray Ranges",
       "difficulty": "Medium",
@@ -345,7 +384,26 @@
       }
     },
     {
-      "id": 19,
+      "id": 21,
+      "title": "Sum of Total Strength of Wizards",
+      "fileName": "Sum of Total Strength of Wizards",
+      "difficulty": "Medium",
+      "topics": [
+        "Array",
+        "String",
+        "Two Pointers",
+        "Stack",
+        "Queue"
+      ],
+      "summary": "recap (one line)",
+      "keyApproach": "",
+      "complexity": {
+        "time": "O(n)",
+        "space": "O(n)"
+      }
+    },
+    {
+      "id": 22,
       "title": "Total Appeal of A String",
       "fileName": "Total Appeal of A String",
       "difficulty": "Medium",
@@ -363,7 +421,7 @@
       }
     },
     {
-      "id": 20,
+      "id": 23,
       "title": "Trapping Rain Water",
       "fileName": "Trapping Rain Water",
       "difficulty": "Medium",
@@ -381,7 +439,7 @@
       }
     },
     {
-      "id": 21,
+      "id": 24,
       "title": "Word Break II",
       "fileName": "Word Break II",
       "difficulty": "Medium",
@@ -408,7 +466,7 @@
       1,
       5,
       11,
-      16
+      18
     ],
     "BFS": [
       1,
@@ -417,13 +475,15 @@
       9,
       14,
       15,
-      16
+      16,
+      17,
+      18
     ],
     "DFS": [
       1,
       8,
-      14,
-      21
+      15,
+      24
     ],
     "Graph": [
       1,
@@ -437,11 +497,11 @@
       11,
       12,
       13,
-      14,
       15,
       16,
-      19,
-      21
+      18,
+      22,
+      24
     ],
     "Linked List": [
       2,
@@ -452,7 +512,8 @@
       5,
       7,
       9,
-      21
+      14,
+      24
     ],
     "Two Pointers": [
       2,
@@ -460,11 +521,12 @@
       10,
       11,
       13,
-      15,
-      17,
-      18,
+      16,
       19,
-      20
+      20,
+      21,
+      22,
+      23
     ],
     "String": [
       3,
@@ -483,7 +545,10 @@
       18,
       19,
       20,
-      21
+      21,
+      22,
+      23,
+      24
     ],
     "Array": [
       4,
@@ -496,13 +561,15 @@
       11,
       12,
       13,
-      14,
       15,
+      16,
       17,
-      18,
       19,
       20,
-      21
+      21,
+      22,
+      23,
+      24
     ],
     "Sliding Window": [
       4
@@ -510,7 +577,7 @@
     "Greedy": [
       6,
       12,
-      16
+      18
     ],
     "Heap": [
       6
@@ -521,11 +588,21 @@
     ],
     "Stack": [
       8,
-      18,
-      20
+      20,
+      21,
+      23
+    ],
+    "Dynamic Programming": [
+      14,
+      17
+    ],
+    "DP": [
+      14,
+      17
     ],
     "Queue": [
-      18
+      20,
+      21
     ]
   },
   "difficultyIndex": {
@@ -551,7 +628,10 @@
       18,
       19,
       20,
-      21
+      21,
+      22,
+      23,
+      24
     ],
     "Hard": []
   },
